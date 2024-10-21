@@ -105,8 +105,30 @@ public class FrameRegistro extends JFrame {
 		
 		JDateChooser dateChooserFechaNac = new JDateChooser();
 		dateChooserFechaNac.setBounds(135, 264, 143, 20);
-		contentPane.add(dateChooserFechaNac);
-		
+		contentPane.add(dateChooserFechaNac);		
 		
 	}
+
+	//getters
+	public JPanel getContentPane() {
+		return contentPane;
+	}
+
+	public JTextField getTextFieldNombre() {
+		return textFieldNombre;
+	}
+
+	public JPasswordField getPasswordFieldContrasena() {
+		return passwordFieldContrasena;
+	}
+
+	public JTextField getTextFieldApellido() {
+		return textFieldApellido;
+	}
+
+	public JTextField getTextFieldEmail() {
+		return textFieldEmail;
+	}
+	
+	
 }

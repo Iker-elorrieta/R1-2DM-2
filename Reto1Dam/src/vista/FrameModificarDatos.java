@@ -109,4 +109,35 @@ public class FrameModificarDatos extends JFrame {
 		dateChooserFechaNacModificar.setBounds(139, 232, 98, 20);
 		contentPane.add(dateChooserFechaNacModificar);
 	}
+
+	//getters
+	public JPanel getContentPane() {
+		return contentPane;
+	}
+
+	public JTextField getTextFieldNombreModificar() {
+		return textFieldNombreModificar;
+	}
+
+	public JTextField getTextFieldApellidoModificar() {
+		return textFieldApellidoModificar;
+	}
+
+	public JTextField getTextFieldEmailModificar() {
+		return textFieldEmailModificar;
+	}
+
+	public JButton getBtnModificarAceptar() {
+		return btnModificarAceptar;
+	}
+
+	public JLabel getLblcontrasena() {
+		return lblcontrasena;
+	}
+
+	public JTextField getTextFieldContrasenaModificar() {
+		return textFieldContrasenaModificar;
+	}
+	
+	
 }
