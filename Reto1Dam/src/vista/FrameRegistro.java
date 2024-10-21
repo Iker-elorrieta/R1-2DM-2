@@ -20,6 +20,8 @@ public class FrameRegistro extends JFrame {
 	private JPasswordField passwordFieldContrasena;
 	private JTextField textFieldApellido;
 	private JTextField textFieldEmail;
+	private JButton btnRegistrarse;
+	private JButton btnAtras;
 
 	/**
 	 * Launch the application.
@@ -74,7 +76,7 @@ public class FrameRegistro extends JFrame {
 		lblFechaNac.setBounds(10, 270, 131, 14);
 		contentPane.add(lblFechaNac);
 		
-		JButton btnAtras = new JButton("Atrás");
+		btnAtras = new JButton("Atrás");
 		btnAtras.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnAtras.setBounds(10, 11, 89, 23);
 		contentPane.add(btnAtras);
@@ -98,7 +100,7 @@ public class FrameRegistro extends JFrame {
 		contentPane.add(textFieldEmail);
 		textFieldEmail.setColumns(10);
 		
-		JButton btnRegistrarse = new JButton("Registrarse");
+		btnRegistrarse = new JButton("Registrarse");
 		btnRegistrarse.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnRegistrarse.setBounds(415, 327, 109, 23);
 		contentPane.add(btnRegistrarse);
@@ -129,6 +131,16 @@ public class FrameRegistro extends JFrame {
 	public JTextField getTextFieldEmail() {
 		return textFieldEmail;
 	}
+
+	public JButton getBtnRegistrarse() {
+		return btnRegistrarse;
+	}
+
+	public JButton getBtnAtras() {
+		return btnAtras;
+	}
+	
+	
 	
 	
 }

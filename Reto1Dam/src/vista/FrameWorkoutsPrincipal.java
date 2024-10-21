@@ -77,11 +77,11 @@ public class FrameWorkoutsPrincipal extends JFrame {
         contentPane.add(btnPerfil);
 
         btnHistorial = new JButton("Historial de workouts");
-        btnHistorial.setBounds(10, 327, 142, 23);
+        btnHistorial.setBounds(10, 327, 168, 23);
         contentPane.add(btnHistorial);
 
         btnSeleccionar = new JButton("Seleccionar");
-        btnSeleccionar.setBounds(435, 327, 89, 23);
+        btnSeleccionar.setBounds(412, 327, 112, 23);
         contentPane.add(btnSeleccionar);
     }
 
