@@ -7,11 +7,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-
-import com.toedter.calendar.JDateChooser;
 
 public class FramePerfilUsuario extends JFrame {
 
@@ -21,6 +18,7 @@ public class FramePerfilUsuario extends JFrame {
 	private JTextField textFieldApellido;
 	private JTextField textFieldEmail;
 	private JTextField textFieldFechaNac;
+	private JButton btnModificar;
 
 	/**
 	 * Launch the application.
@@ -93,7 +91,7 @@ public class FramePerfilUsuario extends JFrame {
 		contentPane.add(textFieldEmail);
 		textFieldEmail.setColumns(10);
 		
-		JButton btnModificar = new JButton("Modificar datos");
+		btnModificar = new JButton("Modificar datos");
 		btnModificar.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnModificar.setBounds(378, 327, 146, 23);
 		contentPane.add(btnModificar);

@@ -103,9 +103,9 @@ public class FrameRegistro extends JFrame {
 		btnRegistrarse.setBounds(415, 327, 109, 23);
 		contentPane.add(btnRegistrarse);
 		
-		JDateChooser dateChooser = new JDateChooser();
-		dateChooser.setBounds(135, 264, 143, 20);
-		contentPane.add(dateChooser);
+		JDateChooser dateChooserFechaNac = new JDateChooser();
+		dateChooserFechaNac.setBounds(135, 264, 143, 20);
+		contentPane.add(dateChooserFechaNac);
 		
 		
 	}
