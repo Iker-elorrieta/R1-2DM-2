@@ -1,7 +1,5 @@
 package controlador;
 
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 
 public class Metodos {
 	
