@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Font;
 
@@ -46,33 +47,44 @@ public class FrameLogin extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		JLabel logo = new JLabel(new ImageIcon("src/Imagen/file.jpg"));
+		logo.setSize(240, 240);
+		logo.setLocation(10, 11);
+		logo.setVisible(true);
+		getContentPane().add(logo);
+		
 		JLabel lblEmail = new JLabel("Email");
 		lblEmail.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblEmail.setBounds(231, 80, 46, 14);
+		lblEmail.setBounds(282, 114, 46, 14);
 		contentPane.add(lblEmail);
 		
 		JLabel lblContrasena = new JLabel("Contraseña");
 		lblContrasena.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblContrasena.setBounds(231, 173, 75, 14);
+		lblContrasena.setBounds(260, 173, 75, 14);
 		contentPane.add(lblContrasena);
 		
 		textFieldEmail = new JTextField();
-		textFieldEmail.setBounds(319, 77, 186, 20);
+		textFieldEmail.setBounds(338, 111, 186, 20);
 		contentPane.add(textFieldEmail);
 		textFieldEmail.setColumns(10);
 		
 		passwordFieldContrasena = new JPasswordField();
-		passwordFieldContrasena.setBounds(319, 170, 186, 20);
+		passwordFieldContrasena.setBounds(338, 170, 186, 20);
 		contentPane.add(passwordFieldContrasena);
 		
 		JButton btRegistro = new JButton("Registrarse");
 		btRegistro.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btRegistro.setBounds(115, 307, 99, 23);
+		btRegistro.setBounds(115, 307, 116, 23);
 		contentPane.add(btRegistro);
 		
 		JButton btnLogin = new JButton("Login");
 		btnLogin.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnLogin.setBounds(406, 307, 99, 23);
+		btnLogin.setBounds(366, 307, 99, 23);
 		contentPane.add(btnLogin);
+		
+		JLabel lblInicioSesion = new JLabel("Inicio de Sesión");
+		lblInicioSesion.setFont(new Font("Bookman Old Style", Font.BOLD, 15));
+		lblInicioSesion.setBounds(338, 46, 150, 14);
+		contentPane.add(lblInicioSesion);
 	}
 }

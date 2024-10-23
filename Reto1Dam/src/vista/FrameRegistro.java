@@ -51,27 +51,27 @@ public class FrameRegistro extends JFrame {
 		
 		JLabel lblNombre = new JLabel("Nombre");
 		lblNombre.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblNombre.setBounds(10, 70, 68, 14);
+		lblNombre.setBounds(150, 70, 68, 14);
 		contentPane.add(lblNombre);
 		
 		JLabel lblApellido = new JLabel("Apellido");
 		lblApellido.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblApellido.setBounds(10, 120, 68, 14);
+		lblApellido.setBounds(150, 120, 68, 14);
 		contentPane.add(lblApellido);
 		
 		JLabel lblEmail = new JLabel("Email");
 		lblEmail.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblEmail.setBounds(10, 170, 68, 14);
+		lblEmail.setBounds(150, 170, 68, 14);
 		contentPane.add(lblEmail);
 		
 		JLabel lblContrasena = new JLabel("Contraseña");
 		lblContrasena.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblContrasena.setBounds(10, 220, 68, 14);
+		lblContrasena.setBounds(150, 220, 68, 14);
 		contentPane.add(lblContrasena);
 		
 		JLabel lblFechaNac = new JLabel("Fecha de nacimiento");
 		lblFechaNac.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblFechaNac.setBounds(10, 270, 131, 14);
+		lblFechaNac.setBounds(125, 270, 131, 14);
 		contentPane.add(lblFechaNac);
 		
 		JButton btnAtras = new JButton("Atrás");
@@ -80,32 +80,37 @@ public class FrameRegistro extends JFrame {
 		contentPane.add(btnAtras);
 		
 		textFieldNombre = new JTextField();
-		textFieldNombre.setBounds(108, 67, 170, 20);
+		textFieldNombre.setBounds(241, 67, 170, 20);
 		contentPane.add(textFieldNombre);
 		textFieldNombre.setColumns(10);
 		
 		passwordFieldContrasena = new JPasswordField();
-		passwordFieldContrasena.setBounds(108, 217, 170, 20);
+		passwordFieldContrasena.setBounds(241, 217, 170, 20);
 		contentPane.add(passwordFieldContrasena);
 		
 		textFieldApellido = new JTextField();
-		textFieldApellido.setBounds(108, 117, 170, 20);
+		textFieldApellido.setBounds(241, 117, 170, 20);
 		contentPane.add(textFieldApellido);
 		textFieldApellido.setColumns(10);
 		
 		textFieldEmail = new JTextField();
-		textFieldEmail.setBounds(108, 167, 170, 20);
+		textFieldEmail.setBounds(241, 167, 170, 20);
 		contentPane.add(textFieldEmail);
 		textFieldEmail.setColumns(10);
 		
 		JButton btnRegistrarse = new JButton("Registrarse");
 		btnRegistrarse.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnRegistrarse.setBounds(415, 327, 109, 23);
+		btnRegistrarse.setBounds(206, 313, 109, 23);
 		contentPane.add(btnRegistrarse);
 		
 		JDateChooser dateChooser = new JDateChooser();
-		dateChooser.setBounds(135, 264, 143, 20);
+		dateChooser.setBounds(254, 264, 143, 20);
 		contentPane.add(dateChooser);
+		
+		JLabel lblRegistro = new JLabel("Registro");
+		lblRegistro.setFont(new Font("Bahnschrift", Font.BOLD, 15));
+		lblRegistro.setBounds(224, 27, 89, 29);
+		contentPane.add(lblRegistro);
 		
 		
 	}
