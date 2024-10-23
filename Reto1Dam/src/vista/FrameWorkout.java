@@ -55,7 +55,7 @@ public class FrameWorkout extends JFrame {
 		btnAtras.setBounds(10, 9, 89, 23);
 		contentPane.add(btnAtras);
 		
-		btnIniciar = new JButton("Iniciar");
+		btnIniciar = new JButton("Inicio");
 		btnIniciar.setForeground(new Color(0, 153, 0));
 		btnIniciar.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnIniciar.setBounds(218, 327, 97, 23);

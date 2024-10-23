@@ -7,12 +7,11 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 
-public class FrameHistorialWorkouts extends JFrame {
+public class FrameResumenWorkout extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JButton btnAtras;
-	
+	private JButton btnOk;
 
 	/**
 	 * Launch the application.
@@ -21,7 +20,7 @@ public class FrameHistorialWorkouts extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FrameHistorialWorkouts frame = new FrameHistorialWorkouts();
+					FrameResumenWorkout frame = new FrameResumenWorkout();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -33,7 +32,7 @@ public class FrameHistorialWorkouts extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FrameHistorialWorkouts() {
+	public FrameResumenWorkout() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 550, 400);
 		contentPane = new JPanel();
@@ -42,9 +41,9 @@ public class FrameHistorialWorkouts extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		btnAtras = new JButton("Atrás");
-		btnAtras.setBounds(10, 11, 89, 23);
-		contentPane.add(btnAtras);
+		btnOk = new JButton("ok");
+		btnOk.setBounds(222, 327, 89, 23);
+		contentPane.add(btnOk);
 	}
 
 	//getters
@@ -52,10 +51,10 @@ public class FrameHistorialWorkouts extends JFrame {
 		return contentPane;
 	}
 
-	public JButton getBtnAtras() {
-		return btnAtras;
+	public JButton getBtnOk() {
+		return btnOk;
 	}
+	
+	
 
-	
-	
 }
