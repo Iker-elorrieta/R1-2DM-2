@@ -105,17 +105,13 @@ public class FrameRegistro extends JFrame {
 		btnRegistrarse.setBounds(206, 313, 109, 23);
 		contentPane.add(btnRegistrarse);
 		
-		JDateChooser dateChooser = new JDateChooser();
-		dateChooser.setBounds(254, 264, 143, 20);
-		contentPane.add(dateChooser);
-		
 		JLabel lblRegistro = new JLabel("Registro");
 		lblRegistro.setFont(new Font("Bahnschrift", Font.BOLD, 15));
 		lblRegistro.setBounds(224, 27, 89, 29);
 		contentPane.add(lblRegistro);
 		
 		JDateChooser dateChooserFechaNac = new JDateChooser();
-		dateChooserFechaNac.setBounds(135, 264, 143, 20);
+		dateChooserFechaNac.setBounds(268, 264, 143, 20);
 		contentPane.add(dateChooserFechaNac);		
 		
 	}
