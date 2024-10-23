@@ -12,7 +12,8 @@ import com.google.cloud.firestore.FirestoreOptions;
 public class Conexion {
 	
 	
-	private static String nombreJSON = "bdgimnasio.json";
+	//private static String nombreJSON = "bdgimnasio.json";
+	private static String nombreJSON = "C:\\Users\\in2dm3-a\\Desktop\\bdgimnasio.json";
 	private static String projectID = "bdgimnasio-20c0b";
 	
 	

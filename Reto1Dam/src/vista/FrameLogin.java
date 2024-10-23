@@ -18,6 +18,8 @@ public class FrameLogin extends JFrame {
 	private JPanel contentPane;
 	private JTextField textFieldEmail;
 	private JPasswordField passwordFieldContrasena;
+	private JButton btnRegistro;
+	private JButton btnLogin;
 
 	/**
 	 * Launch the application.
@@ -72,12 +74,12 @@ public class FrameLogin extends JFrame {
 		passwordFieldContrasena.setBounds(338, 170, 186, 20);
 		contentPane.add(passwordFieldContrasena);
 		
-		JButton btRegistro = new JButton("Registrarse");
-		btRegistro.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btRegistro.setBounds(115, 307, 116, 23);
-		contentPane.add(btRegistro);
+		btnRegistro = new JButton("Registrarse");
+		btnRegistro.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnRegistro.setBounds(115, 307, 116, 23);
+		contentPane.add(btnRegistro);
 		
-		JButton btnLogin = new JButton("Login");
+		btnLogin = new JButton("Login");
 		btnLogin.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnLogin.setBounds(366, 307, 99, 23);
 		contentPane.add(btnLogin);
@@ -87,5 +89,27 @@ public class FrameLogin extends JFrame {
 		lblInicioSesion.setBounds(338, 46, 150, 14);
 		contentPane.add(lblInicioSesion);
 	}
+
+	//getters
+	public JPanel getContentPane() {
+		return contentPane;
+	}
+
+	public JTextField getTextFieldEmail() {
+		return textFieldEmail;
+	}
+
+	public JPasswordField getPasswordFieldContrasena() {
+		return passwordFieldContrasena;
+	}
+
+	public JButton getBtnRegistro() {
+		return btnRegistro;
+	}
+
+	public JButton getBtnLogin() {
+		return btnLogin;
+	}
+	
 	
 }

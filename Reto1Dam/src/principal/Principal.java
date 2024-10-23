@@ -4,35 +4,37 @@ import com.google.cloud.firestore.Firestore;
 
 import conexion.Conexion;
 import controlador.Metodos;
+
+import controlador.ControladorFrames;
+import vista.FrameEjercicios;
+import vista.FrameHistorialWorkouts;
 import vista.FrameLogin;
+import vista.FrameModificarDatos;
+import vista.FramePerfilUsuario;
+import vista.FrameRegistro;
+import vista.FrameResumenWorkout;
+import vista.FrameWorkout;
+import vista.FrameWorkoutsPrincipal;
 
 public class Principal {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub		
 		
 		//FRAME INICIAL
 		FrameLogin login = new FrameLogin();
+		FrameRegistro registro = new FrameRegistro();
+		FrameWorkoutsPrincipal workoutsPrincipal = new FrameWorkoutsPrincipal();
+		FramePerfilUsuario perfilUsuario = new FramePerfilUsuario();
+		FrameModificarDatos modificarDatos = new FrameModificarDatos();
+		FrameHistorialWorkouts historialWorkouts = new FrameHistorialWorkouts();
+		FrameWorkout workout = new FrameWorkout();
+		FrameEjercicios ejercicios = new FrameEjercicios();
+		FrameResumenWorkout resumenWorkout = new FrameResumenWorkout();
         
+		
+		ControladorFrames controlador = new ControladorFrames(login, registro, workoutsPrincipal, perfilUsuario, modificarDatos, historialWorkouts, workout, ejercicios, resumenWorkout);
         login.setVisible(true);
-        
-        try {
-            // Inicializar Firestore
-            Firestore db = Conexion.conectar();
-
-            Metodos loginService = new Metodos(db);
-
-            boolean loginExitoso = loginService.comprobarLogin("jon@gmail.com", "123");
-
-            if (loginExitoso) {
-                System.out.println("Bienvenido a la aplicación.");
-            } else {
-                System.out.println("Fallo al iniciar sesión.");
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
 	}
 

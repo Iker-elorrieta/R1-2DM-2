@@ -19,6 +19,7 @@ public class FrameModificarDatos extends JFrame {
 	private JTextField textFieldApellidoModificar;
 	private JTextField textFieldEmailModificar;
 	private JButton btnModificarAceptar;
+	private JButton btnCancelar;
 	private JLabel lblcontrasena;
 	private JTextField textFieldContrasenaModificar;
 
@@ -70,7 +71,7 @@ public class FrameModificarDatos extends JFrame {
 		lblFechaNac.setFont(new Font("Tahoma", Font.BOLD, 11));
 		contentPane.add(lblFechaNac);
 		
-		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar = new JButton("Cancelar");
 		btnCancelar.setBounds(279, 327, 89, 23);
 		btnCancelar.setFont(new Font("Tahoma", Font.BOLD, 11));
 		contentPane.add(btnCancelar);
@@ -129,6 +130,10 @@ public class FrameModificarDatos extends JFrame {
 
 	public JButton getBtnModificarAceptar() {
 		return btnModificarAceptar;
+	}
+
+	public JButton getBtnCancelar() {
+		return btnCancelar;
 	}
 
 	public JLabel getLblcontrasena() {

@@ -12,9 +12,9 @@ import com.google.firebase.auth.UserRecord.CreateRequest;
 import com.google.cloud.firestore.DocumentSnapshot;
 
 
-
 public class Metodos {
 	
+
 	private Firestore db;
 
     // Constructor que inicializa Firestore
@@ -23,7 +23,7 @@ public class Metodos {
     }
 
     // Método de login
-    public boolean comprobarLogin(String email, String password) {
+    public boolean comprobarLogin(String email, String contrasena) {
         try {
             if (db == null) {
                 System.out.println("Firestore no ha sido inicializado correctamente.");
@@ -40,7 +40,7 @@ public class Metodos {
             DocumentSnapshot document = documents.get(0);
 
             String storedPassword = document.getString("Contrasenya");
-            if (storedPassword != null && storedPassword.equals(password)) {
+            if (storedPassword != null && storedPassword.equals(contrasena)) {
                 System.out.println("Login exitoso.");
                 return true;
             } else {
@@ -52,6 +52,7 @@ public class Metodos {
             return false;
         }
     }
+
 	
 	//METODO PARA COMPROBAR EL REGISTRO
 	public static boolean comprobarRegistro() {
@@ -61,6 +62,7 @@ public class Metodos {
 		
 	}
 	
+
 	public String registro(String email, String password) {
         try {
             UserRecord userRecord = FirebaseAuth.getInstance().createUser(
@@ -72,5 +74,26 @@ public class Metodos {
         }
     }
 	
-  
+	//METODO PARA REGISTRAR AL NUEVO USUARIO
+	public static boolean registrarUsuario() {
+		
+		if(comprobarRegistro()) {
+			//*
+			//insertar en la base de datos
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	//METODO PARA MODIFICAR LOS DATOS DEL PERFIL DE USUARIO
+	public static boolean modificarDatos() {
+		//*
+		//comprobar la datatype correcta
+		//modificar los datos en la bd
+		
+		return false;
+	}
+	
+
 }
