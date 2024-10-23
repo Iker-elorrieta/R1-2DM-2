@@ -123,8 +123,14 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 			registro.dispose();
 
 		} else if (e.getSource() == registro.getBtnRegistrarse()) {
+			
+			String nombre = registro.getTextFieldNombre().getText();
+			String apellido = registro.getTextFieldApellido().getText();
+			String email = registro.getTextFieldEmail().getText();
+			String contrasena = new String(registro.getPasswordFieldContrasena().getPassword());
+			Date fechaNac = registro.getDateChooserFechaNac();
 
-			if(Metodos.comprobarRegistro(registro.getTextFieldNombre().getText(), registro.getTextFieldApellido().getText(), registro.getTextFieldEmail().getText(), registro.getPasswordFieldContrasena().getPassword(), registro.getDateChooserFechaNac())) {
+			if(Metodos.comprobarRegistro(nombre, apellido, email, contrasena, fechaNac)) {
 				//metodo de guardar los datos ********************
 				login.setVisible(true);
 				registro.dispose();
