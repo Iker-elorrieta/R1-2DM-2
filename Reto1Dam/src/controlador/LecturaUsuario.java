@@ -36,7 +36,7 @@ public class LecturaUsuario {
 	                        usuario.setContrasena(partes[1]);
 	                        break;
 	                    case "fechanac":
-	                        (usuario.setFechanac(partes[1]));
+	                        //(usuario.setFechanac(partes[1]));
 	                        break;
 	                    default:
 	                        break;

@@ -20,6 +20,8 @@ public class FrameRegistro extends JFrame {
 	private JPasswordField passwordFieldContrasena;
 	private JTextField textFieldApellido;
 	private JTextField textFieldEmail;
+	private JButton btnRegistrarse;
+	private JButton btnAtras;
 
 	/**
 	 * Launch the application.
@@ -74,7 +76,7 @@ public class FrameRegistro extends JFrame {
 		lblFechaNac.setBounds(125, 270, 131, 14);
 		contentPane.add(lblFechaNac);
 		
-		JButton btnAtras = new JButton("Atrás");
+		btnAtras = new JButton("Atrás");
 		btnAtras.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnAtras.setBounds(10, 11, 89, 23);
 		contentPane.add(btnAtras);
@@ -98,7 +100,7 @@ public class FrameRegistro extends JFrame {
 		contentPane.add(textFieldEmail);
 		textFieldEmail.setColumns(10);
 		
-		JButton btnRegistrarse = new JButton("Registrarse");
+		btnRegistrarse = new JButton("Registrarse");
 		btnRegistrarse.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnRegistrarse.setBounds(206, 313, 109, 23);
 		contentPane.add(btnRegistrarse);
@@ -112,6 +114,42 @@ public class FrameRegistro extends JFrame {
 		lblRegistro.setBounds(224, 27, 89, 29);
 		contentPane.add(lblRegistro);
 		
+		JDateChooser dateChooserFechaNac = new JDateChooser();
+		dateChooserFechaNac.setBounds(135, 264, 143, 20);
+		contentPane.add(dateChooserFechaNac);		
 		
 	}
+
+	//getters
+	public JPanel getContentPane() {
+		return contentPane;
+	}
+
+	public JTextField getTextFieldNombre() {
+		return textFieldNombre;
+	}
+
+	public JPasswordField getPasswordFieldContrasena() {
+		return passwordFieldContrasena;
+	}
+
+	public JTextField getTextFieldApellido() {
+		return textFieldApellido;
+	}
+
+	public JTextField getTextFieldEmail() {
+		return textFieldEmail;
+	}
+
+	public JButton getBtnRegistrarse() {
+		return btnRegistrarse;
+	}
+
+	public JButton getBtnAtras() {
+		return btnAtras;
+	}
+	
+	
+	
+	
 }
