@@ -3,6 +3,8 @@ package controlador;
 import java.util.Date;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
@@ -57,13 +59,27 @@ public class Metodos {
 
 	//METODO PARA COMPROBAR EL REGISTRO
 	public static boolean comprobarRegistro(String nombre, String apellido, String email, String contrasena, Date fechaNac) {
-		if(nombre.isEmpty() || apellido.isEmpty() || email.isEmpty() || contrasena.isEmpty() /*|| fechaNac empty*/) {
+		if(nombre.isEmpty() || apellido.isEmpty() || email.isEmpty() || contrasena.isEmpty() || fechaNac == null) {
+			return false;
+		//comprobar datatype de los inputs que sean correctos
+		}else if(nombreContieneNumeros(nombre)) {
+			JOptionPane.showMessageDialog(null, "El nombre contiene digitos.", "Error de Registro, nombre", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
-		//comprobar datatype de los inputs que sean correctos
+		
 		return true;
 
 	}
+	
+	//metodo para ver que el nombre no contenga numeros
+    public static boolean nombreContieneNumeros(String nombre) {
+        for (int i = 0; i < nombre.length(); i++) {
+            if (Character.isDigit(nombre.charAt(i))) {
+                return true; //tiene numeros
+            }
+        }
+        return false; //no tiene numeros
+    }
 
 
 	public String registro(String email, String password) {

@@ -13,6 +13,7 @@ public class Conexion {
 	
 	
 	//private static String nombreJSON = "bdgimnasio.json";
+	//local
 	private static String nombreJSON = "C:\\Users\\in2dm3-a\\Desktop\\bdgimnasio.json";
 	private static String projectID = "bdgimnasio-20c0b";
 	
