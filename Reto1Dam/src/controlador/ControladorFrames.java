@@ -7,6 +7,9 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
+import com.google.protobuf.StringValue;
+
 import vista.FrameWorkoutsPrincipal;
 import vista.FrameEjercicios;
 import vista.FrameHistorialWorkouts;
@@ -72,7 +75,10 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 		//funcion botones frame login
 		if (e.getSource() == login.getBtnLogin()) {
 			//comprobar que el login sea correcto
-			if (Metodos.comprobarLogin(login.getTextFieldEmail(), login.getPasswordFieldContrasena())) {
+			String email = login.getTextFieldEmail().getText();
+	        String contrasena = new String(login.getPasswordFieldContrasena().getPassword());
+			
+			if (Metodos.comprobarLogin(email, contrasena)) {
 
 				workoutsPrincipal.setVisible(true);
 				login.dispose();
