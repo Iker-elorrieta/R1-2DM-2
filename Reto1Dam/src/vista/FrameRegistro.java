@@ -148,6 +148,7 @@ public class FrameRegistro extends JFrame {
 	public JButton getBtnAtras() {
 		return btnAtras;
 	}
+
 	
 	
 	

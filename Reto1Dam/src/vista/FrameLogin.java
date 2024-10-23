@@ -87,4 +87,5 @@ public class FrameLogin extends JFrame {
 		lblInicioSesion.setBounds(338, 46, 150, 14);
 		contentPane.add(lblInicioSesion);
 	}
+	
 }
