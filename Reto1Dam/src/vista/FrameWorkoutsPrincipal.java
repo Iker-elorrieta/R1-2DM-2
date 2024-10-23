@@ -16,7 +16,7 @@ public class FrameWorkoutsPrincipal extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
-    private JTable tablaContactos;
+    private JTable tablaEjercicios;
     private DefaultTableModel defaultTableModel;
     private JLabel lblWorkouts;
     private JButton btnPerfil;
@@ -58,14 +58,14 @@ public class FrameWorkoutsPrincipal extends JFrame {
         //tabla con datos
         String columnas[] = { "Nombre", "nº de ejercicios", "Nivel", "Video(URL)" };
         defaultTableModel = new DefaultTableModel(columnas, 0);
-        tablaContactos = new JTable(defaultTableModel);
-        tablaContactos.setAutoCreateRowSorter(true);
-        tablaContactos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        tablaContactos.setRowSelectionAllowed(false);
-        tablaContactos.setCellSelectionEnabled(false);
-        tablaContactos.setDefaultEditor(Object.class, null);
+        tablaEjercicios = new JTable(defaultTableModel);
+        tablaEjercicios.setAutoCreateRowSorter(true);
+        tablaEjercicios.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tablaEjercicios.setRowSelectionAllowed(false);
+        tablaEjercicios.setCellSelectionEnabled(false);
+        tablaEjercicios.setDefaultEditor(Object.class, null);
         
-        jScrollPanel.setViewportView(tablaContactos);
+        jScrollPanel.setViewportView(tablaEjercicios);
 
         lblWorkouts = new JLabel("WORKOUTS");
         lblWorkouts.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -90,8 +90,8 @@ public class FrameWorkoutsPrincipal extends JFrame {
 		return contentPane;
 	}
 
-	public JTable getTablaContactos() {
-		return tablaContactos;
+	public JTable getTablaEjercicios() {
+		return tablaEjercicios;
 	}
 
 	public DefaultTableModel getDefaultTableModel() {

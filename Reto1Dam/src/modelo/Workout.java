@@ -112,7 +112,7 @@ public class Workout {
 
 			QuerySnapshot querySnapshot = query.get();
 			List<QueryDocumentSnapshot> workouts = querySnapshot.getDocuments();
-			
+
 			for (QueryDocumentSnapshot workout : workouts) {
 
 				Workout w = new Workout();
@@ -133,8 +133,9 @@ public class Workout {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		System.out.println(listaWorkouts);
 		return listaWorkouts;
+
 	}
 
 

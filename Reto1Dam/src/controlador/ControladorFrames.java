@@ -124,7 +124,7 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 
 		} else if (e.getSource() == registro.getBtnRegistrarse()) {
 
-			if(Metodos.comprobarRegistro()) {
+			if(Metodos.comprobarRegistro(registro.getTextFieldNombre().getText(), registro.getTextFieldApellido().getText(), registro.getTextFieldEmail().getText(), registro.getPasswordFieldContrasena().getPassword(), registro.getDateChooserFechaNac())) {
 				//metodo de guardar los datos ********************
 				login.setVisible(true);
 				registro.dispose();

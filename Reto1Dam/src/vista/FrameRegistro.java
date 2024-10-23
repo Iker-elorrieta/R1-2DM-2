@@ -20,6 +20,7 @@ public class FrameRegistro extends JFrame {
 	private JPasswordField passwordFieldContrasena;
 	private JTextField textFieldApellido;
 	private JTextField textFieldEmail;
+	private JDateChooser dateChooserFechaNac;
 	private JButton btnRegistrarse;
 	private JButton btnAtras;
 
@@ -110,7 +111,7 @@ public class FrameRegistro extends JFrame {
 		lblRegistro.setBounds(224, 27, 89, 29);
 		contentPane.add(lblRegistro);
 		
-		JDateChooser dateChooserFechaNac = new JDateChooser();
+		dateChooserFechaNac = new JDateChooser();
 		dateChooserFechaNac.setBounds(268, 264, 143, 20);
 		contentPane.add(dateChooserFechaNac);		
 		
@@ -143,6 +144,10 @@ public class FrameRegistro extends JFrame {
 
 	public JButton getBtnAtras() {
 		return btnAtras;
+	}
+	
+	public JDateChooser getDateChooserFechaNac() {
+		return dateChooserFechaNac;
 	}
 
 	
