@@ -15,15 +15,15 @@ import com.google.cloud.firestore.DocumentSnapshot;
 public class Metodos {
 	
 
-	private Firestore db;
+	private static Firestore db;
 
     // Constructor que inicializa Firestore
     public Metodos(Firestore db) {
-        this.db = db;
+        Metodos.db = db;
     }
 
     // Método de login
-    public boolean comprobarLogin(String email, String contrasena) {
+    public static boolean comprobarLogin(String email, String contrasena) {
         try {
             if (db == null) {
                 System.out.println("Firestore no ha sido inicializado correctamente.");
