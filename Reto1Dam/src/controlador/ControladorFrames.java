@@ -6,8 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
-
+import java.util.Date; 
 import vista.FrameWorkoutsPrincipal;
 import vista.FrameEjercicios;
 import vista.FrameHistorialWorkouts;
@@ -17,6 +16,7 @@ import vista.FramePerfilUsuario;
 import vista.FrameRegistro;
 import vista.FrameResumenWorkout;
 import vista.FrameWorkout;
+import modelo.Usuario;
 
 public class ControladorFrames implements ActionListener, ListSelectionListener {
 	private FrameLogin login = new FrameLogin();
@@ -99,7 +99,7 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 			String email = login.getTextFieldEmail().getText();
 			String contrasena = new String(login.getPasswordFieldContrasena().getPassword());
 
-			if (Metodos.comprobarLogin(email, contrasena)) {
+			if (Usuarios.mRegistrarUsuario(email, contrasena)) {
 
 				workoutsPrincipal.setVisible(true);
 				login.dispose();
@@ -128,7 +128,7 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 			String apellido = registro.getTextFieldApellido().getText();
 			String email = registro.getTextFieldEmail().getText();
 			String contrasena = new String(registro.getPasswordFieldContrasena().getPassword());
-			Date fechaNac = registro.getDateChooserFechaNac();
+			Date fechaNac = registro.getDateChooserFechaNac().getDate();
 
 			if(Metodos.comprobarRegistro(nombre, apellido, email, contrasena, fechaNac)) {
 				//metodo de guardar los datos ********************

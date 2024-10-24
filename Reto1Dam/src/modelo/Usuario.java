@@ -2,11 +2,15 @@ package modelo;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
+import javax.swing.JOptionPane;
 import java.util.Date;
-
+import java.util.HashMap;
+import java.util.Map;
+import com.google.cloud.Timestamp;
+import com.google.cloud.firestore.CollectionReference;
+import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
-
 import conexion.Conexion;
 
 public class Usuario {
@@ -95,32 +99,79 @@ public class Usuario {
 
 
 	//OBTENER USUARIO ------------------------
-	public Usuario mObtenerUsuario() {
+	public Usuario mObtenerUsuario(String idIntroducido, String contrasenaIntroducida) {
 		Firestore co =null;
 
-		try {			
-			co= Conexion.conectar();
-			//tiene que ser el ID del cliente no el nombre********************************
-			DocumentSnapshot usuario = co.collection(collectionName).document(nombre).get().get();
+		try {
+			co = Conexion.conectar();
 
-			setNombre(usuario.getString(fieldNombre));
-			setApellido(usuario.getString(fieldApellido));
-			setContrasena(usuario.getString(fieldContrasena));
-			setEmail(usuario.getString(fieldEmail));
-			setFechanac(usuario.getDate(fieldFechaNac));
-			setTipoUsuario(usuario.getString(fieldTipoUsuario));
+			if (co.collection(collectionName).document(idIntroducido).get().get().exists()) {
+				DocumentSnapshot dsUsuario = co.collection(collectionName).document(idIntroducido).get().get();
+				if (dsUsuario.getString(fieldContrasena).equals(contrasenaIntroducida)) {
+					setEmail(dsUsuario.getId());
+					setNombre(dsUsuario.getString(fieldNombre));
+					setApellido(dsUsuario.getString(fieldApellido));
+					setContrasena(dsUsuario.getString(fieldContrasena));
+					setFechanac(obtenerFechaDate(dsUsuario, fieldFechaNac));
 
+					JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso");
+					return this;
 
-
-		} catch ( InterruptedException | ExecutionException e) {
+				} else {
+					JOptionPane.showMessageDialog(null, "Usuario o contraseña incorecctos", "ERROR",
+							JOptionPane.ERROR_MESSAGE);
+				}
+			} else {
+				JOptionPane.showMessageDialog(null, "Usuario o contraseña incorecctos", "ERROR",
+						JOptionPane.ERROR_MESSAGE);
+			}
+			
+			co.close();
+		} catch (InterruptedException | ExecutionException | IOException e) {
 			System.out.println("Error: Clase Usuario, metodo mObtenerUsuario");
 			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		return this;
+		return null;
 	}
+	
+	
+	// Convertir de timeStamp de Firestore a date
+		public Date obtenerFechaDate(DocumentSnapshot documentSnapshot, String fieldName) {
+			Timestamp timestamp = documentSnapshot.getTimestamp(fieldName);
+			return (timestamp != null) ? timestamp.toDate() : null;
+		}
+		
+		
+		public void mRegistrarUsuario() {
+
+			Firestore co = null;
+			try {
+				co = Conexion.conectar();
+
+				CollectionReference root = co.collection(collectionName);
+				if (!root.document(this.email).get().get().exists()) {
+					Map<String, Object> nuevoUsuario = new HashMap<>();
+					nuevoUsuario.put(fieldNombre, this.nombre);
+					nuevoUsuario.put(fieldApellido, this.apellido);
+					nuevoUsuario.put(fieldContrasena, this.contrasena);
+					nuevoUsuario.put(fieldFechaNac, this.fechanac);
+					DocumentReference newCont = root.document(this.email);
+					newCont.set(nuevoUsuario);
+					JOptionPane.showMessageDialog(null, "Usuario creado con éxito");
+				} else {
+					JOptionPane.showMessageDialog(null, "Ya existe un usuario con ese email");
+				}
+				co.close();
+			} catch (IOException | InterruptedException | ExecutionException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
 
 }

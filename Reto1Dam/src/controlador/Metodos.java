@@ -1,7 +1,11 @@
 package controlador;
 
+import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import javax.swing.JOptionPane;
 
@@ -12,6 +16,11 @@ import com.google.cloud.firestore.QuerySnapshot;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserRecord;
 import com.google.firebase.auth.UserRecord.CreateRequest;
+
+import conexion.Conexion;
+
+import com.google.cloud.firestore.CollectionReference;
+import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 
 
@@ -26,35 +35,35 @@ public class Metodos {
 	}
 
 	// Método de login
-	public static boolean comprobarLogin(String email, String contrasena) {
-		try {
-			if (db == null) {
-				System.out.println("Firestore no ha sido inicializado correctamente.");
-				return false;
-			}
-			ApiFuture<QuerySnapshot> future = db.collection("USUARIO").whereEqualTo("Email", email).get();
-			List<QueryDocumentSnapshot> documents = future.get().getDocuments();
+	//public static boolean comprobarLogin(String email, String contrasena) {
+		//try {
+			//if (db == null) {
+			//	System.out.println("Firestore no ha sido inicializado correctamente.");
+			//	return false;
+			//}
+			//ApiFuture<QuerySnapshot> future = db.collection("USUARIO").whereEqualTo("Email", email).get();
+			//List<QueryDocumentSnapshot> documents = future.get().getDocuments();
 
-			if (documents.isEmpty()) {
-				System.out.println("Usuario no encontrado.");
-				return false;
-			}
+		//	if (documents.isEmpty()) {
+		//		System.out.println("Usuario no encontrado.");
+		//		return false;
+		//	}
 
-			DocumentSnapshot document = documents.get(0);
+		//	DocumentSnapshot document = documents.get(0);
 
-			String storedPassword = document.getString("Contrasenya");
-			if (storedPassword != null && storedPassword.equals(contrasena)) {
-				System.out.println("Login exitoso.");
-				return true;
-			} else {
-				System.out.println("Contraseña incorrecta.");
-				return false;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
+//			String storedPassword = document.getString("Contrasenya");
+//			if (storedPassword != null && storedPassword.equals(contrasena)) {
+//				System.out.println("Login exitoso.");
+//				return true;
+//			} else {
+//				System.out.println("Contraseña incorrecta.");
+//				return false;
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			return false;
+//		}
+//	}
 
 
 	//METODO PARA COMPROBAR EL REGISTRO
@@ -94,16 +103,35 @@ public class Metodos {
 	}
 
 	//METODO PARA REGISTRAR AL NUEVO USUARIO
-	public static boolean registrarUsuario() {
+	//public static boolean registrarUsuario() {
 
-		if(comprobarRegistro()) {
-			//*
-			//insertar en la base de datos
-			return true;
-		}else {
-			return false;
-		}
-	}
+	//	Firestore co = null;
+		//try {
+			//co = Conexion.conectar();
+
+			//CollectionReference root = co.collection(collectionName);
+			//if (!root.document(this.email).get().get().exists()) {
+			//	Map<String, Object> nuevoUsuario = new HashMap<>();
+			//	nuevoUsuario.put(FIELD_NOMBRE, this.nombre);
+			//	nuevoUsuario.put(FIELD_APELLIDOS, this.apellidos);
+			//	nuevoUsuario.put(FIELD_PASS, this.pass);
+			//	nuevoUsuario.put(FIELD_FECHA_NACIMIENTO, this.fechaNacimiento);
+			//	nuevoUsuario.put(FIELD_FECHA_REGISTRO, this.fechaRegistro);
+			//	nuevoUsuario.put(FIELD_NIVEL, this.nivel);
+			//	DocumentReference newCont = root.document(this.email);
+			//	newCont.set(nuevoUsuario);
+			//	JOptionPane.showMessageDialog(null, "Usuario creado con éxito");
+			//} else {
+			//	JOptionPane.showMessageDialog(null, "Ya existe un usuario con ese email");
+			//}
+		//	co.close();
+		//} catch (IOException | InterruptedException | ExecutionException e) {
+		//	e.printStackTrace();
+		//} catch (Exception e) {
+			// TODO Auto-generated catch block
+		//	e.printStackTrace();
+		//}
+	//}
 
 	//METODO PARA MODIFICAR LOS DATOS DEL PERFIL DE USUARIO
 	public static boolean modificarDatos() {
