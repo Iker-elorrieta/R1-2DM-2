@@ -26,7 +26,7 @@ try {
 		escriturafichero.newLine();
 		escriturafichero.write("contrasena:" +usuarios.get(j).getContrasena());
 		escriturafichero.newLine();
-		escriturafichero.write("fechanac:" +usuarios.get(j).getFechanac());
+		escriturafichero.write("fechanac:" +usuarios.get(j).getFechaNac());
 		escriturafichero.newLine();
 		
 	}
