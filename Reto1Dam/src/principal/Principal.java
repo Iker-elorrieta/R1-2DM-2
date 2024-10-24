@@ -1,10 +1,5 @@
 package principal;
 
-import com.google.cloud.firestore.Firestore;
-
-import conexion.Conexion;
-import controlador.Metodos;
-
 import controlador.ControladorFrames;
 import vista.FrameEjercicios;
 import vista.FrameHistorialWorkouts;
