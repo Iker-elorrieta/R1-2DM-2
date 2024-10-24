@@ -7,6 +7,8 @@ import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.util.Date; 
+
+
 import vista.FrameWorkoutsPrincipal;
 import vista.FrameEjercicios;
 import vista.FrameHistorialWorkouts;
@@ -16,7 +18,6 @@ import vista.FramePerfilUsuario;
 import vista.FrameRegistro;
 import vista.FrameResumenWorkout;
 import vista.FrameWorkout;
-import modelo.Usuario;
 
 public class ControladorFrames implements ActionListener, ListSelectionListener {
 	private FrameLogin login = new FrameLogin();
@@ -99,7 +100,7 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 			String email = login.getTextFieldEmail().getText();
 			String contrasena = new String(login.getPasswordFieldContrasena().getPassword());
 
-			if (Usuarios.mRegistrarUsuario(email, contrasena)) {
+			if (Metodos.comprobarLogin(email, contrasena)) {
 
 				workoutsPrincipal.setVisible(true);
 				login.dispose();
@@ -130,7 +131,7 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 			String contrasena = new String(registro.getPasswordFieldContrasena().getPassword());
 			Date fechaNac = registro.getDateChooserFechaNac().getDate();
 
-			if(Metodos.comprobarRegistro(nombre, apellido, email, contrasena, fechaNac)) {
+	/*		if(Metodos.comprobarRegistro(nombre, apellido, email, contrasena, fechaNac)) {
 				//metodo de guardar los datos ********************
 				login.setVisible(true);
 				registro.dispose();
@@ -139,6 +140,7 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 
 				JOptionPane.showMessageDialog(null, "Algún campo tiene datos incorrectos.", "Error de Registro", JOptionPane.ERROR_MESSAGE);
 			}
+			*/
 		} 
 		//funcion botones frame workouts principal ---------------------------------------------- BOTONES FRAME WORKOUTS PRINCIPAL
 		else if (e.getSource() == workoutsPrincipal.getBtnPerfil()) {
