@@ -19,10 +19,13 @@ import vista.FrameWorkout;
 import modelo.Usuario;
 
 public class ControladorFrames implements ActionListener, ListSelectionListener {
+	Usuario usuario = new Usuario();
+	Usuario usuarioLogueado = Usuario.getUsuarioLogueado();
+
 	private FrameLogin login = new FrameLogin();
 	private FrameRegistro registro = new FrameRegistro();
-	private FrameWorkoutsPrincipal workoutsPrincipal = new FrameWorkoutsPrincipal();
-	private FramePerfilUsuario perfilUsuario = new FramePerfilUsuario();
+	private FrameWorkoutsPrincipal workoutsPrincipal = new FrameWorkoutsPrincipal(usuario);
+	private FramePerfilUsuario perfilUsuario = new FramePerfilUsuario(usuarioLogueado);
 	private FrameModificarDatos modificarDatos = new FrameModificarDatos();
 	private FrameHistorialWorkouts historialWorkouts = new FrameHistorialWorkouts();
 	private FrameWorkout workout = new FrameWorkout();
@@ -64,7 +67,7 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 		workoutsPrincipal.getBtnSeleccionar().addActionListener(this);
 
 		//frame perfil de usuario
-		perfilUsuario.getBtnAtras().addActionListener(this);
+		perfilUsuario.getBtnAtras().addActionListener(this);		
 		perfilUsuario.getBtnModificar().addActionListener(this);
 
 		//frame modificar datos del usuario
@@ -100,12 +103,17 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 			String contrasena = new String(login.getPasswordFieldContrasena().getPassword());
 
 			if (Usuario.comprobarLogin(email, contrasena)) {
+				Usuario usuario = Usuario.mObtenerUsuario(email);
 
-				workoutsPrincipal.setVisible(true);
-				login.dispose();
+				if(usuario != null) {
 
+					Usuario.setUsuarioLogueado(usuario);
+					this.usuarioLogueado = usuario;
+
+					workoutsPrincipal.setVisible(true);
+					login.dispose();
+				}
 			}
-
 		} else if (e.getSource() == login.getBtnRegistro()) {
 
 			registro.setVisible(true);
@@ -120,7 +128,7 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 			registro.dispose();
 
 		} else if (e.getSource() == registro.getBtnRegistrarse()) {
-			
+
 			String nombre = registro.getTextFieldNombre().getText();
 			String apellido = registro.getTextFieldApellido().getText();
 			String email = registro.getTextFieldEmail().getText();
@@ -140,8 +148,15 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 		//funcion botones frame workouts principal ---------------------------------------------- BOTONES FRAME WORKOUTS PRINCIPAL
 		else if (e.getSource() == workoutsPrincipal.getBtnPerfil()) {
 
-			perfilUsuario.setVisible(true);
-			workoutsPrincipal.dispose();
+			if (usuarioLogueado != null) {
+
+				//perfilUsuario.setVisible(true);
+				FramePerfilUsuario.cargarFramePerfilUsuario(usuarioLogueado);
+				workoutsPrincipal.dispose();
+
+			} else {
+				JOptionPane.showMessageDialog(null, "No se ha encontrado el usuario.", "Error", JOptionPane.ERROR_MESSAGE);
+			}
 
 		} else if (e.getSource() == workoutsPrincipal.getBtnHistorial()) {
 
@@ -153,7 +168,7 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 			workout.setVisible(true);
 			workoutsPrincipal.dispose();
 
-				
+
 		}
 		//funcion botones frame workout	---------------------------------------------- BOTONES FRAME WORKOUT
 		else if(e.getSource() == workout.getBtnAtras()) {
@@ -165,7 +180,7 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 
 			//*
 
-					
+
 		}
 		//funcion botones frame ejercicio ---------------------------------------------- BOTONES FRAME EJERCICIOS
 		else if (e.getSource() == ejercicios.getBtnAtras()) {
@@ -188,12 +203,12 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 			workoutsPrincipal.setVisible(true);
 			resumenWorkout.dispose();
 
-			
+
 		} else if (e.getSource() == historialWorkouts.getBtnAtras()) {
-			
+
 			workoutsPrincipal.setVisible(true);
 			historialWorkouts.dispose();
-			
+
 		}
 		//funcion botones frame perfil usuario ----------------------------------------------	BOTONES FRAME PERFIL USUARIO
 		else if (e.getSource() == perfilUsuario.getBtnAtras()) {
@@ -206,7 +221,7 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 			modificarDatos.setVisible(true);
 			perfilUsuario.dispose();
 
-				
+
 		}
 		//funciones botones frame modificar datos ---------------------------------------------- BOTONES FRAME MODIFICAR DATOS	
 		else if(e.getSource() == modificarDatos.getBtnCancelar()) {

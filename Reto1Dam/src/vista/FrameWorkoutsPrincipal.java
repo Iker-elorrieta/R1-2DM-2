@@ -9,6 +9,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import modelo.Usuario;
 import modelo.Workout;
 
 import javax.swing.JLabel;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 
 public class FrameWorkoutsPrincipal extends JFrame {
+	private static Usuario usuario;
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -35,7 +37,7 @@ public class FrameWorkoutsPrincipal extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FrameWorkoutsPrincipal frame = new FrameWorkoutsPrincipal();
+					FrameWorkoutsPrincipal frame = new FrameWorkoutsPrincipal(usuario);
 					frame.setVisible(true);
 
 					//cargamos la tabla con los datos
@@ -50,7 +52,9 @@ public class FrameWorkoutsPrincipal extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FrameWorkoutsPrincipal() {
+	public FrameWorkoutsPrincipal(Usuario usuario) {
+		FrameWorkoutsPrincipal.usuario = usuario;
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 550, 400);
 

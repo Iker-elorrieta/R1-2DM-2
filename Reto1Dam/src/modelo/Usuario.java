@@ -20,6 +20,8 @@ import conexion.Conexion;
 
 public class Usuario {
 
+	private static Usuario usuarioLogueado = null;
+
 	private String nombre;
 	private String apellido;
 	private String email;
@@ -92,21 +94,46 @@ public class Usuario {
 	}
 
 
+	//METODOS PARA EL USUARIO QUE HA LOGUEADO
+	public static void setUsuarioLogueado(Usuario usuario) {
+		usuarioLogueado = usuario;
+	}
+
+
+	public static Usuario getUsuarioLogueado() {
+		return usuarioLogueado;
+	}
+
+
+	public static boolean estaLogueado() {
+		return usuarioLogueado != null;
+	}
+
+
 	//OBTENER USUARIO ------------------------
-	public Usuario mObtenerUsuario(String email) {
+	public static Usuario mObtenerUsuario(String email) {
 		Firestore co =null;
+		Usuario usuario = new Usuario();
 
-		try {			
-			co= Conexion.conectar();
+		try {
+			co = Conexion.conectar();
 
-			DocumentSnapshot usuario = co.collection(collectionName).document(email).get().get();
 
-			setNombre(usuario.getString(fieldNombre));
-			setApellido(usuario.getString(fieldApellido));
-			setContrasena(usuario.getString(fieldContrasena));
-			setEmail(usuario.getString(fieldEmail));
-			setFechaNac(usuario.getDate(fieldFechaNac));
+			ApiFuture<QuerySnapshot> future = co.collection(collectionName).whereEqualTo("Email", email).get();
 
+
+			List<QueryDocumentSnapshot> documents = future.get().getDocuments();
+
+			if (!documents.isEmpty()) {
+				DocumentSnapshot doc = documents.get(0);
+
+				usuario.setNombre(doc.getString(fieldNombre));
+				usuario.setApellido(doc.getString(fieldApellido));
+				usuario.setEmail(doc.getString(fieldEmail));
+				usuario.setContrasena(doc.getString(fieldContrasena));
+				usuario.setFechaNac(doc.getDate(fieldFechaNac));
+				
+			}
 		} catch ( InterruptedException | ExecutionException e) {
 			System.out.println("Error: Clase Usuario, metodo mObtenerUsuario");
 			e.printStackTrace();
@@ -115,7 +142,7 @@ public class Usuario {
 			e.printStackTrace();
 		}
 
-		return this;
+		return usuario;
 	}
 
 	//METODO PARA COMPORBAR EL LOGIN
@@ -131,9 +158,9 @@ public class Usuario {
 			List<QueryDocumentSnapshot> usuarios = querySnapshot.getDocuments();
 
 			if (usuarios.isEmpty()) {
-	            return false;
-	        }
-			
+				return false;
+			}
+
 			DocumentSnapshot usuario = usuarios.get(0);			
 			String contrasenaDB = usuario.getString("Contrasenya");
 

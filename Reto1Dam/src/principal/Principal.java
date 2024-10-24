@@ -1,6 +1,7 @@
 package principal;
 
 import controlador.ControladorFrames;
+import modelo.Usuario;
 import vista.FrameEjercicios;
 import vista.FrameHistorialWorkouts;
 import vista.FrameLogin;
@@ -14,13 +15,14 @@ import vista.FrameWorkoutsPrincipal;
 public class Principal {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub		
+		// TODO Auto-generated method stub
+		Usuario usuario = new Usuario();
 		
 		//FRAME INICIAL
 		FrameLogin login = new FrameLogin();
 		FrameRegistro registro = new FrameRegistro();
-		FrameWorkoutsPrincipal workoutsPrincipal = new FrameWorkoutsPrincipal();
-		FramePerfilUsuario perfilUsuario = new FramePerfilUsuario();
+		FrameWorkoutsPrincipal workoutsPrincipal = new FrameWorkoutsPrincipal(usuario);
+		FramePerfilUsuario perfilUsuario = new FramePerfilUsuario(usuario);
 		FrameModificarDatos modificarDatos = new FrameModificarDatos();
 		FrameHistorialWorkouts historialWorkouts = new FrameHistorialWorkouts();
 		FrameWorkout workout = new FrameWorkout();
