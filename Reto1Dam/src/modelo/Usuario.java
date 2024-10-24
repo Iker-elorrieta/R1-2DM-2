@@ -173,8 +173,10 @@ public class Usuario {
 		} catch (InterruptedException | ExecutionException e) {
 			System.out.println("Error: Clase Usuario, metodo comprobarLogin");
 			e.printStackTrace();
+			return false;
 		} catch (IOException e) {
 			e.printStackTrace();
+			return false;
 		}
 	}
 
