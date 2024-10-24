@@ -36,59 +36,72 @@ public class Metodos {
 
 	// Método de login
 	//public static boolean comprobarLogin(String email, String contrasena) {
-		//try {
-			//if (db == null) {
-			//	System.out.println("Firestore no ha sido inicializado correctamente.");
-			//	return false;
-			//}
-			//ApiFuture<QuerySnapshot> future = db.collection("USUARIO").whereEqualTo("Email", email).get();
-			//List<QueryDocumentSnapshot> documents = future.get().getDocuments();
+	//try {
+	//if (db == null) {
+	//	System.out.println("Firestore no ha sido inicializado correctamente.");
+	//	return false;
+	//}
+	//ApiFuture<QuerySnapshot> future = db.collection("USUARIO").whereEqualTo("Email", email).get();
+	//List<QueryDocumentSnapshot> documents = future.get().getDocuments();
 
-		//	if (documents.isEmpty()) {
-		//		System.out.println("Usuario no encontrado.");
-		//		return false;
-		//	}
+	//	if (documents.isEmpty()) {
+	//		System.out.println("Usuario no encontrado.");
+	//		return false;
+	//	}
 
-		//	DocumentSnapshot document = documents.get(0);
+	//	DocumentSnapshot document = documents.get(0);
 
-//			String storedPassword = document.getString("Contrasenya");
-//			if (storedPassword != null && storedPassword.equals(contrasena)) {
-//				System.out.println("Login exitoso.");
-//				return true;
-//			} else {
-//				System.out.println("Contraseña incorrecta.");
-//				return false;
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			return false;
-//		}
-//	}
+	//			String storedPassword = document.getString("Contrasenya");
+	//			if (storedPassword != null && storedPassword.equals(contrasena)) {
+	//				System.out.println("Login exitoso.");
+	//				return true;
+	//			} else {
+	//				System.out.println("Contraseña incorrecta.");
+	//				return false;
+	//			}
+	//		} catch (Exception e) {
+	//			e.printStackTrace();
+	//			return false;
+	//		}
+	//	}
 
 
 	//METODO PARA COMPROBAR EL REGISTRO
 	public static boolean comprobarRegistro(String nombre, String apellido, String email, String contrasena, Date fechaNac) {
 		if(nombre.isEmpty() || apellido.isEmpty() || email.isEmpty() || contrasena.isEmpty() || fechaNac == null) {
 			return false;
-		//comprobar datatype de los inputs que sean correctos
+			//comprobar datatype de los inputs que sean correctos
 		}else if(nombreContieneNumeros(nombre)) {
 			JOptionPane.showMessageDialog(null, "El nombre contiene digitos.", "Error de Registro, nombre", JOptionPane.ERROR_MESSAGE);
 			return false;
+		} else if(apellidoContieneNumeros(apellido)) {
+			JOptionPane.showMessageDialog(null, "El apellido contiene digitos.", "Error de Registro, apellido", JOptionPane.ERROR_MESSAGE);
+			return false;
 		}
-		
+
 		return true;
 
 	}
-	
+
 	//metodo para ver que el nombre no contenga numeros
-    public static boolean nombreContieneNumeros(String nombre) {
-        for (int i = 0; i < nombre.length(); i++) {
-            if (Character.isDigit(nombre.charAt(i))) {
-                return true; //tiene numeros
-            }
-        }
-        return false; //no tiene numeros
-    }
+	public static boolean nombreContieneNumeros(String nombre) {
+		for (int i = 0; i < nombre.length(); i++) {
+			if (Character.isDigit(nombre.charAt(i))) {
+				return true; //tiene numeros
+			}
+		}
+		return false; //no tiene numeros
+	}
+
+	//metodo para ver que el apellido no contenga numeros
+	public static boolean apellidoContieneNumeros(String apellido) {
+		for (int i = 0; i < apellido.length(); i++) {
+			if (Character.isDigit(apellido.charAt(i))) {
+				return true; //tiene numeros
+			}
+		}
+		return false; //no tiene numeros
+	}
 
 
 	public String registro(String email, String password) {
@@ -106,31 +119,31 @@ public class Metodos {
 	//public static boolean registrarUsuario() {
 
 	//	Firestore co = null;
-		//try {
-			//co = Conexion.conectar();
+	//try {
+	//co = Conexion.conectar();
 
-			//CollectionReference root = co.collection(collectionName);
-			//if (!root.document(this.email).get().get().exists()) {
-			//	Map<String, Object> nuevoUsuario = new HashMap<>();
-			//	nuevoUsuario.put(FIELD_NOMBRE, this.nombre);
-			//	nuevoUsuario.put(FIELD_APELLIDOS, this.apellidos);
-			//	nuevoUsuario.put(FIELD_PASS, this.pass);
-			//	nuevoUsuario.put(FIELD_FECHA_NACIMIENTO, this.fechaNacimiento);
-			//	nuevoUsuario.put(FIELD_FECHA_REGISTRO, this.fechaRegistro);
-			//	nuevoUsuario.put(FIELD_NIVEL, this.nivel);
-			//	DocumentReference newCont = root.document(this.email);
-			//	newCont.set(nuevoUsuario);
-			//	JOptionPane.showMessageDialog(null, "Usuario creado con éxito");
-			//} else {
-			//	JOptionPane.showMessageDialog(null, "Ya existe un usuario con ese email");
-			//}
-		//	co.close();
-		//} catch (IOException | InterruptedException | ExecutionException e) {
-		//	e.printStackTrace();
-		//} catch (Exception e) {
-			// TODO Auto-generated catch block
-		//	e.printStackTrace();
-		//}
+	//CollectionReference root = co.collection(collectionName);
+	//if (!root.document(this.email).get().get().exists()) {
+	//	Map<String, Object> nuevoUsuario = new HashMap<>();
+	//	nuevoUsuario.put(FIELD_NOMBRE, this.nombre);
+	//	nuevoUsuario.put(FIELD_APELLIDOS, this.apellidos);
+	//	nuevoUsuario.put(FIELD_PASS, this.pass);
+	//	nuevoUsuario.put(FIELD_FECHA_NACIMIENTO, this.fechaNacimiento);
+	//	nuevoUsuario.put(FIELD_FECHA_REGISTRO, this.fechaRegistro);
+	//	nuevoUsuario.put(FIELD_NIVEL, this.nivel);
+	//	DocumentReference newCont = root.document(this.email);
+	//	newCont.set(nuevoUsuario);
+	//	JOptionPane.showMessageDialog(null, "Usuario creado con éxito");
+	//} else {
+	//	JOptionPane.showMessageDialog(null, "Ya existe un usuario con ese email");
+	//}
+	//	co.close();
+	//} catch (IOException | InterruptedException | ExecutionException e) {
+	//	e.printStackTrace();
+	//} catch (Exception e) {
+	// TODO Auto-generated catch block
+	//	e.printStackTrace();
+	//}
 	//}
 
 	//METODO PARA MODIFICAR LOS DATOS DEL PERFIL DE USUARIO
