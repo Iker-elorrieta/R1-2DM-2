@@ -19,7 +19,7 @@ public class FramePerfilUsuario extends JFrame {
 	private JTextField textFieldEmail;
 	private JTextField textFieldFechaNac;
 	private JButton btnModificar;
-	JButton btnAtras;
+	private JButton btnAtras;
 
 
 	/**

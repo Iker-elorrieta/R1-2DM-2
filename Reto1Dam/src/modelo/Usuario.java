@@ -25,28 +25,28 @@ public class Usuario {
 	private String email;
 	private String contrasena;
 	private Date fechaNac;
-	private String tipoUsuario;
 
+	//nombre campos BD
 	private static String collectionName = "USUARIO";
 	private static String fieldNombre = "Nombre";
 	private static String fieldApellido = "Apellido";
 	private static String fieldContrasena = "Contrasenya";
 	private static String fieldEmail = "Email";
 	private static String fieldFechaNac = "FechaNac";
-	private static String fieldTipoUsuario = "TipoUsuario";
+
 
 	//constructores	
 	public Usuario() {
 
 	}
 
-	public Usuario(String nombre, String apellido, String email, String contrasena, Date fechaNac, String tipoUsuario) {
+	public Usuario(String nombre, String apellido, String email, String contrasena, Date fechaNac) {
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.email = email;
 		this.contrasena = contrasena;
 		this.fechaNac = fechaNac;
-		this.tipoUsuario = tipoUsuario;
+
 	}
 
 
@@ -91,54 +91,31 @@ public class Usuario {
 		this.fechaNac = fechaNac;
 	}
 
-	public String getTipoUsuario() {
-		return tipoUsuario;
-	}
-
-	public void setTipoUsuario(String tipoUsuario) {
-		this.tipoUsuario = tipoUsuario;
-	}
-
 
 	//OBTENER USUARIO ------------------------
-	public Usuario mObtenerUsuario(String idIntroducido, String contrasenaIntroducida) {
+	public Usuario mObtenerUsuario(String email) {
 		Firestore co =null;
 
-		try {
-			co = Conexion.conectar();
+		try {			
+			co= Conexion.conectar();
 
-			if (co.collection(collectionName).document(idIntroducido).get().get().exists()) {
-				
-				DocumentSnapshot dsUsuario = co.collection(collectionName).document(idIntroducido).get().get();
-				
-				if (dsUsuario.getString(fieldContrasena).equals(contrasenaIntroducida)) {
-					setEmail(dsUsuario.getId());
-					setNombre(dsUsuario.getString(fieldNombre));
-					setApellido(dsUsuario.getString(fieldApellido));
-					setEmail(dsUsuario.getString(fieldEmail));
-					setContrasena(dsUsuario.getString(fieldContrasena));
-					setFechaNac(dsUsuario.getDate(fieldFechaNac));
-					//setFechaNac(obtenerFechaDate(dsUsuario, fieldFechaNac));
+			DocumentSnapshot usuario = co.collection(collectionName).document(email).get().get();
 
-					JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso");
-					return this;
+			setNombre(usuario.getString(fieldNombre));
+			setApellido(usuario.getString(fieldApellido));
+			setContrasena(usuario.getString(fieldContrasena));
+			setEmail(usuario.getString(fieldEmail));
+			setFechaNac(usuario.getDate(fieldFechaNac));
 
-				} else {
-					JOptionPane.showMessageDialog(null, "Usuario o contraseña incorecctos", "ERROR", JOptionPane.ERROR_MESSAGE);
-				}
-			} else {
-				JOptionPane.showMessageDialog(null, "Usuario o contraseña incorecctos", "ERROR", JOptionPane.ERROR_MESSAGE);
-			}
-
-			co.close();
-		} catch (InterruptedException | ExecutionException | IOException e) {
+		} catch ( InterruptedException | ExecutionException e) {
 			System.out.println("Error: Clase Usuario, metodo mObtenerUsuario");
 			e.printStackTrace();
-		} catch (Exception e) {
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
+
+		return this;
 	}
 
 	//METODO PARA COMPORBAR EL LOGIN
@@ -154,21 +131,19 @@ public class Usuario {
 			List<QueryDocumentSnapshot> usuarios = querySnapshot.getDocuments();
 
 			if (usuarios.isEmpty()) {
+	            return false;
+	        }
+			
+			DocumentSnapshot usuario = usuarios.get(0);			
+			String contrasenaDB = usuario.getString("Contrasenya");
 
-				JOptionPane.showMessageDialog(null, "El email no existe.", "Error login", JOptionPane.ERROR_MESSAGE);
+			if (contrasenaDB == null || !contrasenaDB.equals(contrasena)) {
+
+				JOptionPane.showMessageDialog(null, "El login es incorrecto.", "Error login", JOptionPane.ERROR_MESSAGE);
 				return false;				
+
 			} else {
-				DocumentSnapshot usuario = usuarios.get(0);
-				String contrasenaDB = usuario.getString("Contrasenya");
-				if (contrasenaDB != null && contrasenaDB.equals(contrasena)) {
-
-					JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-					return true;
-				} else {
-
-					JOptionPane.showMessageDialog(null, "La contraseña es incorrecta.", "Error login", JOptionPane.ERROR_MESSAGE);
-					return false;
-				}
+				return true;
 			}
 
 		} catch (InterruptedException | ExecutionException e) {

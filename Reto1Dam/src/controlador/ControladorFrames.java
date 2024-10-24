@@ -104,9 +104,6 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 				workoutsPrincipal.setVisible(true);
 				login.dispose();
 
-			} else {
-
-				JOptionPane.showMessageDialog(null, "Login incorrecto.", "Error de Login", JOptionPane.ERROR_MESSAGE);
 			}
 
 		} else if (e.getSource() == login.getBtnRegistro()) {
@@ -191,6 +188,11 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 			workoutsPrincipal.setVisible(true);
 			resumenWorkout.dispose();
 
+			
+		} else if (e.getSource() == historialWorkouts.getBtnAtras()) {
+			
+			workoutsPrincipal.setVisible(true);
+			historialWorkouts.dispose();
 			
 		}
 		//funcion botones frame perfil usuario ----------------------------------------------	BOTONES FRAME PERFIL USUARIO

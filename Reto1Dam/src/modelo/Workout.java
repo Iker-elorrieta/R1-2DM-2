@@ -134,6 +134,7 @@ public class Workout {
 			e.printStackTrace();
 		}
 		System.out.println(listaWorkouts);
+		
 		return listaWorkouts;
 
 	}
