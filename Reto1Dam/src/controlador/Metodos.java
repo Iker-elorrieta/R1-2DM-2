@@ -34,36 +34,7 @@ public class Metodos {
 		Metodos.db = db;
 	}
 
-	// Método de login
-	//public static boolean comprobarLogin(String email, String contrasena) {
-	//try {
-	//if (db == null) {
-	//	System.out.println("Firestore no ha sido inicializado correctamente.");
-	//	return false;
-	//}
-	//ApiFuture<QuerySnapshot> future = db.collection("USUARIO").whereEqualTo("Email", email).get();
-	//List<QueryDocumentSnapshot> documents = future.get().getDocuments();
-
-	//	if (documents.isEmpty()) {
-	//		System.out.println("Usuario no encontrado.");
-	//		return false;
-	//	}
-
-	//	DocumentSnapshot document = documents.get(0);
-
-	//			String storedPassword = document.getString("Contrasenya");
-	//			if (storedPassword != null && storedPassword.equals(contrasena)) {
-	//				System.out.println("Login exitoso.");
-	//				return true;
-	//			} else {
-	//				System.out.println("Contraseña incorrecta.");
-	//				return false;
-	//			}
-	//		} catch (Exception e) {
-	//			e.printStackTrace();
-	//			return false;
-	//		}
-	//	}
+	
 
 
 	//METODO PARA COMPROBAR EL REGISTRO

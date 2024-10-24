@@ -5,12 +5,18 @@ import java.util.concurrent.ExecutionException;
 import javax.swing.JOptionPane;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import com.google.api.core.ApiFuture;
 import com.google.cloud.Timestamp;
 import com.google.cloud.firestore.CollectionReference;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.QueryDocumentSnapshot;
+import com.google.cloud.firestore.QuerySnapshot;
+
 import conexion.Conexion;
 
 public class Usuario {
@@ -21,7 +27,7 @@ public class Usuario {
 	private String contrasena;
 	private Date fechanac;
 	private String tipoUsuario;
-	
+
 
 	private static String collectionName = "USUARIO";
 	private static String fieldNombre = "Nombre";
@@ -125,7 +131,7 @@ public class Usuario {
 				JOptionPane.showMessageDialog(null, "Usuario o contraseña incorecctos", "ERROR",
 						JOptionPane.ERROR_MESSAGE);
 			}
-			
+
 			co.close();
 		} catch (InterruptedException | ExecutionException | IOException e) {
 			System.out.println("Error: Clase Usuario, metodo mObtenerUsuario");
@@ -136,42 +142,78 @@ public class Usuario {
 		}
 		return null;
 	}
-	
-	
-	// Convertir de timeStamp de Firestore a date
-		public Date obtenerFechaDate(DocumentSnapshot documentSnapshot, String fieldName) {
-			Timestamp timestamp = documentSnapshot.getTimestamp(fieldName);
-			return (timestamp != null) ? timestamp.toDate() : null;
-		}
-		
-		
-		public void mRegistrarUsuario() {
 
-			Firestore co = null;
-			try {
-				co = Conexion.conectar();
+	//METODO PARA COMPORBAR EL LOGIN
+	public static boolean comprobarLogin(String email, String contrasena) {
+		Firestore co = null;
 
-				CollectionReference root = co.collection(collectionName);
-				if (!root.document(this.email).get().get().exists()) {
-					Map<String, Object> nuevoUsuario = new HashMap<>();
-					nuevoUsuario.put(fieldNombre, this.nombre);
-					nuevoUsuario.put(fieldApellido, this.apellido);
-					nuevoUsuario.put(fieldContrasena, this.contrasena);
-					nuevoUsuario.put(fieldFechaNac, this.fechanac);
-					DocumentReference newCont = root.document(this.email);
-					newCont.set(nuevoUsuario);
-					JOptionPane.showMessageDialog(null, "Usuario creado con éxito");
+		try {
+			co = Conexion.conectar();
+
+			ApiFuture<QuerySnapshot> query = co.collection(collectionName).whereEqualTo("Email", email).get();
+
+			QuerySnapshot querySnapshot = query.get();
+			List<QueryDocumentSnapshot> usuarios = querySnapshot.getDocuments();
+
+			if (usuarios.isEmpty()) {
+				return false;
+				JOptionPane.showMessageDialog(null, "El email no existe.", "Error login", JOptionPane.ERROR_MESSAGE);				
+			} else {
+				DocumentSnapshot usuario = usuarios.get(0);
+				String contrasenaDB = usuario.getString("Contrasenya");
+				if (contrasenaDB != null && contrasenaDB.equals(contrasena)) {
+					return true;
+					JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 				} else {
-					JOptionPane.showMessageDialog(null, "Ya existe un usuario con ese email");
+					return false;
+					JOptionPane.showMessageDialog(null, "La contraseña es incorrecta.", "Error login", JOptionPane.ERROR_MESSAGE);
 				}
-				co.close();
-			} catch (IOException | InterruptedException | ExecutionException e) {
-				e.printStackTrace();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
 
+		} catch (InterruptedException | ExecutionException e) {
+			System.out.println("Error: Clase Usuario, metodo comprobarLogin");
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+	}
+
+
+
+	// Convertir de timeStamp de Firestore a date
+	public Date obtenerFechaDate(DocumentSnapshot documentSnapshot, String fieldName) {
+		Timestamp timestamp = documentSnapshot.getTimestamp(fieldName);
+		return (timestamp != null) ? timestamp.toDate() : null;
+	}
+
+
+	public void mRegistrarUsuario(String email, String contrasena) {
+
+		Firestore co = null;
+		try {
+			co = Conexion.conectar();
+
+			CollectionReference root = co.collection(collectionName);
+			if (!root.document(this.email).get().get().exists()) {
+				Map<String, Object> nuevoUsuario = new HashMap<>();
+				nuevoUsuario.put(fieldNombre, this.nombre);
+				nuevoUsuario.put(fieldApellido, this.apellido);
+				nuevoUsuario.put(fieldContrasena, this.contrasena);
+				nuevoUsuario.put(fieldFechaNac, this.fechanac);
+				DocumentReference newCont = root.document(this.email);
+				newCont.set(nuevoUsuario);
+				JOptionPane.showMessageDialog(null, "Usuario creado con éxito");
+			} else {
+				JOptionPane.showMessageDialog(null, "Ya existe un usuario con ese email");
+			}
+			co.close();
+		} catch (IOException | InterruptedException | ExecutionException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
 
 }

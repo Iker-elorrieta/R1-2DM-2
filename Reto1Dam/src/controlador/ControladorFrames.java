@@ -99,7 +99,7 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 			String email = login.getTextFieldEmail().getText();
 			String contrasena = new String(login.getPasswordFieldContrasena().getPassword());
 
-			if (Usuarios.mRegistrarUsuario(email, contrasena)) {
+			if (Usuario.comprobarLogin(email, contrasena)) {
 
 				workoutsPrincipal.setVisible(true);
 				login.dispose();
