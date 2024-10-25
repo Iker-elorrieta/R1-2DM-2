@@ -136,7 +136,7 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 			Date fechaNac = registro.getDateChooserFechaNac().getDate();
 
 			if(Metodos.comprobarRegistro(nombre, apellido, email, contrasena, fechaNac)) {
-				//metodo de guardar los datos ********************
+				Usuario.mRegistrarUsuario(nombre, apellido, email, contrasena, fechaNac);
 				login.setVisible(true);
 				registro.dispose();
 

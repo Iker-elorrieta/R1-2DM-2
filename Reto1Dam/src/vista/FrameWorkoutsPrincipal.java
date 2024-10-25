@@ -63,12 +63,13 @@ public class FrameWorkoutsPrincipal extends JFrame {
 		contentPane.setLayout(null);
 		setContentPane(contentPane);
 
+		//tabla con datos
 		JScrollPane jScrollPanel = new JScrollPane();
 		jScrollPanel.setBounds(63, 68, 408, 217);
 		contentPane.add(jScrollPanel);
 
-		//tabla con datos
-		String columnas[] = { "Nombre", "nº de ejercicios", "Nivel", "Video(URL)" };
+		
+		String columnas[] = { "Nombre", "nº de ejercicios", "Nivel", "Video(URL)"};
 
 		defaultTableModel = new DefaultTableModel(columnas, 0);
 
@@ -83,7 +84,6 @@ public class FrameWorkoutsPrincipal extends JFrame {
 		tablaEjercicios.setDefaultEditor(Object.class, null);
 
 		jScrollPanel.setViewportView(tablaEjercicios);
-
 
 
 		lblWorkouts = new JLabel("WORKOUTS");
