@@ -33,9 +33,6 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 	private FrameResumenWorkout resumenWorkout = new FrameResumenWorkout();
 
 
-
-
-
 	public ControladorFrames(FrameLogin login, FrameRegistro registro, FrameWorkoutsPrincipal workoutsPrincipal, FramePerfilUsuario perfilUsuario,FrameModificarDatos modificarDatos, FrameHistorialWorkouts historialWorkouts,
 			FrameWorkout workout, FrameEjercicios ejercicios, FrameResumenWorkout resumenWorkout) {
 		this.login = login;
@@ -110,7 +107,8 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 					Usuario.setUsuarioLogueado(usuario);
 					this.usuarioLogueado = usuario;
 
-					workoutsPrincipal.setVisible(true);
+					//workoutsPrincipal.setVisible(true);
+					FrameWorkoutsPrincipal.cargarFrameWorkoutsPrincipal(usuario);					
 					login.dispose();
 				}
 			}
