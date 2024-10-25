@@ -184,7 +184,6 @@ public class Usuario {
 	}
 
 
-
 	/* Convertir de timeStamp de Firestore a date
 	public Date obtenerFechaDate(DocumentSnapshot documentSnapshot, String fieldName) {
 		Timestamp timestamp = documentSnapshot.getTimestamp(fieldName);

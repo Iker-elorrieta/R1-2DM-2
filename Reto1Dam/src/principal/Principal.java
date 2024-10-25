@@ -20,6 +20,8 @@ public class Principal {
 		
 		//FRAME INICIAL
 		FrameLogin login = new FrameLogin();
+		login.setVisible(true);
+		
 		FrameRegistro registro = new FrameRegistro();
 		FrameWorkoutsPrincipal workoutsPrincipal = new FrameWorkoutsPrincipal(usuario);
 		FramePerfilUsuario perfilUsuario = new FramePerfilUsuario(usuario);
@@ -31,7 +33,7 @@ public class Principal {
         
 		
 		ControladorFrames controlador = new ControladorFrames(login, registro, workoutsPrincipal, perfilUsuario, modificarDatos, historialWorkouts, workout, ejercicios, resumenWorkout);
-        login.setVisible(true);
+        
 
 	}
 
