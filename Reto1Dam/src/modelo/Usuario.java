@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
 import com.google.cloud.Timestamp;
 import com.google.cloud.firestore.CollectionReference;
 import com.google.cloud.firestore.DocumentReference;
@@ -20,8 +21,7 @@ public class Usuario {
 	private String email;
 	private String contrasena;
 	private Date fechanac;
-	private String tipoUsuario;
-	
+
 
 	private static String collectionName = "USUARIO";
 	private static String fieldNombre = "Nombre";
@@ -29,20 +29,18 @@ public class Usuario {
 	private static String fieldContrasena = "Contrasenya";
 	private static String fieldEmail = "Email";
 	private static String fieldFechaNac = "FechaNac";
-	private static String fieldTipoUsuario = "TipoUsuario";
 
 	//constructores	
 	public Usuario() {
 
 	}
 
-	public Usuario(String nombre, String apellido, String email, String contrasena, Date fechanac, String tipoUsuario) {
+	public Usuario(String nombre, String apellido, String email, String contrasena, Date fechanac) {
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.email = email;
 		this.contrasena = contrasena;
 		this.fechanac = fechanac;
-		this.tipoUsuario = tipoUsuario;
 	}
 
 
@@ -87,14 +85,6 @@ public class Usuario {
 		this.fechanac = fechanac;
 	}
 
-	public String getTipoUsuario() {
-		return tipoUsuario;
-	}
-
-	public void setTipoUsuario(String tipoUsuario) {
-		this.tipoUsuario = tipoUsuario;
-	}
-
 
 
 
@@ -104,9 +94,9 @@ public class Usuario {
 
 		try {
 			co = Conexion.conectar();
-
 			if (co.collection(collectionName).document(idIntroducido).get().get().exists()) {
 				DocumentSnapshot dsUsuario = co.collection(collectionName).document(idIntroducido).get().get();
+
 				if (dsUsuario.getString(fieldContrasena).equals(contrasenaIntroducida)) {
 					setEmail(dsUsuario.getId());
 					setNombre(dsUsuario.getString(fieldNombre));
@@ -125,7 +115,7 @@ public class Usuario {
 				JOptionPane.showMessageDialog(null, "Usuario o contraseña incorecctos", "ERROR",
 						JOptionPane.ERROR_MESSAGE);
 			}
-			
+
 			co.close();
 		} catch (InterruptedException | ExecutionException | IOException e) {
 			System.out.println("Error: Clase Usuario, metodo mObtenerUsuario");
@@ -136,42 +126,40 @@ public class Usuario {
 		}
 		return null;
 	}
-	
-	
+
+
 	// Convertir de timeStamp de Firestore a date
-		public Date obtenerFechaDate(DocumentSnapshot documentSnapshot, String fieldName) {
-			Timestamp timestamp = documentSnapshot.getTimestamp(fieldName);
-			return (timestamp != null) ? timestamp.toDate() : null;
-		}
-		
-		
-		public void mRegistrarUsuario() {
+	public Date obtenerFechaDate(DocumentSnapshot documentSnapshot, String fieldName) {
+		Timestamp timestamp = documentSnapshot.getTimestamp(fieldName);
+		return (timestamp != null) ? timestamp.toDate() : null;
+	}
 
-			Firestore co = null;
-			try {
-				co = Conexion.conectar();
+	public void mRegistrarUsuario() {
+		Firestore co = null;
+		try {
+			co = Conexion.conectar();
 
-				CollectionReference root = co.collection(collectionName);
-				if (!root.document(this.email).get().get().exists()) {
-					Map<String, Object> nuevoUsuario = new HashMap<>();
-					nuevoUsuario.put(fieldNombre, this.nombre);
-					nuevoUsuario.put(fieldApellido, this.apellido);
-					nuevoUsuario.put(fieldContrasena, this.contrasena);
-					nuevoUsuario.put(fieldFechaNac, this.fechanac);
-					DocumentReference newCont = root.document(this.email);
-					newCont.set(nuevoUsuario);
-					JOptionPane.showMessageDialog(null, "Usuario creado con éxito");
-				} else {
-					JOptionPane.showMessageDialog(null, "Ya existe un usuario con ese email");
-				}
-				co.close();
-			} catch (IOException | InterruptedException | ExecutionException e) {
-				e.printStackTrace();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			CollectionReference root = co.collection(collectionName);
+			if (!root.document(this.email).get().get().exists()) {
+				Map<String, Object> nuevoUsuario = new HashMap<>();
+				nuevoUsuario.put(fieldNombre, this.nombre);
+				nuevoUsuario.put(fieldApellido, this.apellido);
+				nuevoUsuario.put(fieldContrasena, this.contrasena);
+				nuevoUsuario.put(fieldFechaNac, this.fechanac);
+				DocumentReference newCont = root.document(this.email);
+				newCont.set(nuevoUsuario);
+				JOptionPane.showMessageDialog(null, "Usuario creado con éxito");
+			} else {
+				JOptionPane.showMessageDialog(null, "Ya existe un usuario con ese email");
 			}
-
+			co.close();
+		} catch (IOException | InterruptedException | ExecutionException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+
+	}
 
 }

@@ -22,16 +22,13 @@ public class Ejercicio {
 	private static String coleccionPrincipal = "WORKOUT";
 	private static String coleccionSecundaria = "EJERCICIO";
 
-	private static String collectionName = "EJERCICIO";
 	private static String fieldNombre = "Nombre";
 	private static String fieldDescripcion = "Descripcion";
 	private static String fieldTiempodescanso = "TiempoDescanso";
 	private static String fieldNombreWorkout = "NombreWorkout";
 
-
-	//constructores
+	// Constructores
 	public Ejercicio() {
-
 	}
 
 	public Ejercicio(String nombreE, String descripcion, Double tiempoDescanso, Workout nombreW) {
@@ -41,129 +38,98 @@ public class Ejercicio {
 		this.nombreW = nombreW;
 	}
 
-
-	//getters y setters
+	// Getters y setters
 	public String getNombreE() {
 		return nombreE;
 	}
-
 
 	public void setNombreE(String nombreE) {
 		this.nombreE = nombreE;
 	}
 
-
 	public String getDescripcion() {
 		return descripcion;
 	}
-
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
 
-
 	public Double getTiempoDescanso() {
 		return tiempoDescanso;
 	}
-
 
 	public void setTiempoDescanso(Double tiempoDescanso) {
 		this.tiempoDescanso = tiempoDescanso;
 	}
 
-
 	public Workout getNombreW() {
 		return nombreW;
 	}
-
 
 	public void setNombreW(Workout nombreW) {
 		this.nombreW = nombreW;
 	}
 
+	// OBTENER EJERCICIO ------------------------
+	public Ejercicio mObtenerEjercicio(String nombreWorkout, String nombreEjercicio) {
+		Firestore co = null;
 
+		try {
+			co = Conexion.conectar();
 
-	//OBTENER EJERCICIO ------------------------
-	public Ejercicio mObtenerEjercicio(Workout nombreW) {
-		Firestore co =null;
+			DocumentSnapshot ejercicio = co.collection(coleccionPrincipal)   //coleccion principal WORKOUT
+					.document(nombreWorkout)                   				//nombre del documento (workout) en el que se encuentra
+					.collection(coleccionSecundaria)           				//coleccion en la que se encuentra (EJERCICIO)
+					.document(nombreEjercicio).get().get();
 
-		try {			
-			co= Conexion.conectar();
-			//HACER LA RUTA BIEN ???********************************
-			DocumentSnapshot ejercicioM = co.collection(collectionName).document(nombreE).get().get();
+			if (ejercicio.exists()) {
+				setNombreE(ejercicio.getString(fieldNombre));
+				setDescripcion(ejercicio.getString(fieldDescripcion));
+				setTiempoDescanso(ejercicio.getDouble(fieldTiempodescanso));
+				setNombreW(new Workout(nombreWorkout, null, null, null));
+			}
 
-
-
-			DocumentSnapshot ejercicio = co
-					.collection(coleccionPrincipal)			//coleccion principal WORKOUT
-					.document(String.valueOf(nombreW))		//Nombre del documento(workout) en el que se encuentra
-					.collection(coleccionSecundaria)		//coleccion en la que se encuentra (EJERCICIO)
-					.document(nombreE)
-					.get().get();                
-
-
-
-			setNombreE(ejercicio.getString(fieldNombre));
-			setDescripcion(ejercicio.getString(fieldDescripcion));
-			setTiempoDescanso(ejercicio.getDouble(fieldTiempodescanso));
-
-			//ES UNA REFERENCIA, CAMBIAR*****************************************
-			//setNombreW(ejercicio.getString(fieldNombreWorkout));
-
-
-
-		} catch ( InterruptedException | ExecutionException e) {
+		} catch (InterruptedException | ExecutionException e) {
 			System.out.println("Error: Clase Ejercicio, metodo mObtenerEjercicio");
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		return this;
 	}
 
-	//OBTENER EJERCICIOS ------------------------
-	public ArrayList<Ejercicio> mObtenerEjercicios() {
-		Firestore co =null;
+	// OBTENER EJERCICIOS ------------------------
+	public ArrayList<Ejercicio> mObtenerEjercicios(String nombreWorkout) {
+		Firestore co = null;
+		ArrayList<Ejercicio> listaEjercicios = new ArrayList<Ejercicio>();
 
-		ArrayList<Ejercicio> listaEjercicios = new 	ArrayList<Ejercicio>();
+		try {
+			co = Conexion.conectar();
 
-		try {			
-			co= Conexion.conectar();
-
-			ApiFuture<QuerySnapshot> query = co.collection(collectionName).get();
+			ApiFuture<QuerySnapshot> query = co.collection(coleccionPrincipal).document(nombreWorkout).collection(coleccionSecundaria).get();
 
 			QuerySnapshot querySnapshot = query.get();
 			List<QueryDocumentSnapshot> ejercicios = querySnapshot.getDocuments();
 
 			for (QueryDocumentSnapshot ejercicio : ejercicios) {
-
 				Ejercicio e = new Ejercicio();
-
 				e.setNombreE(ejercicio.getString(fieldNombre));
 				e.setDescripcion(ejercicio.getString(fieldDescripcion));
 				e.setTiempoDescanso(ejercicio.getDouble(fieldTiempodescanso));
-
-				//ES UNA REFERENCIA, CAMBIAR*****************************************
-				//setNombreW(ejercicio.getString(fieldNombreWorkout));
-
+				e.setNombreW(new Workout(nombreWorkout, null, null, null));
 
 				listaEjercicios.add(e);
 			}
 
-
-		} catch ( InterruptedException | ExecutionException e) {
-			System.out.println("Error: Clase Workout, metodo mObtenerWorkouts");
+		} catch (InterruptedException | ExecutionException e) {
+			System.out.println("Error: Clase Ejercicio, metodo mObtenerEjercicios");
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		return listaEjercicios;
 	}
-
-
 }

@@ -89,7 +89,7 @@ public class Workout {
 
 
 		} catch ( InterruptedException | ExecutionException e) {
-			System.out.println("Error: Clase Workout, metodo mObtenerWorkouts");
+			System.out.println("Error: Clase Workout, metodo mObtenerWorkout");
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
