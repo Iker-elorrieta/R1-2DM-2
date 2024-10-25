@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import com.google.cloud.Timestamp;
+
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.CollectionReference;
 import com.google.cloud.firestore.DocumentReference;
@@ -26,7 +26,7 @@ public class Usuario {
 	private String apellido;
 	private String email;
 	private String contrasena;
-	private Date fechanac;
+	private Date fechaNac;
 
 	//nombre campos BD
 	private static String collectionName = "USUARIO";
@@ -37,19 +37,16 @@ public class Usuario {
 	private static String fieldFechaNac = "FechaNac";
 
 
-	//constructores	
+	//constructores
 	public Usuario() {
 
 	}
 
-
 	public Usuario(String nombre, String apellido, String email, String contrasena, Date fechaNac) {
-
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.email = email;
 		this.contrasena = contrasena;
-		this.fechanac = fechanac;
 		this.fechaNac = fechaNac;
 
 	}
@@ -92,8 +89,8 @@ public class Usuario {
 		return fechaNac;
 	}
 
-	public void setFechanac(Date fechanac) {
-		this.fechanac = fechanac;
+	public void setFechaNac(Date fechaNac) {
+		this.fechaNac = fechaNac;
 	}
 
 
@@ -120,15 +117,6 @@ public class Usuario {
 
 		try {
 			co = Conexion.conectar();
-			if (co.collection(collectionName).document(idIntroducido).get().get().exists()) {
-				DocumentSnapshot dsUsuario = co.collection(collectionName).document(idIntroducido).get().get();
-
-				if (dsUsuario.getString(fieldContrasena).equals(contrasenaIntroducida)) {
-					setEmail(dsUsuario.getId());
-					setNombre(dsUsuario.getString(fieldNombre));
-					setApellido(dsUsuario.getString(fieldApellido));
-					setContrasena(dsUsuario.getString(fieldContrasena));
-					setFechanac(obtenerFechaDate(dsUsuario, fieldFechaNac));
 
 
 			ApiFuture<QuerySnapshot> future = co.collection(collectionName).whereEqualTo("Email", email).get();
@@ -144,11 +132,9 @@ public class Usuario {
 				usuario.setEmail(doc.getString(fieldEmail));
 				usuario.setContrasena(doc.getString(fieldContrasena));
 				usuario.setFechaNac(doc.getDate(fieldFechaNac));
-				
-			}
 
-			co.close();
-		} catch (InterruptedException | ExecutionException | IOException e) {
+			}
+		} catch ( InterruptedException | ExecutionException e) {
 			System.out.println("Error: Clase Usuario, metodo mObtenerUsuario");
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -175,13 +161,13 @@ public class Usuario {
 				return false;
 			}
 
-			DocumentSnapshot usuario = usuarios.get(0);			
+			DocumentSnapshot usuario = usuarios.get(0);
 			String contrasenaDB = usuario.getString("Contrasenya");
 
 			if (contrasenaDB == null || !contrasenaDB.equals(contrasena)) {
 
 				JOptionPane.showMessageDialog(null, "El login es incorrecto.", "Error login", JOptionPane.ERROR_MESSAGE);
-				return false;				
+				return false;
 
 			} else {
 				return true;
@@ -198,12 +184,11 @@ public class Usuario {
 	}
 
 
-
 	/* Convertir de timeStamp de Firestore a date
-	public Date obtenerFechaDate(DocumentSnapshot documentSnapshot, String fieldName) {
-		Timestamp timestamp = documentSnapshot.getTimestamp(fieldName);
-		return (timestamp != null) ? timestamp.toDate() : null;
-	}*/
+public Date obtenerFechaDate(DocumentSnapshot documentSnapshot, String fieldName) {
+Timestamp timestamp = documentSnapshot.getTimestamp(fieldName);
+return (timestamp != null) ? timestamp.toDate() : null;
+}*/
 
 
 	public void mRegistrarUsuario(String email, String contrasena) {
@@ -235,42 +220,6 @@ public class Usuario {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-	}
-
-
-	// Convertir de timeStamp de Firestore a date
-	public Date obtenerFechaDate(DocumentSnapshot documentSnapshot, String fieldName) {
-		Timestamp timestamp = documentSnapshot.getTimestamp(fieldName);
-		return (timestamp != null) ? timestamp.toDate() : null;
-	}
-
-	public void mRegistrarUsuario() {
-		Firestore co = null;
-		try {
-			co = Conexion.conectar();
-
-			CollectionReference root = co.collection(collectionName);
-			if (!root.document(this.email).get().get().exists()) {
-				Map<String, Object> nuevoUsuario = new HashMap<>();
-				nuevoUsuario.put(fieldNombre, this.nombre);
-				nuevoUsuario.put(fieldApellido, this.apellido);
-				nuevoUsuario.put(fieldContrasena, this.contrasena);
-				nuevoUsuario.put(fieldFechaNac, this.fechanac);
-				DocumentReference newCont = root.document(this.email);
-				newCont.set(nuevoUsuario);
-				JOptionPane.showMessageDialog(null, "Usuario creado con éxito");
-			} else {
-				JOptionPane.showMessageDialog(null, "Ya existe un usuario con ese email");
-			}
-			co.close();
-		} catch (IOException | InterruptedException | ExecutionException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
 
 	}
 

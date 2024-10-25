@@ -14,48 +14,10 @@ import vista.FrameLogin;
 
 
 public class Metodos{
-	private static vista.FrameLogin login;
-	private static vista.FrameRegistro registro;
 
 	static Usuario usuario;
 
-	public Metodos(vista.FrameLogin login, vista.FrameRegistro registro) {
-		this.login = login;
-		this.registro= registro;
 
-	}
-
-	public void comprobarRegistro2() {
-		String nombre = registro.getTextFieldNombre().getText().trim();
-		String apellido = registro.getTextFieldApellido().getText().trim();
-		String email = registro.getTextFieldEmail().getText().trim();
-		String pasString = new String (registro.getPasswordFieldContrasena().getPassword()).trim();
-		Date fechanac = registro.getDateChooserFechaNac().getDate();
-		Usuario nuevoUsuairo = new Usuario(nombre, apellido,email, pasString, fechanac);
-
-		nuevoUsuairo.mRegistrarUsuario();
-
-
-	}
-
-
-	public boolean comprobarLogin2() {
-		String email = login.getTextFieldEmail().getText().trim();
-		String pasString = new String (login.getPasswordFieldContrasena().getPassword()).trim();
-		if(!email.isEmpty() && !pasString.isEmpty()) {
-			if(new Usuario ().mObtenerUsuario(email, pasString) !=null) {
-				usuario = new Usuario ().mObtenerUsuario(email, pasString);
-			}else {
-				System.out.println("Aviso");
-			}
-		}else {
-			JOptionPane.showMessageDialog(null, "Algun campo vacio");	
-
-		}
-
-		return false;
-
-	}
 
 	//METODO PARA COMPROBAR EL REGISTRO
 	public static boolean comprobarRegistro(String nombre, String apellido, String email, String contrasena, Date fechaNac) {
@@ -93,36 +55,7 @@ public class Metodos{
 		return false; //no tiene numeros
 	}
 
-	//METODO PARA COMPROBAR EL REGISTRO
-	public static boolean comprobarRegistro() {
-		//*
-		//comprobar datatype de los inputs que sean correctos
-		return false;
 
-	}
-
-	public String registro(String email, String contrasena) {
-		try {
-			UserRecord userRecord = FirebaseAuth.getInstance().createUser(
-					new CreateRequest().setEmail(email).setPassword(contrasena)
-					);
-			return "Usuario registrado: " + userRecord.getUid();
-		} catch (Exception e) {
-			return "Error al registrar usuario: " + e.getMessage();
-		}
-	}
-
-	//METODO PARA REGISTRAR AL NUEVO USUARIO
-	public static boolean registrarUsuario() {
-
-		if(comprobarRegistro()) {
-			//*
-			//insertar en la base de datos
-			return true;
-		}else {
-			return false;
-		}
-	}
 
 	//METODO PARA MODIFICAR LOS DATOS DEL PERFIL DE USUARIO
 	public static boolean modificarDatos() {
