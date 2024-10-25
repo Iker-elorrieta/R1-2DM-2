@@ -184,32 +184,31 @@ public class Usuario {
 	}
 
 
-	/* Convertir de timeStamp de Firestore a date
-public Date obtenerFechaDate(DocumentSnapshot documentSnapshot, String fieldName) {
-Timestamp timestamp = documentSnapshot.getTimestamp(fieldName);
-return (timestamp != null) ? timestamp.toDate() : null;
-}*/
-
-
-	public void mRegistrarUsuario(String email, String contrasena) {
+	//METODO PARA REGISTRAR AL USUARIO
+	public static void mRegistrarUsuario(String nombre, String apellido, String email, String contrasena, Date fechaNac) {
 
 		Firestore co = null;
 		try {
 			co = Conexion.conectar();
 
-			CollectionReference root = co.collection(collectionName);
+			CollectionReference usuario = co.collection(collectionName);
 
-			if (!root.document(this.email).get().get().exists()) {
+			ApiFuture<QuerySnapshot> future = usuario.whereEqualTo("Email", email).get();
+			List<QueryDocumentSnapshot> documents = future.get().getDocuments();
+
+			if (documents.isEmpty()) {
+				
 				Map<String, Object> nuevoUsuario = new HashMap<>();
-				nuevoUsuario.put(fieldNombre, this.nombre);
-				nuevoUsuario.put(fieldApellido, this.apellido);
-				nuevoUsuario.put(fieldContrasena, this.contrasena);
-				nuevoUsuario.put(fieldFechaNac, this.fechaNac);
+				
+				nuevoUsuario.put("Nombre", nombre);
+				nuevoUsuario.put("Apellido", apellido);
+				nuevoUsuario.put("Email", email);
+				nuevoUsuario.put("Contrasena", contrasena);
+				nuevoUsuario.put("FechaNac", fechaNac);
 
-				DocumentReference newCont = root.document(this.email);
-				newCont.set(nuevoUsuario);
+				usuario.add(nuevoUsuario).get();
 
-				JOptionPane.showMessageDialog(null, "Usuario creado con éxito");
+				JOptionPane.showMessageDialog(null, "Usuario creado con éxito.");
 			} else {
 				JOptionPane.showMessageDialog(null, "Ya existe un usuario con ese email");
 			}
