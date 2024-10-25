@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import java.util.Date; 
+import java.util.Date;
 import vista.FrameWorkoutsPrincipal;
 import vista.FrameEjercicios;
 import vista.FrameHistorialWorkouts;
@@ -59,7 +59,7 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 
 		//frame registro
 		registro.getBtnAtras().addActionListener(this);
-		registro.getBtnRegistrarse().addActionListener(this);    	
+		registro.getBtnRegistrarse().addActionListener(this);    
 
 		//frame principal de workouts
 		workoutsPrincipal.getBtnPerfil().addActionListener(this);
@@ -67,7 +67,7 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 		workoutsPrincipal.getBtnSeleccionar().addActionListener(this);
 
 		//frame perfil de usuario
-		perfilUsuario.getBtnAtras().addActionListener(this);		
+		perfilUsuario.getBtnAtras().addActionListener(this);
 		perfilUsuario.getBtnModificar().addActionListener(this);
 
 		//frame modificar datos del usuario
@@ -96,7 +96,7 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		//funcion botones frame login ---------------------------------------------- BOTONES FRAME LOGIN	
+		//funcion botones frame login ---------------------------------------------- BOTONES FRAME LOGIN
 		if (e.getSource() == login.getBtnLogin()) {
 			//comprobar que el login sea correcto
 			String email = login.getTextFieldEmail().getText();
@@ -120,8 +120,8 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 			login.dispose();
 
 
-		} 
-		//funcion botones frame registro ---------------------------------------------- BOTONES FRAME REGISTRO	
+		}
+		//funcion botones frame registro ---------------------------------------------- BOTONES FRAME REGISTRO
 		else if (e.getSource() == registro.getBtnAtras()) {
 
 			login.setVisible(true);
@@ -144,7 +144,7 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 
 				JOptionPane.showMessageDialog(null, "Algún campo tiene datos incorrectos.", "Error de Registro", JOptionPane.ERROR_MESSAGE);
 			}
-		} 
+		}
 		//funcion botones frame workouts principal ---------------------------------------------- BOTONES FRAME WORKOUTS PRINCIPAL
 		else if (e.getSource() == workoutsPrincipal.getBtnPerfil()) {
 
@@ -170,7 +170,7 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 
 
 		}
-		//funcion botones frame workout	---------------------------------------------- BOTONES FRAME WORKOUT
+		//funcion botones frame workout ---------------------------------------------- BOTONES FRAME WORKOUT
 		else if(e.getSource() == workout.getBtnAtras()) {
 
 			workoutsPrincipal.setVisible(true);
@@ -210,7 +210,7 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 			historialWorkouts.dispose();
 
 		}
-		//funcion botones frame perfil usuario ----------------------------------------------	BOTONES FRAME PERFIL USUARIO
+		//funcion botones frame perfil usuario ---------------------------------------------- BOTONES FRAME PERFIL USUARIO
 		else if (e.getSource() == perfilUsuario.getBtnAtras()) {
 
 			workoutsPrincipal.setVisible(true);
@@ -223,7 +223,7 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 
 
 		}
-		//funciones botones frame modificar datos ---------------------------------------------- BOTONES FRAME MODIFICAR DATOS	
+		//funciones botones frame modificar datos ---------------------------------------------- BOTONES FRAME MODIFICAR DATOS
 		else if(e.getSource() == modificarDatos.getBtnCancelar()) {
 
 			perfilUsuario.setVisible(true);
@@ -239,7 +239,7 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 
 				JOptionPane.showMessageDialog(null, "Algún campo tiene datos incorrectos.", "Error de Modificar", JOptionPane.ERROR_MESSAGE);
 			}
-		} 
+		}
 	}
 
 	@Override

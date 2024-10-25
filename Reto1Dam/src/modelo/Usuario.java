@@ -37,7 +37,7 @@ public class Usuario {
 	private static String fieldFechaNac = "FechaNac";
 
 
-	//constructores	
+	//constructores
 	public Usuario() {
 
 	}
@@ -132,7 +132,7 @@ public class Usuario {
 				usuario.setEmail(doc.getString(fieldEmail));
 				usuario.setContrasena(doc.getString(fieldContrasena));
 				usuario.setFechaNac(doc.getDate(fieldFechaNac));
-				
+
 			}
 		} catch ( InterruptedException | ExecutionException e) {
 			System.out.println("Error: Clase Usuario, metodo mObtenerUsuario");
@@ -161,13 +161,13 @@ public class Usuario {
 				return false;
 			}
 
-			DocumentSnapshot usuario = usuarios.get(0);			
+			DocumentSnapshot usuario = usuarios.get(0);
 			String contrasenaDB = usuario.getString("Contrasenya");
 
 			if (contrasenaDB == null || !contrasenaDB.equals(contrasena)) {
 
 				JOptionPane.showMessageDialog(null, "El login es incorrecto.", "Error login", JOptionPane.ERROR_MESSAGE);
-				return false;				
+				return false;
 
 			} else {
 				return true;
@@ -185,10 +185,10 @@ public class Usuario {
 
 
 	/* Convertir de timeStamp de Firestore a date
-	public Date obtenerFechaDate(DocumentSnapshot documentSnapshot, String fieldName) {
-		Timestamp timestamp = documentSnapshot.getTimestamp(fieldName);
-		return (timestamp != null) ? timestamp.toDate() : null;
-	}*/
+public Date obtenerFechaDate(DocumentSnapshot documentSnapshot, String fieldName) {
+Timestamp timestamp = documentSnapshot.getTimestamp(fieldName);
+return (timestamp != null) ? timestamp.toDate() : null;
+}*/
 
 
 	public void mRegistrarUsuario(String email, String contrasena) {
