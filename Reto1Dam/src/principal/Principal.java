@@ -4,7 +4,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import controlador.ControladorFrames;
+<<<<<<< HEAD
 import controlador.Metodos;
+=======
+import modelo.Usuario;
+>>>>>>> branch 's1' of https://github.com/Iker-elorrieta/R1-2DM-2.git
 import vista.FrameEjercicios;
 import vista.FrameHistorialWorkouts;
 import vista.FrameLogin;
@@ -19,13 +23,20 @@ public class Principal {
 	static FrameLogin login;
 	static FrameRegistro registro;
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub		
-
+		// TODO Auto-generated method stub
+		Usuario usuario = new Usuario();
+		
 		//FRAME INICIAL
+
 		login = new FrameLogin();
 		registro = new FrameRegistro();
 		FrameWorkoutsPrincipal workoutsPrincipal = new FrameWorkoutsPrincipal();
 		FramePerfilUsuario perfilUsuario = new FramePerfilUsuario();
+
+		FrameLogin login = new FrameLogin();
+		FrameRegistro registro = new FrameRegistro();
+		FrameWorkoutsPrincipal workoutsPrincipal = new FrameWorkoutsPrincipal(usuario);
+		FramePerfilUsuario perfilUsuario = new FramePerfilUsuario(usuario);
 		FrameModificarDatos modificarDatos = new FrameModificarDatos();
 		FrameHistorialWorkouts historialWorkouts = new FrameHistorialWorkouts();
 		FrameWorkout workout = new FrameWorkout();

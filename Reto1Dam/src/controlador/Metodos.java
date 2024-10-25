@@ -3,13 +3,11 @@ package controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
-
 import javax.swing.JOptionPane;
-
+import com.google.cloud.firestore.Firestore;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserRecord;
 import com.google.firebase.auth.UserRecord.CreateRequest;
-
 import modelo.Usuario;
 import vista.FrameLogin;
 
@@ -41,7 +39,6 @@ public class Metodos{
 	}
 
 
-
 	public boolean comprobarLogin2() {
 		String email = login.getTextFieldEmail().getText().trim();
 		String pasString = new String (login.getPasswordFieldContrasena().getPassword()).trim();
@@ -63,18 +60,17 @@ public class Metodos{
 	//METODO PARA COMPROBAR EL REGISTRO
 	public static boolean comprobarRegistro(String nombre, String apellido, String email, String contrasena, Date fechaNac) {
 		if(nombre.isEmpty() || apellido.isEmpty() || email.isEmpty() || contrasena.isEmpty() || fechaNac == null) {
+			JOptionPane.showMessageDialog(null, "Hay campos vacios", "Error de Registro", JOptionPane.ERROR_MESSAGE);
 			return false;
 			//comprobar datatype de los inputs que sean correctos
-		}else if(nombreContieneNumeros(nombre)) {
-			JOptionPane.showMessageDialog(null, "El nombre contiene digitos.", "Error de Registro, nombre", JOptionPane.ERROR_MESSAGE);
+		}else if(nombreContieneNumeros(nombre) || apellidoContieneNumeros(apellido)) {
+			JOptionPane.showMessageDialog(null, "El nombre o apellido contiene digitos.", "Error de Registro", JOptionPane.ERROR_MESSAGE);
 			return false;
-		} else if(apellidoContieneNumeros(apellido)) {
-			JOptionPane.showMessageDialog(null, "El apellido contiene digitos.", "Error de Registro, apellido", JOptionPane.ERROR_MESSAGE);
-			return false;
+		}else {
+			
+			return true;
+
 		}
-
-		return true;
-
 	}
 
 	//metodo para ver que el nombre no contenga numeros
@@ -97,7 +93,6 @@ public class Metodos{
 		return false; //no tiene numeros
 	}
 
-
 	//METODO PARA COMPROBAR EL REGISTRO
 	public static boolean comprobarRegistro() {
 		//*
@@ -106,11 +101,10 @@ public class Metodos{
 
 	}
 
-
-	public String registro(String email, String password) {
+	public String registro(String email, String contrasena) {
 		try {
 			UserRecord userRecord = FirebaseAuth.getInstance().createUser(
-					new CreateRequest().setEmail(email).setPassword(password)
+					new CreateRequest().setEmail(email).setPassword(contrasena)
 					);
 			return "Usuario registrado: " + userRecord.getUid();
 		} catch (Exception e) {

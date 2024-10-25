@@ -10,7 +10,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import modelo.Usuario;
+
 public class FramePerfilUsuario extends JFrame {
+	private static Usuario usuario;
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -19,18 +22,21 @@ public class FramePerfilUsuario extends JFrame {
 	private JTextField textFieldEmail;
 	private JTextField textFieldFechaNac;
 	private JButton btnModificar;
-	JButton btnAtras;
+	private JButton btnAtras;
 
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void cargarFramePerfilUsuario(Usuario usuario) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				try {
-					FramePerfilUsuario frame = new FramePerfilUsuario();
+				try {					
+					FramePerfilUsuario frame = new FramePerfilUsuario(usuario);
 					frame.setVisible(true);
+
+					frame.setUsuarioDatos(usuario);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -41,7 +47,8 @@ public class FramePerfilUsuario extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FramePerfilUsuario() {
+	public FramePerfilUsuario(Usuario usuario) {
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 550, 400);
 		contentPane = new JPanel();
@@ -108,6 +115,22 @@ public class FramePerfilUsuario extends JFrame {
 
 	}
 
+	//metodo para poner los datos del usuario en los textField
+	public void setUsuarioDatos(Usuario usuario) {
+		if (usuario != null) {
+			textFieldNombre.setText(usuario.getNombre());
+			textFieldApellido.setText(usuario.getApellido());
+			textFieldEmail.setText(usuario.getEmail());
+			if (usuario.getFechaNac() != null) {
+				textFieldFechaNac.setText(usuario.getFechaNac().toString());
+			} else {
+				textFieldFechaNac.setText("");
+			}
+		}
+	}
+
+
+
 	//getters
 	public JPanel getContentPane() {
 		return contentPane;
@@ -137,6 +160,6 @@ public class FramePerfilUsuario extends JFrame {
 		return btnAtras;
 	}
 
-	
+
 
 }

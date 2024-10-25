@@ -24,6 +24,10 @@
   		<artifactId>EjercicioCrudFirestore</artifactId>
   		<version>0.0.1-SNAPSHOT</version>
   	</dependency>
+    <groupId>com.google.cloud</groupId>
+    <artifactId>google-cloud-firestore</artifactId>
+    <version>3.0.4</version>
+</dependency>
   </dependencies>
   <build>
     <sourceDirectory>src</sourceDirectory>
