@@ -1,15 +1,8 @@
 package controlador;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Date;
 import javax.swing.JOptionPane;
-import com.google.cloud.firestore.Firestore;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.UserRecord;
-import com.google.firebase.auth.UserRecord.CreateRequest;
 import modelo.Usuario;
-import vista.FrameLogin;
 
 
 
