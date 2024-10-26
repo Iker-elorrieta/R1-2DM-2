@@ -19,9 +19,9 @@ import vista.FrameWorkout;
 import modelo.Usuario;
 
 public class ControladorFrames implements ActionListener, ListSelectionListener {
-	Usuario usuario = new Usuario();
-	Usuario usuarioLogueado = Usuario.getUsuarioLogueado();
-
+	//Usuario usuario = new Usuario();
+	//Usuario usuarioLogueado = Usuario.getUsuarioLogueado();
+/*
 	private FrameLogin login = new FrameLogin();
 	private FrameRegistro registro = new FrameRegistro();
 	private FrameWorkoutsPrincipal workoutsPrincipal = new FrameWorkoutsPrincipal(usuario);
@@ -30,11 +30,23 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 	private FrameHistorialWorkouts historialWorkouts = new FrameHistorialWorkouts();
 	private FrameWorkout workout = new FrameWorkout();
 	private FrameEjercicios ejercicios = new FrameEjercicios();
-	private FrameResumenWorkout resumenWorkout = new FrameResumenWorkout();
+	private FrameResumenWorkout resumenWorkout = new FrameResumenWorkout();*/
+	
+	private FrameLogin login;
+	private FrameRegistro registro;
+	private FrameWorkoutsPrincipal workoutsPrincipal;
+	private FramePerfilUsuario perfilUsuario;
+	private FrameModificarDatos modificarDatos;
+	private FrameHistorialWorkouts historialWorkouts;
+	private FrameWorkout workout;
+	private FrameEjercicios ejercicios;
+	private FrameResumenWorkout resumenWorkout;
+	private Usuario usuario;
+	private Usuario usuarioLogueado;
 
 
 	public ControladorFrames(FrameLogin login, FrameRegistro registro, FrameWorkoutsPrincipal workoutsPrincipal, FramePerfilUsuario perfilUsuario,FrameModificarDatos modificarDatos, FrameHistorialWorkouts historialWorkouts,
-			FrameWorkout workout, FrameEjercicios ejercicios, FrameResumenWorkout resumenWorkout) {
+			FrameWorkout workout, FrameEjercicios ejercicios, FrameResumenWorkout resumenWorkout, Usuario usuario, Usuario usuarioLogueado) {
 		this.login = login;
 		this.registro = registro;
 		this.workoutsPrincipal = workoutsPrincipal;
@@ -44,6 +56,8 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 		this.workout = workout;
 		this.ejercicios = ejercicios;
 		this.resumenWorkout = resumenWorkout;
+		this.usuario = usuario;
+		this.usuarioLogueado = usuarioLogueado;
 
 		addListeners();
 	}
@@ -106,9 +120,9 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 
 					Usuario.setUsuarioLogueado(usuario);
 					this.usuarioLogueado = usuario;
-
-					//workoutsPrincipal.setVisible(true);
-					FrameWorkoutsPrincipal.cargarFrameWorkoutsPrincipal(usuario);					
+					
+					workoutsPrincipal.insertarWorkouts();
+					workoutsPrincipal.setVisible(true);					
 					login.dispose();
 				}
 			}
@@ -148,8 +162,9 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 
 			if (usuarioLogueado != null) {
 
-				//perfilUsuario.setVisible(true);
-				FramePerfilUsuario.cargarFramePerfilUsuario(usuarioLogueado);
+				perfilUsuario.setUsuarioDatos(usuarioLogueado);
+				perfilUsuario.setVisible(true);
+				
 				workoutsPrincipal.dispose();
 
 			} else {

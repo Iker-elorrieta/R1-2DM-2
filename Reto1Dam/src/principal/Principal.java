@@ -17,14 +17,12 @@ public class Principal {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Usuario usuario = new Usuario();
+		Usuario usuarioLogueado = Usuario.getUsuarioLogueado();
 
-		//FRAME INICIAL
 		FrameLogin login = new FrameLogin();
-		login.setVisible(true);
-
 		FrameRegistro registro = new FrameRegistro();
 		FrameWorkoutsPrincipal workoutsPrincipal = new FrameWorkoutsPrincipal(usuario);
-		FramePerfilUsuario perfilUsuario = new FramePerfilUsuario(usuario);
+		FramePerfilUsuario perfilUsuario = new FramePerfilUsuario(usuarioLogueado);
 		FrameModificarDatos modificarDatos = new FrameModificarDatos();
 		FrameHistorialWorkouts historialWorkouts = new FrameHistorialWorkouts();
 		FrameWorkout workout = new FrameWorkout();
@@ -32,9 +30,11 @@ public class Principal {
 		FrameResumenWorkout resumenWorkout = new FrameResumenWorkout();
 
 
-		ControladorFrames controlador = new ControladorFrames(login, registro, workoutsPrincipal, perfilUsuario, modificarDatos, historialWorkouts, workout, ejercicios, resumenWorkout);
+		ControladorFrames controlador = new ControladorFrames(login, registro, workoutsPrincipal, perfilUsuario, modificarDatos, historialWorkouts, workout, ejercicios, resumenWorkout, usuario, usuarioLogueado);
 
 
+		login.setVisible(true);
+		
 	}
 
 }

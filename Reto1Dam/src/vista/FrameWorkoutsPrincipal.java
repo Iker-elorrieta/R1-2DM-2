@@ -19,8 +19,6 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 
 public class FrameWorkoutsPrincipal extends JFrame {
-	private static Usuario usuario;
-
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTable tablaEjercicios;
@@ -33,7 +31,8 @@ public class FrameWorkoutsPrincipal extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void cargarFrameWorkoutsPrincipal(Usuario usuario) {
+	/*
+	public void cargarFrameWorkoutsPrincipal(Usuario usuario, FrameWorkoutsPrincipal frame) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -47,14 +46,12 @@ public class FrameWorkoutsPrincipal extends JFrame {
 				}
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Create the frame.
 	 */
 	public FrameWorkoutsPrincipal(Usuario usuario) {
-		FrameWorkoutsPrincipal.usuario = usuario;
-		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 550, 400);
 
@@ -154,6 +151,7 @@ public class FrameWorkoutsPrincipal extends JFrame {
 	public JButton getBtnSeleccionar() {
 		return btnSeleccionar;
 	}
+	
 
 
 

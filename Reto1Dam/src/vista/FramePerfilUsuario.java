@@ -13,8 +13,7 @@ import javax.swing.border.EmptyBorder;
 import modelo.Usuario;
 
 public class FramePerfilUsuario extends JFrame {
-	private static Usuario usuario;
-
+	
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textFieldNombre;
@@ -28,7 +27,8 @@ public class FramePerfilUsuario extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void cargarFramePerfilUsuario(Usuario usuario) {
+	/*
+	public void cargarFramePerfilUsuario(Usuario usuario) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {					
@@ -39,10 +39,12 @@ public class FramePerfilUsuario extends JFrame {
 					
 				} catch (Exception e) {
 					e.printStackTrace();
+					
 				}
 			}
+			
 		});
-	}
+	}*/
 
 	/**
 	 * Create the frame.

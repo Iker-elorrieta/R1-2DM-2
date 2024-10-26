@@ -203,7 +203,7 @@ public class Usuario {
 				nuevoUsuario.put("Nombre", nombre);
 				nuevoUsuario.put("Apellido", apellido);
 				nuevoUsuario.put("Email", email);
-				nuevoUsuario.put("Contrasena", contrasena);
+				nuevoUsuario.put("Contrasenya", contrasena);
 				nuevoUsuario.put("FechaNac", fechaNac);
 
 				usuario.add(nuevoUsuario).get();
