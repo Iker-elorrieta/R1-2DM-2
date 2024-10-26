@@ -15,6 +15,7 @@ import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
+import com.google.cloud.firestore.WriteResult;
 
 import conexion.Conexion;
 
@@ -134,10 +135,16 @@ public class Usuario {
 				usuario.setFechaNac(doc.getDate(fieldFechaNac));
 
 			}
+
+			co.close();
+
 		} catch ( InterruptedException | ExecutionException e) {
 			System.out.println("Error: Clase Usuario, metodo mObtenerUsuario");
 			e.printStackTrace();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -163,7 +170,9 @@ public class Usuario {
 
 			DocumentSnapshot usuario = usuarios.get(0);
 			String contrasenaDB = usuario.getString("Contrasenya");
-
+			
+			co.close();
+			
 			if (contrasenaDB == null || !contrasenaDB.equals(contrasena)) {
 
 				JOptionPane.showMessageDialog(null, "El login es incorrecto.", "Error login", JOptionPane.ERROR_MESSAGE);
@@ -173,12 +182,16 @@ public class Usuario {
 				return true;
 			}
 
+
+
 		} catch (InterruptedException | ExecutionException e) {
 			System.out.println("Error: Clase Usuario, metodo comprobarLogin");
 			e.printStackTrace();
 			return false;
 		} catch (IOException e) {
 			e.printStackTrace();
+			return false;
+		} catch (Exception e) {
 			return false;
 		}
 	}
@@ -197,9 +210,9 @@ public class Usuario {
 			List<QueryDocumentSnapshot> documents = future.get().getDocuments();
 
 			if (documents.isEmpty()) {
-				
+
 				Map<String, Object> nuevoUsuario = new HashMap<>();
-				
+
 				nuevoUsuario.put("Nombre", nombre);
 				nuevoUsuario.put("Apellido", apellido);
 				nuevoUsuario.put("Email", email);
@@ -212,7 +225,9 @@ public class Usuario {
 			} else {
 				JOptionPane.showMessageDialog(null, "Ya existe un usuario con ese email");
 			}
+			
 			co.close();
+			
 		} catch (IOException | InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -220,6 +235,52 @@ public class Usuario {
 			e.printStackTrace();
 		}
 
+	}
+
+	//METODO PARA MODIFICAR LOS DATOS DEL PERFIL DE USUARIO
+	public static String mModificarDatos(Usuario usuario, String nombre, String apellido, String nuevoEmail, String contrasena, Date fechaNac) {
+		Firestore co = null;
+
+		try {
+			co = Conexion.conectar();
+			
+			String email = usuario.getEmail();
+
+			ApiFuture<QuerySnapshot> future = co.collection(collectionName).whereEqualTo("Email", email).get();
+			List<QueryDocumentSnapshot> documents = future.get().getDocuments();
+
+			if (!documents.isEmpty()) {
+				DocumentReference docRef = documents.get(0).getReference();
+
+				Map<String, Object> updates = new HashMap<>();
+				updates.put(fieldNombre, nombre);
+				updates.put(fieldApellido, apellido);
+				updates.put(fieldEmail, nuevoEmail);
+				if(contrasena.isEmpty()) {
+					contrasena = usuario.getContrasena();
+				}
+				updates.put(fieldContrasena, contrasena);				
+				updates.put(fieldFechaNac, usuario.getFechaNac());
+
+				docRef.update(updates);
+
+			} else {
+				System.out.println("No existe un usuario con ese email");
+			}
+
+			co.close();
+
+		} catch (InterruptedException | ExecutionException e) {
+			System.out.println("Error: Clase Usuario, metodo modificarDatos");
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return nuevoEmail;
 	}
 
 }

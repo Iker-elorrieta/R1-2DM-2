@@ -2,6 +2,7 @@ package vista;
 
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.text.SimpleDateFormat;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -124,10 +125,12 @@ public class FramePerfilUsuario extends JFrame {
 			textFieldApellido.setText(usuario.getApellido());
 			textFieldEmail.setText(usuario.getEmail());
 			if (usuario.getFechaNac() != null) {
-				textFieldFechaNac.setText(usuario.getFechaNac().toString());
-			} else {
-				textFieldFechaNac.setText("");
-			}
+	            SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy");
+	            String formattedDate = dateFormat.format(usuario.getFechaNac());
+	            textFieldFechaNac.setText(formattedDate);
+	        } else {
+	            textFieldFechaNac.setText("");
+	        }
 		}
 	}
 

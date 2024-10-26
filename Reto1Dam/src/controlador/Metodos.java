@@ -22,7 +22,7 @@ public class Metodos{
 			JOptionPane.showMessageDialog(null, "El nombre o apellido contiene digitos.", "Error de Registro", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}else {
-			
+
 			return true;
 
 		}
@@ -49,15 +49,24 @@ public class Metodos{
 	}
 
 
+	//METODO PARA COMPROBAR LOS CAMPOS DE MODIFICAR DATOS
+	public static boolean comprobarModificarDatos(String nombre, String apellido, String email, Date fechaNac) {
+		if(nombre.isEmpty() || apellido.isEmpty() || email.isEmpty() || fechaNac == null) {
+			JOptionPane.showMessageDialog(null, "Hay campos vacios", "Error de Registro", JOptionPane.ERROR_MESSAGE);
+			return false;
+			//comprobar datatype de los inputs que sean correctos
+		}else if(nombreContieneNumeros(nombre) || apellidoContieneNumeros(apellido)) {
+			JOptionPane.showMessageDialog(null, "El nombre o apellido contiene digitos.", "Error de Registro", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}else {
 
-	//METODO PARA MODIFICAR LOS DATOS DEL PERFIL DE USUARIO
-	public static boolean modificarDatos() {
-		//*
-		//comprobar la datatype correcta
-		//modificar los datos en la bd
+			return true;
 
-		return false;
+		}
 	}
+
+
+	
 
 
 }

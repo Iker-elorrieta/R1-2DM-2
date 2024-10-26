@@ -1,6 +1,5 @@
 package vista;
 
-import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -17,6 +16,7 @@ import java.awt.Font;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 
 public class FrameWorkoutsPrincipal extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -26,7 +26,9 @@ public class FrameWorkoutsPrincipal extends JFrame {
 	private JLabel lblWorkouts;
 	private JButton btnPerfil;
 	private JButton btnHistorial;
+	private JButton btnFiltro;
 	private JButton btnSeleccionar;
+	private JComboBox<Integer> comboBoxFiltrosNivel;
 
 	/**
 	 * Launch the application.
@@ -62,10 +64,10 @@ public class FrameWorkoutsPrincipal extends JFrame {
 
 		//tabla con datos
 		JScrollPane jScrollPanel = new JScrollPane();
-		jScrollPanel.setBounds(63, 68, 408, 217);
+		jScrollPanel.setBounds(63, 120, 408, 167);
 		contentPane.add(jScrollPanel);
 
-		
+
 		String columnas[] = { "Nombre", "nº de ejercicios", "Nivel", "Video(URL)"};
 
 		defaultTableModel = new DefaultTableModel(columnas, 0);
@@ -99,6 +101,24 @@ public class FrameWorkoutsPrincipal extends JFrame {
 		btnSeleccionar = new JButton("Seleccionar");
 		btnSeleccionar.setBounds(412, 327, 112, 23);
 		contentPane.add(btnSeleccionar);
+
+		JLabel lblFiltroNivel = new JLabel("Filtros de nivel: ");
+		lblFiltroNivel.setBounds(10, 59, 99, 14);
+		contentPane.add(lblFiltroNivel);
+
+		comboBoxFiltrosNivel = new JComboBox<Integer>();
+		comboBoxFiltrosNivel.setBounds(110, 55, 89, 22);
+		contentPane.add(comboBoxFiltrosNivel);
+		
+		btnFiltro = new JButton("Filtrar");
+		btnFiltro.setBounds(239, 55, 89, 23);
+		contentPane.add(btnFiltro);
+
+		comboBoxFiltrosNivel.addItem(null);
+		comboBoxFiltrosNivel.addItem(0);
+		comboBoxFiltrosNivel.addItem(1);
+		comboBoxFiltrosNivel.addItem(2);
+
 	}
 
 	//metodo para insertar los workout en la tabla
@@ -107,7 +127,18 @@ public class FrameWorkoutsPrincipal extends JFrame {
 		defaultTableModel.setRowCount(0);
 
 		Workout workoutInstance = new Workout();
-		ArrayList<Workout> listaWorkouts = workoutInstance.mObtenerWorkouts();
+
+		Integer nivelSeleccionado = (Integer) comboBoxFiltrosNivel.getSelectedItem();
+
+		ArrayList<Workout> listaWorkouts;
+
+		if(nivelSeleccionado == null) {
+
+			listaWorkouts = workoutInstance.mObtenerWorkouts();
+
+		} else {
+			listaWorkouts = workoutInstance.mObtenerWorkoutsNivel(nivelSeleccionado);
+		}
 
 		//lo recorremos y añadimos a la tabla
 		for (Workout workout : listaWorkouts) {
@@ -151,8 +182,14 @@ public class FrameWorkoutsPrincipal extends JFrame {
 	public JButton getBtnSeleccionar() {
 		return btnSeleccionar;
 	}
+
+	public JComboBox<Integer> getComboBoxFiltrosNivel() {
+		return comboBoxFiltrosNivel;
+	}
+
+	public JButton getBtnFiltro() {
+		return btnFiltro;
+	}
 	
-
-
-
+	
 }

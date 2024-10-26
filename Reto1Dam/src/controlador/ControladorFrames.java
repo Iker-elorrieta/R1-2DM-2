@@ -76,6 +76,7 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 		workoutsPrincipal.getBtnPerfil().addActionListener(this);
 		workoutsPrincipal.getBtnHistorial().addActionListener(this);
 		workoutsPrincipal.getBtnSeleccionar().addActionListener(this);
+		workoutsPrincipal.getBtnFiltro().addActionListener(this);
 
 		//frame perfil de usuario
 		perfilUsuario.getBtnAtras().addActionListener(this);
@@ -182,6 +183,10 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 			workoutsPrincipal.dispose();
 
 
+		}else if(e.getSource() == workoutsPrincipal.getBtnFiltro()) {
+			
+			workoutsPrincipal.insertarWorkouts();
+			
 		}
 		//funcion botones frame workout ---------------------------------------------- BOTONES FRAME WORKOUT
 		else if(e.getSource() == workout.getBtnAtras()) {
@@ -231,6 +236,8 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 
 		} else if (e.getSource() == perfilUsuario.getBtnModificar()) {
 
+			
+			modificarDatos.setUsuarioModificarDatos(usuarioLogueado);
 			modificarDatos.setVisible(true);
 			perfilUsuario.dispose();
 
@@ -243,14 +250,26 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 			modificarDatos.dispose();
 
 		}else if (e.getSource() == modificarDatos.getBtnModificarAceptar()) {
+			
+			String nombre = modificarDatos.getTextFieldNombreModificar().getText();
+			String apellido = modificarDatos.getTextFieldApellidoModificar().getText();
+			String email = modificarDatos.getTextFieldEmailModificar().getText();
+			String contrasena = new String(registro.getPasswordFieldContrasena().getPassword());
+			Date fechaNac = modificarDatos.getDateChooserFechaNacModificar().getDate();
 
-			if(Metodos.modificarDatos()) {
+			if(Metodos.comprobarModificarDatos(nombre, apellido, email, fechaNac)) {
+				
+				email = Usuario.mModificarDatos(usuarioLogueado, nombre, apellido, email, contrasena, fechaNac);
 
+				usuarioLogueado.setEmail(email);
+				
 				JOptionPane.showMessageDialog(null, "Datos modificados.", "Modificar datos", JOptionPane.INFORMATION_MESSAGE);
+				
+				modificarDatos.setUsuarioModificarDatos(usuarioLogueado);
+				perfilUsuario.setUsuarioDatos(Usuario.mObtenerUsuario(email));
+				perfilUsuario.setVisible(true);
+				modificarDatos.dispose();
 
-			}else {
-
-				JOptionPane.showMessageDialog(null, "Algún campo tiene datos incorrectos.", "Error de Modificar", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}

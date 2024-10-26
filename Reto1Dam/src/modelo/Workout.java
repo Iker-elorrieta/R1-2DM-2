@@ -87,11 +87,15 @@ public class Workout {
 			setNivel(workout.getDouble(fieldNivel));
 			setVideo(workout.getString(fieldVideo));
 
+			co.close();
 
 		} catch ( InterruptedException | ExecutionException e) {
 			System.out.println("Error: Clase Workout, metodo mObtenerWorkout");
 			e.printStackTrace();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -125,6 +129,7 @@ public class Workout {
 				listaWorkouts.add(w);
 			}
 
+			co.close();
 
 		} catch ( InterruptedException | ExecutionException e) {
 			System.out.println("Error: Clase Workout, metodo mObtenerWorkouts");
@@ -132,11 +137,52 @@ public class Workout {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		System.out.println(listaWorkouts);
-		
+
 		return listaWorkouts;
 
+	}
+
+	//OBTENER WORKOUTS EN BASE AL NIVEL ------------------------
+	public ArrayList<Workout> mObtenerWorkoutsNivel(int nivel) {
+		Firestore co = null;
+
+		ArrayList<Workout> listaWorkoutsNivel = new ArrayList<Workout>();
+
+		try {
+			co = Conexion.conectar();
+
+
+			ApiFuture<QuerySnapshot> query = co.collection(collectionName).whereEqualTo(fieldNivel, nivel).get();
+
+			QuerySnapshot querySnapshot = query.get();
+			List<QueryDocumentSnapshot> workoutsNivel = querySnapshot.getDocuments();
+
+			for (QueryDocumentSnapshot workoutNivel : workoutsNivel) {
+				Workout wn = new Workout();
+				wn.setNombreW(workoutNivel.getString(fieldNombre));
+				wn.setNumEjercicios(workoutNivel.getDouble(fieldNumEjer));
+				wn.setNivel(workoutNivel.getDouble(fieldNivel));
+				wn.setVideo(workoutNivel.getString(fieldVideo));
+
+				listaWorkoutsNivel.add(wn);
+			}
+
+			co.close();
+
+		} catch (InterruptedException | ExecutionException e) {
+			System.out.println("Error: Clase Workout, metodo mObtenerWorkoutsNivel");
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return listaWorkoutsNivel;
 	}
 
 
