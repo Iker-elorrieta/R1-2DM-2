@@ -13,6 +13,8 @@ import modelo.Workout;
 
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -29,6 +31,8 @@ public class FrameWorkoutsPrincipal extends JFrame {
 	private JButton btnFiltro;
 	private JButton btnSeleccionar;
 	private JComboBox<Integer> comboBoxFiltrosNivel;
+	
+	private String nombreWorkout;
 
 	/**
 	 * Launch the application.
@@ -83,6 +87,16 @@ public class FrameWorkoutsPrincipal extends JFrame {
 		tablaEjercicios.setDefaultEditor(Object.class, null);
 
 		jScrollPanel.setViewportView(tablaEjercicios);
+		
+		tablaEjercicios.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int row = tablaEjercicios.getSelectedRow(); // Get the selected row
+                if (row != -1) { // Check if a row is selected
+                    nombreWorkout = (String) defaultTableModel.getValueAt(row, 0); //valor de la primera columna de la fila seleccionada
+                }
+            }
+        });
 
 
 		lblWorkouts = new JLabel("WORKOUTS");
@@ -190,6 +204,12 @@ public class FrameWorkoutsPrincipal extends JFrame {
 	public JButton getBtnFiltro() {
 		return btnFiltro;
 	}
+
+	public String getNombreWorkout() {
+		return nombreWorkout;
+	}
+	
+	
 	
 	
 }

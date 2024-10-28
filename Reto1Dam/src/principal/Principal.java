@@ -2,6 +2,7 @@ package principal;
 
 import controlador.ControladorFrames;
 import modelo.Usuario;
+import modelo.Workout;
 import vista.FrameEjercicios;
 import vista.FrameHistorialWorkouts;
 import vista.FrameLogin;
@@ -18,6 +19,7 @@ public class Principal {
 		// TODO Auto-generated method stub
 		Usuario usuario = new Usuario();
 		Usuario usuarioLogueado = Usuario.getUsuarioLogueado();
+		Workout eWorkout = new Workout();
 
 		FrameLogin login = new FrameLogin();
 		FrameRegistro registro = new FrameRegistro();
@@ -25,7 +27,7 @@ public class Principal {
 		FramePerfilUsuario perfilUsuario = new FramePerfilUsuario(usuarioLogueado);
 		FrameModificarDatos modificarDatos = new FrameModificarDatos();
 		FrameHistorialWorkouts historialWorkouts = new FrameHistorialWorkouts();
-		FrameWorkout workout = new FrameWorkout();
+		FrameWorkout workout = new FrameWorkout(eWorkout);
 		FrameEjercicios ejercicios = new FrameEjercicios();
 		FrameResumenWorkout resumenWorkout = new FrameResumenWorkout();
 

@@ -19,18 +19,6 @@ import vista.FrameWorkout;
 import modelo.Usuario;
 
 public class ControladorFrames implements ActionListener, ListSelectionListener {
-	//Usuario usuario = new Usuario();
-	//Usuario usuarioLogueado = Usuario.getUsuarioLogueado();
-/*
-	private FrameLogin login = new FrameLogin();
-	private FrameRegistro registro = new FrameRegistro();
-	private FrameWorkoutsPrincipal workoutsPrincipal = new FrameWorkoutsPrincipal(usuario);
-	private FramePerfilUsuario perfilUsuario = new FramePerfilUsuario(usuarioLogueado);
-	private FrameModificarDatos modificarDatos = new FrameModificarDatos();
-	private FrameHistorialWorkouts historialWorkouts = new FrameHistorialWorkouts();
-	private FrameWorkout workout = new FrameWorkout();
-	private FrameEjercicios ejercicios = new FrameEjercicios();
-	private FrameResumenWorkout resumenWorkout = new FrameResumenWorkout();*/
 	
 	private FrameLogin login;
 	private FrameRegistro registro;
@@ -178,6 +166,12 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 			workoutsPrincipal.dispose();
 
 		} else if(e.getSource() == workoutsPrincipal.getBtnSeleccionar()) {
+			
+			String nombreWorkout = workoutsPrincipal.getNombreWorkout();
+			
+			workout.getLblNombreWorkout().setText(nombreWorkout);
+			
+			workout.insertarEjercicios(nombreWorkout);
 
 			workout.setVisible(true);
 			workoutsPrincipal.dispose();
@@ -197,6 +191,9 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 		} else if(e.getSource() == workout.getBtnIniciar()) {
 
 			//*
+			
+			ejercicios.setVisible(true);
+			workout.dispose();
 
 
 		}
@@ -205,6 +202,7 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 
 			workout.setVisible(true);
 			ejercicios.dispose();
+			
 		} else if(e.getSource() == ejercicios.getBtnInicioPausa()) {
 
 			//*cronometro
