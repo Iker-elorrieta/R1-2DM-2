@@ -60,7 +60,7 @@ public class FrameHistorialWorkouts extends JFrame {
 		jScrollPanel.setBounds(63, 68, 408, 217);
 		contentPane.add(jScrollPanel);
 
-		String columnas[] = { "Nombre", "nº de ejercicios", "Nivel", "Video(URL)" };
+		String columnas[] = { "NombreWorkout", "Nivel", "TiempoTotal", "TiempoPrevisto", "Fecha", "Completado" };
 
 		defaultTableModel = new DefaultTableModel(columnas, 0);
 
