@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.SystemColor;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class FrameWorkout extends JFrame {
 
@@ -29,6 +31,9 @@ public class FrameWorkout extends JFrame {
 
 	private JTable tablaEjercicios;
 	private DefaultTableModel defaultTableModel;
+	
+	private String nombreWorkout;
+	private String nombreEjercicio;
 
 	/**
 	 * Launch the application.
@@ -86,6 +91,17 @@ public class FrameWorkout extends JFrame {
 		tablaEjercicios.setDefaultEditor(Object.class, null);
 
 		jScrollPanel.setViewportView(tablaEjercicios);
+		
+		tablaEjercicios.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int row = tablaEjercicios.getSelectedRow(); // Get the selected row
+                if (row != -1) { // Check if a row is selected
+                    nombreWorkout = (String) defaultTableModel.getValueAt(row, 0); //valor de la primera columna de la fila seleccionada
+                    nombreEjercicio = (String) defaultTableModel.getValueAt(row, 1); //valor de la segunda columna de la fila seleccionada
+                }
+            }
+        });
 
 		btnAtras = new JButton("Atrás");
 		btnAtras.setBounds(10, 9, 89, 23);
@@ -144,6 +160,16 @@ public class FrameWorkout extends JFrame {
 	public JLabel getLblNombreWorkout() {
 		return lblNombreWorkout;
 	}
+
+	public String getNombreWorkout() {
+		return nombreWorkout;
+	}
+
+	public String getNombreEjercicio() {
+		return nombreEjercicio;
+	}
+	
+	
 	
 	
 

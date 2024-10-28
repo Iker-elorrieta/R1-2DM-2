@@ -1,6 +1,7 @@
 package principal;
 
 import controlador.ControladorFrames;
+import modelo.Ejercicio;
 import modelo.Usuario;
 import modelo.Workout;
 import vista.FrameEjercicios;
@@ -20,6 +21,7 @@ public class Principal {
 		Usuario usuario = new Usuario();
 		Usuario usuarioLogueado = Usuario.getUsuarioLogueado();
 		Workout eWorkout = new Workout();
+		Ejercicio ejercicio = new Ejercicio();
 
 		FrameLogin login = new FrameLogin();
 		FrameRegistro registro = new FrameRegistro();
@@ -28,7 +30,7 @@ public class Principal {
 		FrameModificarDatos modificarDatos = new FrameModificarDatos();
 		FrameHistorialWorkouts historialWorkouts = new FrameHistorialWorkouts(usuarioLogueado);
 		FrameWorkout workout = new FrameWorkout(eWorkout);
-		FrameEjercicios ejercicios = new FrameEjercicios();
+		FrameEjercicios ejercicios = new FrameEjercicios(eWorkout, ejercicio);
 		FrameResumenWorkout resumenWorkout = new FrameResumenWorkout();
 
 

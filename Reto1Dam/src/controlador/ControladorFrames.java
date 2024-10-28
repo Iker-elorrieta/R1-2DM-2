@@ -193,6 +193,8 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 		} else if(e.getSource() == workout.getBtnIniciar()) {
 
 			//*
+			String nombreWorkout = workout.getNombreWorkout();
+			String nombreEjercicio = workout.getNombreEjercicio();
 			
 			ejercicios.setVisible(true);
 			workout.dispose();

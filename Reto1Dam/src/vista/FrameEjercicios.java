@@ -5,10 +5,15 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import modelo.Ejercicio;
+import modelo.Workout;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JList;
+import java.awt.SystemColor;
 
 public class FrameEjercicios extends JFrame {
 
@@ -18,10 +23,14 @@ public class FrameEjercicios extends JFrame {
 	private JButton btnInicioPausa;
 	private JButton btnSalir;
 	
+	private JLabel lblNombreEjercicio;
+	private JLabel lblNombreWorkout;
+	
 
 	/**
 	 * Launch the application.
 	 */
+	/*
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -33,12 +42,12 @@ public class FrameEjercicios extends JFrame {
 				}
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Create the frame.
 	 */
-	public FrameEjercicios() {
+	public FrameEjercicios(Workout workout, Ejercicio ejercicio) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 550, 400);
 		contentPane = new JPanel();
@@ -51,13 +60,15 @@ public class FrameEjercicios extends JFrame {
 		btnAtras.setBounds(10, 11, 89, 23);
 		contentPane.add(btnAtras);
 		
-		JLabel lblNombreEjercicio = new JLabel("nombre ejercicio***");
-		lblNombreEjercicio.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNombreEjercicio = new JLabel("nombre ejercicio***");
+		lblNombreEjercicio.setForeground(SystemColor.textHighlight);
+		lblNombreEjercicio.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblNombreEjercicio.setBounds(189, 15, 155, 14);
 		contentPane.add(lblNombreEjercicio);
 		
-		JLabel lblNombreWorkout = new JLabel("nombre workout***");
-		lblNombreWorkout.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNombreWorkout = new JLabel("nombre workout***");
+		lblNombreWorkout.setForeground(SystemColor.textHighlight);
+		lblNombreWorkout.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblNombreWorkout.setBounds(369, 13, 155, 14);
 		contentPane.add(lblNombreWorkout);
 		
@@ -98,6 +109,16 @@ public class FrameEjercicios extends JFrame {
 	public JButton getBtnSalir() {
 		return btnSalir;
 	}
+
+	public JLabel getLblNombreEjercicio() {
+		return lblNombreEjercicio;
+	}
+
+	public JLabel getLblNombreWorkout() {
+		return lblNombreWorkout;
+	}
+	
+	
 	
 	
 
