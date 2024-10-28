@@ -161,6 +161,8 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 			}
 
 		} else if (e.getSource() == workoutsPrincipal.getBtnHistorial()) {
+			String email = usuarioLogueado.getEmail();
+			historialWorkouts.insertarHistoricos(email);
 
 			historialWorkouts.setVisible(true);
 			workoutsPrincipal.dispose();

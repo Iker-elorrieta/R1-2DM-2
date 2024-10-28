@@ -13,6 +13,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import modelo.HistoricoWorkouts;
+import modelo.Usuario;
 
 import javax.swing.JButton;
 
@@ -24,12 +25,13 @@ public class FrameHistorialWorkouts extends JFrame {
 	private DefaultTableModel defaultTableModel;
 	private JTable tablaHistorial;
 	private JLabel lblWorkouts;
-	private JButton btnPerfil;
 	private JButton btnSeleccionar;
 
 	/**
 	 * Launch the application.
 	 */
+	/*
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -42,11 +44,11 @@ public class FrameHistorialWorkouts extends JFrame {
 			}
 		});
 	}
-
+*/
 	/**
 	 * Create the frame.
 	 */
-	public FrameHistorialWorkouts() {
+	public FrameHistorialWorkouts(Usuario usuario) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 550, 400);
 		contentPane = new JPanel();
@@ -60,7 +62,7 @@ public class FrameHistorialWorkouts extends JFrame {
 		jScrollPanel.setBounds(63, 68, 408, 217);
 		contentPane.add(jScrollPanel);
 
-		String columnas[] = { "NombreWorkout", "Nivel", "TiempoTotal", "TiempoPrevisto", "Fecha", "Completado" };
+		String columnas[] = { "NombreWorkout","Nivel", "TiempoPrevisto", "TiempoTotal", "Fecha", "Completado" };
 
 		defaultTableModel = new DefaultTableModel(columnas, 0);
 
@@ -76,14 +78,10 @@ public class FrameHistorialWorkouts extends JFrame {
 
 		jScrollPanel.setViewportView(tablaHistorial);
 
-		lblWorkouts = new JLabel("WORKOUTS");
+		lblWorkouts = new JLabel("HISTORICO WORKOUTS");
 		lblWorkouts.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblWorkouts.setBounds(10, 11, 99, 14);
+		lblWorkouts.setBounds(182, 13, 182, 14);
 		contentPane.add(lblWorkouts);
-
-		btnPerfil = new JButton("Perfil");
-		btnPerfil.setBounds(435, 9, 89, 23);
-		contentPane.add(btnPerfil);
 
 //				btnHistorial = new JButton("Historial de workouts");
 //				btnHistorial.setBounds(10, 327, 168, 23);
@@ -99,12 +97,12 @@ public class FrameHistorialWorkouts extends JFrame {
 	}
 	
 	//metodo para insertar los workout en la tabla
-		public void insertarHistoricos() {
+		public void insertarHistoricos(String email) {
 			//limpiar las filas
 			defaultTableModel.setRowCount(0);
 
 			HistoricoWorkouts historicoInstance = new HistoricoWorkouts();
-			ArrayList<HistoricoWorkouts> listaHistoricoWorkouts = historicoInstance.mObtenerHistoricoWorkouts(getName());
+			ArrayList<HistoricoWorkouts> listaHistoricoWorkouts = historicoInstance.mObtenerHistoricoWorkouts(email);
 
 			//lo recorremos y añadimos a la tabla
 			for (HistoricoWorkouts HistoricoWorkout : listaHistoricoWorkouts) {
@@ -113,7 +111,8 @@ public class FrameHistorialWorkouts extends JFrame {
 						HistoricoWorkout.getNivel(),
 						HistoricoWorkout.getTiempoTotal().intValue(),
 						HistoricoWorkout.getTiempoPrevisto().intValue(),
-						HistoricoWorkout.getFecha()
+						HistoricoWorkout.getFecha(),
+						HistoricoWorkout.getEjerciciosCompletados()
 				};
 
 				defaultTableModel.addRow(rowData);

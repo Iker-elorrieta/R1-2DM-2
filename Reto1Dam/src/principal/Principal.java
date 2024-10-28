@@ -26,7 +26,7 @@ public class Principal {
 		FrameWorkoutsPrincipal workoutsPrincipal = new FrameWorkoutsPrincipal(usuario);
 		FramePerfilUsuario perfilUsuario = new FramePerfilUsuario(usuarioLogueado);
 		FrameModificarDatos modificarDatos = new FrameModificarDatos();
-		FrameHistorialWorkouts historialWorkouts = new FrameHistorialWorkouts();
+		FrameHistorialWorkouts historialWorkouts = new FrameHistorialWorkouts(usuarioLogueado);
 		FrameWorkout workout = new FrameWorkout(eWorkout);
 		FrameEjercicios ejercicios = new FrameEjercicios();
 		FrameResumenWorkout resumenWorkout = new FrameResumenWorkout();

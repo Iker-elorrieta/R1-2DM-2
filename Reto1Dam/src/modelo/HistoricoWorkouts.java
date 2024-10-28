@@ -9,8 +9,10 @@ import java.util.concurrent.ExecutionException;
 import javax.swing.table.DefaultTableModel;
 
 import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.CollectionReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.Query;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
 
@@ -18,7 +20,7 @@ import conexion.Conexion;
 import vista.FrameWorkoutsPrincipal;
 
 public class HistoricoWorkouts {
-	private Workout nombreW;
+	private String nombreW;
 	private String nivel;
 	private Double tiempoTotal;
 	private Double tiempoPrevisto;
@@ -40,7 +42,7 @@ public class HistoricoWorkouts {
 	public HistoricoWorkouts() {
 	}
 
-	public HistoricoWorkouts(Workout nombreW, String nivel, Double tiempoTotal, Double tiempoPrevisto, Date fecha,
+	public HistoricoWorkouts(String nombreW, String nivel, Double tiempoTotal, Double tiempoPrevisto, Date fecha,
 			Double ejerciciosCompletados) {
 		this.nombreW = nombreW;
 		this.nivel = nivel;
@@ -51,11 +53,11 @@ public class HistoricoWorkouts {
 	}
 
 	// Getters y setters
-	public Workout getNombreW() {
+	public String getNombreW() {
 		return nombreW;
 	}
 
-	public void setNombreW(Workout nombreW) {
+	public void setNombreW(String nombreW) {
 		this.nombreW = nombreW;
 	}
 
@@ -99,102 +101,103 @@ public class HistoricoWorkouts {
 		this.ejerciciosCompletados = ejerciciosCompletados;
 	}
 
-	// OBTENER HISTORICOWORKOUT ------------------------
-	public HistoricoWorkouts mObtenerHistoricoWorkout(String IDUsuario, String IDWorkout) {
-		Firestore co = null;
+//	// OBTENER HISTORICOWORKOUT ------------------------
+//	public HistoricoWorkouts mObtenerHistoricoWorkout(String emailUsuario) {
+//	    Firestore co = null;
+//	    HistoricoWorkouts historicoWorkout = new HistoricoWorkouts();
+//
+//	    try {
+//	        co = Conexion.conectar();
+//
+//	        // Consulta para obtener el documento del usuario usando su email
+//	        CollectionReference usuariosRef = co.collection("USUARIO");
+//	        Query query = usuariosRef.whereEqualTo("Email", emailUsuario);
+//	        ApiFuture<QuerySnapshot> querySnapshot = query.get();
+//
+//	        List<QueryDocumentSnapshot> documentosUsuario = querySnapshot.get().getDocuments();
+//
+//	        // Verificamos si encontramos algún usuario con el email proporcionado
+//	        if (!documentosUsuario.isEmpty()) {
+//	            DocumentSnapshot documentoUsuario = documentosUsuario.get(0); // Supongamos que solo hay un usuario con ese email
+//
+//	            // Ahora obtenemos el workout específico desde la subcolección HISTORIALWORKOUTS usando el IDWorkout
+//	            DocumentSnapshot historico = documentoUsuario.getReference()
+//	                    .collection("HISTORIALWORKOUTS")    // Colección secundaria HISTORIALWORKOUTS
+//	                    .document(IDWorkout)                 // Documento del workout específico
+//	                    .get().get();
+//
+//	            // Verificamos si el workout existe
+//	            if (historico.exists()) {
+//	                historicoWorkout.setNombreW(new Workout(historico.getString("NombreWorkout"), null, null, null));
+//	                historicoWorkout.setNivel(historico.getString("Nivel"));
+//	                historicoWorkout.setTiempoTotal(historico.getDouble("TiempoTotal"));
+//	                historicoWorkout.setTiempoPrevisto(historico.getDouble("TiempoPrevisto"));
+//	                historicoWorkout.setFecha(historico.getDate("Fecha"));
+//	                historicoWorkout.setEjerciciosCompletados(historico.getDouble("Completado"));
+//	            }
+//	        } else {
+//	            System.out.println("No se encontró un usuario con el email: " + emailUsuario);
+//	        }
+//
+//	    } catch (InterruptedException | ExecutionException e) {
+//	        System.out.println("Error: Clase HistoricoWorkouts, metodo mObtenerHistoricoWorkout");
+//	        e.printStackTrace();
+//	    } catch (IOException e) {
+//	        e.printStackTrace();
+//	    }
+//
+//	    return historicoWorkout;
+//	}
 
-		try {
-			co = Conexion.conectar();
-
-			DocumentSnapshot historico = co
-					.collection(coleccionPrincipal)            //coleccion principal USUARIO
-					.document(IDUsuario)                       //documento (usuario)
-					.collection(coleccionSecundaria)           //coleccion secundaria HISTORIALWORKOUTS
-					.document(IDWorkout).get().get();
-
-			if (historico.exists()) {
-				setNombreW(new Workout(historico.getString(fieldNombreWorkout), null, null, null));
-				setNivel(historico.getString(fieldNivel));
-				setTiempoTotal(historico.getDouble(fieldTiempoTotal));
-				setTiempoPrevisto(historico.getDouble(fieldTiempoPrevisto));
-				setFecha(historico.getDate(fieldFecha));
-				setEjerciciosCompletados(historico.getDouble(fieldCompletado));
-			}
-
-		} catch (InterruptedException | ExecutionException e) {
-			System.out.println("Error: Clase HistoricoWorkouts, metodo mObtenerHistoricoWorkout");
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		return this;
-	}
 
 	// OBTENER HISTORICOWORKOUTS ------------------------
-	public ArrayList<HistoricoWorkouts> mObtenerHistoricoWorkouts(String userId) {
-		Firestore co = null;
-		ArrayList<HistoricoWorkouts> listaHistoricoWorkouts = new ArrayList<HistoricoWorkouts>();
+	public ArrayList<HistoricoWorkouts> mObtenerHistoricoWorkouts(String email) {
+	    Firestore co = null;
+	    ArrayList<HistoricoWorkouts> listaHistoricoWorkouts = new ArrayList<>();
 
-		try {
-			co = Conexion.conectar();
+	    try {
+	        co = Conexion.conectar();
 
-			ApiFuture<QuerySnapshot> query = co.collection(coleccionPrincipal).document(userId).collection(coleccionSecundaria).get();
+	        // Consulta para obtener el documento del usuario usando su email
+	        CollectionReference usuariosRef = co.collection("USUARIO");
+	        Query query = usuariosRef.whereEqualTo("Email", email);
+	        ApiFuture<QuerySnapshot> querySnapshot = query.get();
 
-			QuerySnapshot querySnapshot = query.get();
-			List<QueryDocumentSnapshot> historicos = querySnapshot.getDocuments();
+	        List<QueryDocumentSnapshot> documentosUsuario = querySnapshot.get().getDocuments();
 
-			for (QueryDocumentSnapshot historico : historicos) {
-				HistoricoWorkouts hw = new HistoricoWorkouts();
-				hw.setNombreW(new Workout(historico.getString(fieldNombreWorkout), null, null, null));
-				hw.setNivel(historico.getString(fieldNivel));
-				hw.setTiempoTotal(historico.getDouble(fieldTiempoTotal));
-				hw.setTiempoPrevisto(historico.getDouble(fieldTiempoPrevisto));
-				hw.setFecha(historico.getDate(fieldFecha));
-				hw.setEjerciciosCompletados(historico.getDouble(fieldCompletado));
+	        // Verificamos si encontramos algún usuario con el email proporcionado
+	        if (!documentosUsuario.isEmpty()) {
+	            DocumentSnapshot documentoUsuario = documentosUsuario.get(0); // Supongamos que solo hay un usuario con ese email
 
-				listaHistoricoWorkouts.add(hw);
-			}
+	            // Obtener la referencia a la subcolección HISTORIALWORKOUTS
+	            CollectionReference historicoWorkoutsRef = documentoUsuario.getReference().collection("HISTORIALWORKOUTS");
+	            ApiFuture<QuerySnapshot> historialSnapshot = historicoWorkoutsRef.get();
 
-		} catch (InterruptedException | ExecutionException e) {
-			System.out.println("Error: Clase HistoricoWorkouts, metodo mObtenerHistoricoWorkouts");
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	            for (DocumentSnapshot doc : historialSnapshot.get().getDocuments()) {
+	                if (doc.exists()) {
+	                    HistoricoWorkouts workout = new HistoricoWorkouts();
+	                    workout.setEjerciciosCompletados(ejerciciosCompletados);
+	                    workout.setFecha(doc.getDate("Fecha"));
+	                    workout.setNivel(doc.getString("Nivel"));
+	                    workout.setNombreW(doc.getString("NombreWorkout"));
+	                    workout.setTiempoPrevisto(doc.getDouble("TiempoPrevisto"));
+	                    workout.setTiempoTotal(doc.getDouble("TiempoTotal"));
 
-		return listaHistoricoWorkouts;
-	}
+	                    listaHistoricoWorkouts.add(workout);
+	                }
+	            }
+	        } else {
+	            System.out.println("No se encontró un usuario con el email: " + email);
+	        }
 
-	// OBTENER TODOS LOS WORKOUTS EN UNA TABLA
-	public static void llenarTablaWorkouts(FrameWorkoutsPrincipal frame) {
-		Firestore co = null;
+	    } catch (InterruptedException | ExecutionException e) {
+	        System.out.println("Error: Clase HistoricoWorkouts, metodo mObtenerHistoricoWorkouts");
+	        e.printStackTrace();
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
 
-		try {
-			co = Conexion.conectar();
-
-			ApiFuture<QuerySnapshot> query = co.collection(coleccionPrincipal2).get();
-			QuerySnapshot querySnapshot = query.get();
-			List<QueryDocumentSnapshot> workouts = querySnapshot.getDocuments();
-
-			DefaultTableModel model = frame.getDefaultTableModel();
-			model.setRowCount(0); //limpiar la tabla antes de llenarla
-
-			for (QueryDocumentSnapshot workout : workouts) {
-				String nombre = workout.getString("Nombre");
-				Double numEjercicios = workout.getDouble("NumEjercicios");
-				Double nivel = workout.getDouble("Nivel");
-				String video = workout.getString("Video");
-
-				model.addRow(new Object[]{nombre, numEjercicios, nivel, video});
-			}
-
-		} catch (InterruptedException | ExecutionException e) {
-			System.out.println("Error: Clase HistoricoWorkouts, metodo llenarTablaWorkouts");
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	    return listaHistoricoWorkouts;
 	}
 
 }
