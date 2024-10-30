@@ -25,7 +25,7 @@ public class Ejercicio {
 	private static String fieldNombre = "Nombre";
 	private static String fieldDescripcion = "Descripcion";
 	private static String fieldTiempodescanso = "TiempoDescanso";
-	private static String fieldNombreWorkout = "NombreWorkout";
+	//private static String fieldNombreWorkout = "NombreWorkout";
 
 	// Constructores
 	public Ejercicio() {
@@ -118,7 +118,7 @@ public class Ejercicio {
 				e.setNombreE(ejercicio.getString(fieldNombre));
 				e.setDescripcion(ejercicio.getString(fieldDescripcion));
 				e.setTiempoDescanso(ejercicio.getDouble(fieldTiempodescanso));
-				e.setNombreW(new Workout(nombreWorkout, null, null, null));
+				e.setNombreW(new Workout(nombreWorkout, null, null, null));//en la base de datos es una referencia al nombre, no el nombre en sí
 
 				listaEjercicios.add(e);
 			}

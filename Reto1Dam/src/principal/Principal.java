@@ -34,10 +34,8 @@ public class Principal {
 		FrameResumenWorkout resumenWorkout = new FrameResumenWorkout();
 
 
-		ControladorFrames controlador = new ControladorFrames(login, registro, workoutsPrincipal, perfilUsuario, modificarDatos, historialWorkouts, workout, ejercicios, resumenWorkout, usuario, usuarioLogueado);
+		new ControladorFrames(login, registro, workoutsPrincipal, perfilUsuario, modificarDatos, historialWorkouts, workout, ejercicios, resumenWorkout, usuario, usuarioLogueado);
 
-
-		login.setVisible(true);
 		
 	}
 

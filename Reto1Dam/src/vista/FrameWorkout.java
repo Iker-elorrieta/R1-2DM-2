@@ -26,14 +26,15 @@ public class FrameWorkout extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JButton btnAtras;
-	private JButton btnIniciar;
+	private JButton btnEntrar;
 	private JLabel lblNombreWorkout;
 
 	private JTable tablaEjercicios;
 	private DefaultTableModel defaultTableModel;
 	
-	private String nombreWorkout;
-	private String nombreEjercicio;
+	private String nombreWorkoutTabla;
+	private String nombreEjercicioTabla;
+	private String descripcionEjercicioTabla;
 
 	/**
 	 * Launch the application.
@@ -97,8 +98,9 @@ public class FrameWorkout extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 int row = tablaEjercicios.getSelectedRow(); // Get the selected row
                 if (row != -1) { // Check if a row is selected
-                    nombreWorkout = (String) defaultTableModel.getValueAt(row, 0); //valor de la primera columna de la fila seleccionada
-                    nombreEjercicio = (String) defaultTableModel.getValueAt(row, 1); //valor de la segunda columna de la fila seleccionada
+                    nombreWorkoutTabla = (String) defaultTableModel.getValueAt(row, 0); //valor de la primera columna de la fila seleccionada
+                    nombreEjercicioTabla = (String) defaultTableModel.getValueAt(row, 1); //valor de la segunda columna de la fila seleccionada
+                    descripcionEjercicioTabla = (String) defaultTableModel.getValueAt(row, 3); //valor de la tercera columna de la fila seleccionada
                 }
             }
         });
@@ -107,11 +109,11 @@ public class FrameWorkout extends JFrame {
 		btnAtras.setBounds(10, 9, 89, 23);
 		contentPane.add(btnAtras);
 
-		btnIniciar = new JButton("Inicio");
-		btnIniciar.setForeground(new Color(0, 153, 0));
-		btnIniciar.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnIniciar.setBounds(218, 327, 97, 23);
-		contentPane.add(btnIniciar);
+		btnEntrar = new JButton("Entrar");
+		btnEntrar.setForeground(new Color(0, 153, 0));
+		btnEntrar.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnEntrar.setBounds(218, 327, 97, 23);
+		contentPane.add(btnEntrar);
 	}
 
 	//metodo para insertar los workout en la tabla
@@ -145,8 +147,8 @@ public class FrameWorkout extends JFrame {
 		return btnAtras;
 	}
 
-	public JButton getBtnIniciar() {
-		return btnIniciar;
+	public JButton getBtnEntrar() {
+		return btnEntrar;
 	}
 
 	public JTable getTablaEjercicios() {
@@ -161,13 +163,19 @@ public class FrameWorkout extends JFrame {
 		return lblNombreWorkout;
 	}
 
-	public String getNombreWorkout() {
-		return nombreWorkout;
+	public String getNombreWorkoutTabla() {
+		return nombreWorkoutTabla;
 	}
 
-	public String getNombreEjercicio() {
-		return nombreEjercicio;
+	public String getNombreEjercicioTabla() {
+		return nombreEjercicioTabla;
 	}
+
+	public String getDescripcionEjercicioTabla() {
+		return descripcionEjercicioTabla;
+	}
+	
+	
 	
 	
 	

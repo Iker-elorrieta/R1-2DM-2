@@ -29,7 +29,6 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 	private FrameWorkout workout;
 	private FrameEjercicios ejercicios;
 	private FrameResumenWorkout resumenWorkout;
-	private Usuario usuario;
 	private Usuario usuarioLogueado;
 
 
@@ -44,10 +43,13 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 		this.workout = workout;
 		this.ejercicios = ejercicios;
 		this.resumenWorkout = resumenWorkout;
-		this.usuario = usuario;
 		this.usuarioLogueado = usuarioLogueado;
 
+		
 		addListeners();
+		
+		
+		login.setVisible(true);
 	}
 
 	private void addListeners() {
@@ -79,7 +81,7 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 
 		//frame del workout elegido
 		workout.getBtnAtras().addActionListener(this);
-		workout.getBtnIniciar().addActionListener(this);
+		workout.getBtnEntrar().addActionListener(this);
 
 		//frame de los ejercicios del workout elegido
 		ejercicios.getBtnAtras().addActionListener(this);
@@ -190,11 +192,17 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 			workoutsPrincipal.setVisible(true);
 			workout.dispose();
 
-		} else if(e.getSource() == workout.getBtnIniciar()) {
+		} else if(e.getSource() == workout.getBtnEntrar()) {
 
-			//*
-			String nombreWorkout = workout.getNombreWorkout();
-			String nombreEjercicio = workout.getNombreEjercicio();
+			String descripcionEjercicio = workout.getDescripcionEjercicioTabla();
+			String nombreWorkout = workout.getNombreWorkoutTabla();
+			String nombreEjercicio = workout.getNombreEjercicioTabla();
+			
+			ejercicios.getLblNombreWorkout().setText(nombreWorkout);
+			ejercicios.getLblNombreEjercicio().setText(nombreEjercicio);
+			ejercicios.getTextAreaDescripcion().setText(descripcionEjercicio);
+			
+			ejercicios.insertarSeries(nombreWorkout, nombreEjercicio);
 			
 			ejercicios.setVisible(true);
 			workout.dispose();
