@@ -10,10 +10,10 @@ import com.google.cloud.firestore.FirestoreOptions;
 public class Conexion {
 	
 	//BD Firestore archivo
-	//private static String nombreJSON = "bdgimnasio.json";
+	private static String nombreJSON = "bdgimnasio.json";
 	
 	//local clase
-	private static String nombreJSON = "C:\\Users\\in2dm3-a\\Desktop\\bdgimnasio.json";
+	//private static String nombreJSON = "C:\\Users\\in2dm3-a\\Desktop\\bdgimnasio.json";
 	
 	//local casa*
 	//private static String nombreJSON = "C:\\Users\\Ayla\\Desktop\\bdgimnasio.json";
