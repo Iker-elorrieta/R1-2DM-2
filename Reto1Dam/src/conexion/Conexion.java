@@ -12,11 +12,6 @@ public class Conexion {
 	//BD Firestore archivo
 	private static String nombreJSON = "bdgimnasio.json";
 	
-	//local clase
-	//private static String nombreJSON = "C:\\Users\\in2dm3-a\\Desktop\\bdgimnasio.json";
-	
-	//local casa*
-	//private static String nombreJSON = "C:\\Users\\Ayla\\Desktop\\bdgimnasio.json";
 	
 	//ID de la base de datos
 	private static String projectID = "bdgimnasio-20c0b";
