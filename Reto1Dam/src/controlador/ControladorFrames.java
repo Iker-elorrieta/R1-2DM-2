@@ -19,7 +19,7 @@ import vista.FrameWorkout;
 import modelo.Usuario;
 
 public class ControladorFrames implements ActionListener, ListSelectionListener {
-	
+
 	private FrameLogin login;
 	private FrameRegistro registro;
 	private FrameWorkoutsPrincipal workoutsPrincipal;
@@ -30,6 +30,7 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 	private FrameEjercicios ejercicios;
 	private FrameResumenWorkout resumenWorkout;
 	private Usuario usuarioLogueado;
+	private int contador = 0;
 
 
 	public ControladorFrames(FrameLogin login, FrameRegistro registro, FrameWorkoutsPrincipal workoutsPrincipal, FramePerfilUsuario perfilUsuario,FrameModificarDatos modificarDatos, FrameHistorialWorkouts historialWorkouts,
@@ -45,11 +46,12 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 		this.resumenWorkout = resumenWorkout;
 		this.usuarioLogueado = usuarioLogueado;
 
-		
+
 		addListeners();
-		
-		
+
+
 		login.setVisible(true);
+		
 	}
 
 	private void addListeners() {
@@ -87,7 +89,8 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 		ejercicios.getBtnAtras().addActionListener(this);
 		ejercicios.getBtnInicioPausa().addActionListener(this);
 		ejercicios.getBtnSalir().addActionListener(this);
-
+		
+		
 		//frame resumen del workout realizado
 		resumenWorkout.getBtnOk().addActionListener(this);
 
@@ -111,7 +114,7 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 
 					Usuario.setUsuarioLogueado(usuario);
 					this.usuarioLogueado = usuario;
-					
+
 					workoutsPrincipal.insertarWorkouts();
 					workoutsPrincipal.setVisible(true);					
 					login.dispose();
@@ -155,7 +158,7 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 
 				perfilUsuario.setUsuarioDatos(usuarioLogueado);
 				perfilUsuario.setVisible(true);
-				
+
 				workoutsPrincipal.dispose();
 
 			} else {
@@ -170,11 +173,11 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 			workoutsPrincipal.dispose();
 
 		} else if(e.getSource() == workoutsPrincipal.getBtnSeleccionar()) {
-			
+
 			String nombreWorkout = workoutsPrincipal.getNombreWorkout();
-			
+
 			workout.getLblNombreWorkout().setText(nombreWorkout);
-			
+
 			workout.insertarEjercicios(nombreWorkout);
 
 			workout.setVisible(true);
@@ -182,9 +185,9 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 
 
 		}else if(e.getSource() == workoutsPrincipal.getBtnFiltro()) {
-			
+
 			workoutsPrincipal.insertarWorkouts();
-			
+
 		}
 		//funcion botones frame workout ---------------------------------------------- BOTONES FRAME WORKOUT
 		else if(e.getSource() == workout.getBtnAtras()) {
@@ -197,13 +200,16 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 			String descripcionEjercicio = workout.getDescripcionEjercicioTabla();
 			String nombreWorkout = workout.getNombreWorkoutTabla();
 			String nombreEjercicio = workout.getNombreEjercicioTabla();
-			
+
 			ejercicios.getLblNombreWorkout().setText(nombreWorkout);
 			ejercicios.getLblNombreEjercicio().setText(nombreEjercicio);
 			ejercicios.getTextAreaDescripcion().setText(descripcionEjercicio);
-			
+
 			ejercicios.insertarSeries(nombreWorkout, nombreEjercicio);
-			
+			ejercicios.getBtnInicioPausa().setText("Iniciar");
+			ejercicios.getBtnInicioPausa().setBackground(new java.awt.Color(153,205,214));
+
+
 			ejercicios.setVisible(true);
 			workout.dispose();
 
@@ -214,9 +220,20 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 
 			workout.setVisible(true);
 			ejercicios.dispose();
-			
-		} else if(e.getSource() == ejercicios.getBtnInicioPausa()) {
 
+		} else if(e.getSource() == ejercicios.getBtnInicioPausa()) {
+			if (contador == 0) {
+				ejercicios.getBtnInicioPausa().setText("Pausar");
+				ejercicios.getBtnInicioPausa().setBackground(new java.awt.Color(153,205,144));
+				
+				contador = 1;
+			}else if (contador == 1){
+				ejercicios.getBtnInicioPausa().setText("Iniciar");
+				ejercicios.getBtnInicioPausa().setBackground(new java.awt.Color(153,205,214));
+				
+				contador=0;
+			}
+			
 			//*cronometro
 
 		} else if (e.getSource() == ejercicios.getBtnSalir()) {
@@ -246,7 +263,7 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 
 		} else if (e.getSource() == perfilUsuario.getBtnModificar()) {
 
-			
+
 			modificarDatos.setUsuarioModificarDatos(usuarioLogueado);
 			modificarDatos.setVisible(true);
 			perfilUsuario.dispose();
@@ -260,7 +277,7 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 			modificarDatos.dispose();
 
 		}else if (e.getSource() == modificarDatos.getBtnModificarAceptar()) {
-			
+
 			String nombre = modificarDatos.getTextFieldNombreModificar().getText();
 			String apellido = modificarDatos.getTextFieldApellidoModificar().getText();
 			String email = modificarDatos.getTextFieldEmailModificar().getText();
@@ -268,13 +285,13 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 			Date fechaNac = modificarDatos.getDateChooserFechaNacModificar().getDate();
 
 			if(Metodos.comprobarModificarDatos(nombre, apellido, email, fechaNac)) {
-				
+
 				email = Usuario.mModificarDatos(usuarioLogueado, nombre, apellido, email, contrasena, fechaNac);
 
 				usuarioLogueado.setEmail(email);
-				
+
 				JOptionPane.showMessageDialog(null, "Datos modificados.", "Modificar datos", JOptionPane.INFORMATION_MESSAGE);
-				
+
 				modificarDatos.setUsuarioModificarDatos(usuarioLogueado);
 				perfilUsuario.setUsuarioDatos(Usuario.mObtenerUsuario(email));
 				perfilUsuario.setVisible(true);

@@ -104,12 +104,17 @@ public class Serie {
                 setNombreE(new Ejercicio(ejercicioNombre, null, null, new Workout(workoutNombre, null, null, null)));
             }
 
+            co.close();
+            
         } catch (InterruptedException | ExecutionException e) {
             System.out.println("Error: Clase Serie, metodo mObtenerSerie");
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        } catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
         return this;
     }

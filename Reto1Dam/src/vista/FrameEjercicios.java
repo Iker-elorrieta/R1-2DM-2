@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import modelo.Ejercicio;
@@ -41,12 +42,14 @@ public class FrameEjercicios extends JFrame {
 	private JTextArea textAreaDescripcion;
 	private JLabel lblTiempoEjercicio;
 	private JLabel lblDescanso;
-	private JLabel lblListaSeries;
 	private JLabel lblCronometroWorkout;
-	private JList<Serie> listSeries;
+	private JLabel lblCronometro;
 
 	private JTable tablaEjercicios;
 	private DefaultTableModel defaultTableModel;
+	private JLabel lblTiempoEjer;
+	private JLabel lblTiempoDescanso;
+	private JLabel lblCuentaAtrasV;
 
 
 	/**
@@ -65,13 +68,37 @@ public class FrameEjercicios extends JFrame {
 			}
 		});
 	}*/
+	
+	
+	 /**
+     * Render customizado para poner imagenes en una columna del Jtable
+     */
+    public class ImageRenderer extends DefaultTableCellRenderer {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		@Override
+        public java.awt.Component getTableCellRendererComponent(JTable table, Object value,
+                boolean isSelected, boolean hasFocus, int row, int column) {
+            if (value instanceof ImageIcon) {
+                setIcon((ImageIcon) value);
+            } else {
+                setIcon(null);
+                setText(value != null ? value.toString() : "");
+            }
+            return this;
+        }
+    }
+	
 
 	/**
 	 * Create the frame.
 	 */
 	public FrameEjercicios(Workout workout, Ejercicio ejercicio) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 650, 700);
+		setBounds(100, 100, 650, 750);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -82,20 +109,20 @@ public class FrameEjercicios extends JFrame {
 		btnAtras.setBounds(10, 11, 89, 23);
 		contentPane.add(btnAtras);
 
-		lblNombreEjercicio = new JLabel("nombre ejercicio***");
+		lblNombreEjercicio = new JLabel("nombre ejercicio*");
 		lblNombreEjercicio.setForeground(SystemColor.textHighlight);
 		lblNombreEjercicio.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblNombreEjercicio.setBounds(50, 66, 155, 14);
 		contentPane.add(lblNombreEjercicio);
 
-		lblNombreWorkout = new JLabel("nombre workout***");
+		lblNombreWorkout = new JLabel("nombre workout*");
 		lblNombreWorkout.setForeground(SystemColor.textHighlight);
 		lblNombreWorkout.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblNombreWorkout.setBounds(330, 66, 155, 14);
 		contentPane.add(lblNombreWorkout);
 
-		btnInicioPausa = new JButton("Iniciar/Pausar****");
-		btnInicioPausa.setBounds(256, 580, 122, 23);
+		btnInicioPausa = new JButton("");
+		btnInicioPausa.setBounds(256, 630, 122, 23);
 		contentPane.add(btnInicioPausa);
 
 		//tabla con datos
@@ -117,23 +144,25 @@ public class FrameEjercicios extends JFrame {
 
 		//anulamos la edicion de las celdas
 		tablaEjercicios.setDefaultEditor(Object.class, null);
+		
+		
+		//ponemos el render customizado para la imagen de la columna
+        tablaEjercicios.getColumnModel().getColumn(0).setCellRenderer(new ImageRenderer());
+        tablaEjercicios.setRowHeight(60);
+		
 
 		jScrollPanel.setViewportView(tablaEjercicios);
 
-		lblCronometroWorkout = new JLabel("cronometro workout");
-		lblCronometroWorkout.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblCronometroWorkout.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCronometroWorkout.setBounds(50, 400, 128, 14);
+		lblCronometroWorkout = new JLabel("Cronometro workout");
+		lblCronometroWorkout.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblCronometroWorkout.setHorizontalAlignment(SwingConstants.LEFT);
+		lblCronometroWorkout.setBounds(20, 400, 161, 14);
 		contentPane.add(lblCronometroWorkout);
-
-		lblListaSeries = new JLabel("Lista de Series");
-		lblListaSeries.setBounds(50, 145, 95, 14);
-		contentPane.add(lblListaSeries);
 
 		btnSalir = new JButton("Salir");
 		btnSalir.setForeground(new Color(165, 42, 42));
 		btnSalir.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnSalir.setBounds(535, 627, 89, 23);
+		btnSalir.setBounds(535, 677, 89, 23);
 		contentPane.add(btnSalir);
 
 		textAreaDescripcion = new JTextArea();
@@ -153,11 +182,28 @@ public class FrameEjercicios extends JFrame {
 		lblDescanso = new JLabel("Descanso");
 		lblDescanso.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblDescanso.setHorizontalAlignment(SwingConstants.CENTER);
-		lblDescanso.setBounds(518, 400, 66, 14);
+		lblDescanso.setBounds(477, 402, 66, 14);
 		contentPane.add(lblDescanso);
+		
+		lblCronometro = new JLabel("*");
+		lblCronometro.setBounds(20, 445, 147, 29);
+		contentPane.add(lblCronometro);
+		
+		lblTiempoEjer = new JLabel("*");
+		lblTiempoEjer.setBounds(243, 445, 147, 29);
+		contentPane.add(lblTiempoEjer);
+		
+		lblTiempoDescanso = new JLabel("*");
+		lblTiempoDescanso.setBounds(477, 445, 147, 29);
+		contentPane.add(lblTiempoDescanso);
+		
+		lblCuentaAtrasV = new JLabel("-");
+		lblCuentaAtrasV.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCuentaAtrasV.setBounds(286, 542, 44, 44);
+		contentPane.add(lblCuentaAtrasV);
 	}
 
-	//metodo para insertar las series en el jlist
+	//metodo para insertar los datos de las series en la tabla
 	public void insertarSeries(String workoutNombre, String ejercicioNombre) {
 		//limpiar las filas
 		defaultTableModel.setRowCount(0);
@@ -178,7 +224,7 @@ public class FrameEjercicios extends JFrame {
 			Object[] rowData = {
 					imageIcon,
 					serie.getNombreS(),
-					serie.getNumRepeticiones()
+					serie.getNumRepeticiones().intValue()
 			};
 
 			defaultTableModel.addRow(rowData);
@@ -222,21 +268,27 @@ public class FrameEjercicios extends JFrame {
 		return lblDescanso;
 	}
 
-	public JLabel getLblListaSeries() {
-		return lblListaSeries;
-	}
-
 	public JLabel getLblCronometroWorkout() {
 		return lblCronometroWorkout;
 	}
 
-	public JList<Serie> getListSeries() {
-		return listSeries;
+	public static String getRutaBaseImg() {
+		return rutaBaseImg;
 	}
 
+	public JTable getTablaEjercicios() {
+		return tablaEjercicios;
+	}
 
+	public DefaultTableModel getDefaultTableModel() {
+		return defaultTableModel;
+	}
 
-
-
-
+	public JLabel getLblCronometro() {
+		return lblCronometro;
+	}
+	
+	
+	
+	
 }
