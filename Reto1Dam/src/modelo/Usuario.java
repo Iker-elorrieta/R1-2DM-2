@@ -3,6 +3,8 @@ package modelo;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 import javax.swing.JOptionPane;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -281,5 +283,34 @@ public class Usuario {
 		
 		return nuevoEmail;
 	}
+	
+	public ArrayList<Usuario> mObtenerTodosLosUsuarios() {
+        Firestore co = null;
+
+        ArrayList<Usuario> listaUsuarios = new ArrayList<Usuario>();
+
+        try {
+            co = Conexion.conectar();
+
+            ApiFuture<QuerySnapshot> query = co.collection(collectionName).get();
+
+            QuerySnapshot querySnapshot = query.get();
+            List<QueryDocumentSnapshot> usuariosFireBase = querySnapshot.getDocuments();
+            for (QueryDocumentSnapshot usuarioFireBase : usuariosFireBase) {
+
+                Usuario usuario = new Usuario(usuarioFireBase.getString(fieldNombre),
+                        usuarioFireBase.getString(fieldApellido), usuarioFireBase.getId(),
+                        usuarioFireBase.getString(fieldContrasena), usuarioFireBase.getDate(fieldFechaNac));
+
+                listaUsuarios.add(usuario);
+            }
+        } catch (InterruptedException | ExecutionException e) {
+            System.out.println("Error: Clase Contacto, metodo mObtenerContactos");
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return listaUsuarios;
+    }
 
 }
