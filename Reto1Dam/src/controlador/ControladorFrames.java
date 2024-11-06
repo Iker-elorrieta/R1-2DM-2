@@ -16,6 +16,9 @@ import vista.FramePerfilUsuario;
 import vista.FrameRegistro;
 import vista.FrameResumenWorkout;
 import vista.FrameWorkout;
+import modelo.HiloContadorEjercicio;
+import modelo.HiloCronometro;
+import modelo.HiloCuentaAtrasV;
 import modelo.Usuario;
 
 public class ControladorFrames implements ActionListener, ListSelectionListener {
@@ -31,6 +34,9 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 	private FrameResumenWorkout resumenWorkout;
 	private Usuario usuarioLogueado;
 	private int contador = 0;
+	private HiloCronometro hiloCronometro;
+	private HiloContadorEjercicio hiloContadorEjercicio;
+	private HiloCuentaAtrasV hiloCuentaAtras;
 
 
 	public ControladorFrames(FrameLogin login, FrameRegistro registro, FrameWorkoutsPrincipal workoutsPrincipal, FramePerfilUsuario perfilUsuario,FrameModificarDatos modificarDatos, FrameHistorialWorkouts historialWorkouts,
@@ -51,7 +57,7 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 
 
 		login.setVisible(true);
-		
+
 	}
 
 	private void addListeners() {
@@ -89,8 +95,8 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 		ejercicios.getBtnAtras().addActionListener(this);
 		ejercicios.getBtnInicioPausa().addActionListener(this);
 		ejercicios.getBtnSalir().addActionListener(this);
-		
-		
+
+
 		//frame resumen del workout realizado
 		resumenWorkout.getBtnOk().addActionListener(this);
 
@@ -213,7 +219,6 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 			ejercicios.setVisible(true);
 			workout.dispose();
 
-
 		}
 		//funcion botones frame ejercicio ---------------------------------------------- BOTONES FRAME EJERCICIOS
 		else if (e.getSource() == ejercicios.getBtnAtras()) {
@@ -225,16 +230,66 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 			if (contador == 0) {
 				ejercicios.getBtnInicioPausa().setText("Pausar");
 				ejercicios.getBtnInicioPausa().setBackground(new java.awt.Color(153,205,144));
-				
-				contador = 1;
+
+				//hilo cuenta atras de 5s
+				if (hiloCuentaAtras == null) {
+					hiloCuentaAtras = new HiloCuentaAtrasV(ejercicios.getLblCuentaAtrasV());
+					hiloCuentaAtras.start();
+				}
+
+				//nuevo hilo para poder mirar si cuentaAtras ha terminado
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						//espera a que termine la cuenta atras
+						while (!hiloCuentaAtras.isTerminado()) {
+							try {
+
+								Thread.sleep(100);
+
+							} catch (InterruptedException ex) {
+								ex.printStackTrace();
+							}
+						}
+
+						if (ejercicios.getLblCuentaAtrasV().getText().equals("1")) {
+							ejercicios.getLblCuentaAtrasV().setText("-");  // Change label to "-" when countdown finishes
+						}
+
+						//hilos contadores
+						if (hiloCronometro == null || hiloContadorEjercicio == null) {
+
+							//hilo cronometro
+							hiloCronometro = new HiloCronometro(ejercicios.getLblCronometro());
+							hiloCronometro.start(); //empezar
+
+							//hilo ejercicio
+							hiloContadorEjercicio = new HiloContadorEjercicio(ejercicios.getLblTiempoEjer());
+							hiloContadorEjercicio.start();
+
+						} else {
+
+							//seguir si estaba pausado
+							hiloCronometro.reanudar();
+							hiloContadorEjercicio.reanudar();
+						}
+
+						contador = 1;
+					}
+				}).start(); 
+
 			}else if (contador == 1){
 				ejercicios.getBtnInicioPausa().setText("Iniciar");
 				ejercicios.getBtnInicioPausa().setBackground(new java.awt.Color(153,205,214));
-				
+
+				if (hiloCronometro != null && hiloContadorEjercicio != null) {
+					//pausar
+					hiloCronometro.pausar(); 
+					hiloContadorEjercicio.pausar();
+				}
+
 				contador=0;
 			}
-			
-			//*cronometro
 
 		} else if (e.getSource() == ejercicios.getBtnSalir()) {
 
