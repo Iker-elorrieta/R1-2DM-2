@@ -2,7 +2,7 @@ package modelo;
 
 import javax.swing.JLabel;
 
-public class HiloCronometro extends Thread{
+public class HiloContadorEjercicio extends Thread{
 
 	private int minutos = 0;
 	private int segundos = 0;
@@ -12,15 +12,15 @@ public class HiloCronometro extends Thread{
 
 
 	//constructores
-	public HiloCronometro() {
+	public HiloContadorEjercicio() {
 
 	}
 
-	public HiloCronometro(JLabel txt) {
+	public HiloContadorEjercicio(JLabel txt) {
 		this.mostrarCronometro = txt;
 	}
 
-	public HiloCronometro(int min, int seg, JLabel txt) {
+	public HiloContadorEjercicio(int min, int seg, JLabel txt) {
 		this.minutos = min;
 		this.segundos = seg;
 		this.mostrarCronometro = txt;

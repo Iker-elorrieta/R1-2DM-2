@@ -50,6 +50,8 @@ public class FrameEjercicios extends JFrame {
 	private JLabel lblTiempoEjer;
 	private JLabel lblTiempoDescanso;
 	private JLabel lblCuentaAtrasV;
+	private JTextArea textArea_1;
+	private JTextArea textArea_2;
 
 
 	/**
@@ -138,7 +140,7 @@ public class FrameEjercicios extends JFrame {
 		tablaEjercicios = new JTable(defaultTableModel);
 		tablaEjercicios.setColumnSelectionAllowed(false);
 		tablaEjercicios.setCellSelectionEnabled(false);
-		tablaEjercicios.setRowSelectionAllowed(true);
+		tablaEjercicios.setRowSelectionAllowed(false);
 		tablaEjercicios.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);		
 		tablaEjercicios.setAutoCreateRowSorter(true);
 
@@ -175,32 +177,53 @@ public class FrameEjercicios extends JFrame {
 
 		lblTiempoEjercicio = new JLabel("Tiempo ejercicio");
 		lblTiempoEjercicio.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblTiempoEjercicio.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTiempoEjercicio.setBounds(266, 400, 102, 14);
+		lblTiempoEjercicio.setHorizontalAlignment(SwingConstants.LEFT);
+		lblTiempoEjercicio.setBounds(255, 400, 102, 14);
 		contentPane.add(lblTiempoEjercicio);
 
 		lblDescanso = new JLabel("Descanso");
 		lblDescanso.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblDescanso.setHorizontalAlignment(SwingConstants.CENTER);
-		lblDescanso.setBounds(477, 402, 66, 14);
+		lblDescanso.setHorizontalAlignment(SwingConstants.LEFT);
+		lblDescanso.setBounds(470, 402, 66, 14);
 		contentPane.add(lblDescanso);
 		
-		lblCronometro = new JLabel("*");
+		lblCronometro = new JLabel("0:00");
+		lblCronometro.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCronometro.setBackground(SystemColor.inactiveCaption);
 		lblCronometro.setBounds(20, 445, 147, 29);
 		contentPane.add(lblCronometro);
 		
-		lblTiempoEjer = new JLabel("*");
-		lblTiempoEjer.setBounds(243, 445, 147, 29);
+		lblTiempoEjer = new JLabel("0:00");
+		lblTiempoEjer.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTiempoEjer.setBounds(230, 445, 147, 29);
 		contentPane.add(lblTiempoEjer);
 		
-		lblTiempoDescanso = new JLabel("*");
-		lblTiempoDescanso.setBounds(477, 445, 147, 29);
+		lblTiempoDescanso = new JLabel("0:00");
+		lblTiempoDescanso.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTiempoDescanso.setBounds(465, 445, 76, 29);
 		contentPane.add(lblTiempoDescanso);
 		
 		lblCuentaAtrasV = new JLabel("-");
+		lblCuentaAtrasV.setForeground(new Color(199, 21, 133));
+		lblCuentaAtrasV.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblCuentaAtrasV.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCuentaAtrasV.setBounds(286, 542, 44, 44);
 		contentPane.add(lblCuentaAtrasV);
+		
+		JTextArea textArea = new JTextArea();
+		textArea.setBackground(SystemColor.inactiveCaption);
+		textArea.setBounds(20, 445, 147, 29);
+		contentPane.add(textArea);
+		
+		textArea_1 = new JTextArea();
+		textArea_1.setBackground(SystemColor.inactiveCaption);
+		textArea_1.setBounds(230, 445, 147, 29);
+		contentPane.add(textArea_1);
+		
+		textArea_2 = new JTextArea();
+		textArea_2.setBackground(SystemColor.inactiveCaption);
+		textArea_2.setBounds(465, 445, 76, 29);
+		contentPane.add(textArea_2);
 	}
 
 	//metodo para insertar los datos de las series en la tabla
@@ -287,8 +310,16 @@ public class FrameEjercicios extends JFrame {
 	public JLabel getLblCronometro() {
 		return lblCronometro;
 	}
-	
-	
-	
-	
+
+	public JLabel getLblTiempoEjer() {
+		return lblTiempoEjer;
+	}
+
+	public JLabel getLblTiempoDescanso() {
+		return lblTiempoDescanso;
+	}
+
+	public JLabel getLblCuentaAtrasV() {
+		return lblCuentaAtrasV;
+	}
 }
