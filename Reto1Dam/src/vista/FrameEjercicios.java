@@ -44,14 +44,16 @@ public class FrameEjercicios extends JFrame {
 	private JLabel lblDescanso;
 	private JLabel lblCronometroWorkout;
 	private JLabel lblCronometro;
+	private JLabel lblTiempoSerie;
+	private JLabel lblTiempoSerieNom;
 
 	private JTable tablaEjercicios;
 	private DefaultTableModel defaultTableModel;
 	private JLabel lblTiempoEjer;
 	private JLabel lblTiempoDescanso;
 	private JLabel lblCuentaAtrasV;
-	private JTextArea textArea_1;
-	private JTextArea textArea_2;
+	private JTextArea textAreaFondo1;
+	private JTextArea textAreaFondo2;
 
 
 	/**
@@ -188,6 +190,7 @@ public class FrameEjercicios extends JFrame {
 		contentPane.add(lblDescanso);
 		
 		lblCronometro = new JLabel("0:00");
+		lblCronometro.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblCronometro.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCronometro.setBackground(SystemColor.inactiveCaption);
 		lblCronometro.setBounds(20, 445, 147, 29);
@@ -205,25 +208,41 @@ public class FrameEjercicios extends JFrame {
 		
 		lblCuentaAtrasV = new JLabel("-");
 		lblCuentaAtrasV.setForeground(new Color(199, 21, 133));
-		lblCuentaAtrasV.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblCuentaAtrasV.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblCuentaAtrasV.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCuentaAtrasV.setBounds(286, 542, 44, 44);
 		contentPane.add(lblCuentaAtrasV);
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setBackground(SystemColor.inactiveCaption);
-		textArea.setBounds(20, 445, 147, 29);
-		contentPane.add(textArea);
+		JTextArea textAreaFondo = new JTextArea();
+		textAreaFondo.setBackground(new Color(204, 204, 255));
+		textAreaFondo.setBounds(20, 445, 147, 29);
+		contentPane.add(textAreaFondo);
 		
-		textArea_1 = new JTextArea();
-		textArea_1.setBackground(SystemColor.inactiveCaption);
-		textArea_1.setBounds(230, 445, 147, 29);
-		contentPane.add(textArea_1);
+		textAreaFondo1 = new JTextArea();
+		textAreaFondo1.setBackground(SystemColor.inactiveCaption);
+		textAreaFondo1.setBounds(230, 445, 147, 29);
+		contentPane.add(textAreaFondo1);
 		
-		textArea_2 = new JTextArea();
-		textArea_2.setBackground(SystemColor.inactiveCaption);
-		textArea_2.setBounds(465, 445, 76, 29);
-		contentPane.add(textArea_2);
+		textAreaFondo2 = new JTextArea();
+		textAreaFondo2.setBackground(new Color(204, 255, 204));
+		textAreaFondo2.setBounds(465, 445, 76, 29);
+		contentPane.add(textAreaFondo2);
+		
+		lblTiempoSerieNom = new JLabel("Tiempo + nomSerie*");
+		lblTiempoSerieNom.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTiempoSerieNom.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblTiempoSerieNom.setBounds(20, 559, 147, 14);
+		contentPane.add(lblTiempoSerieNom);
+		
+		lblTiempoSerie = new JLabel("0:00");
+		lblTiempoSerie.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTiempoSerie.setBounds(20, 597, 147, 29);
+		contentPane.add(lblTiempoSerie);
+		
+		JTextArea textAreaFondo3 = new JTextArea();
+		textAreaFondo3.setBackground(new Color(255, 222, 173));
+		textAreaFondo3.setBounds(20, 597, 147, 29);
+		contentPane.add(textAreaFondo3);
 	}
 
 	//metodo para insertar los datos de las series en la tabla
@@ -322,4 +341,16 @@ public class FrameEjercicios extends JFrame {
 	public JLabel getLblCuentaAtrasV() {
 		return lblCuentaAtrasV;
 	}
+
+	public JLabel getLblTiempoSerie() {
+		return lblTiempoSerie;
+	}
+
+	public JLabel getLblTiempoSerieNom() {
+		return lblTiempoSerieNom;
+	}
+	
+	
+	
+	
 }

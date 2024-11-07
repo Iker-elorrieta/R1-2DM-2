@@ -16,9 +16,12 @@ import vista.FramePerfilUsuario;
 import vista.FrameRegistro;
 import vista.FrameResumenWorkout;
 import vista.FrameWorkout;
+import modelo.Ejercicio;
 import modelo.HiloContadorEjercicio;
 import modelo.HiloCronometro;
+import modelo.HiloCuentaAtrasSerie;
 import modelo.HiloCuentaAtrasV;
+import modelo.Serie;
 import modelo.Usuario;
 
 public class ControladorFrames implements ActionListener, ListSelectionListener {
@@ -32,12 +35,17 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 	private FrameWorkout workout;
 	private FrameEjercicios ejercicios;
 	private FrameResumenWorkout resumenWorkout;
+	
 	private Usuario usuarioLogueado;
+	private Serie serie;
+	
 	private int contador = 0;
+	
 	private HiloCronometro hiloCronometro;
 	private HiloContadorEjercicio hiloContadorEjercicio;
 	private HiloCuentaAtrasV hiloCuentaAtras;
 	private Metodos metodos = new Metodos();
+	private HiloCuentaAtrasSerie hiloCuentaAtrasSerie;
 
 
 	public ControladorFrames(FrameLogin login, FrameRegistro registro, FrameWorkoutsPrincipal workoutsPrincipal, FramePerfilUsuario perfilUsuario,FrameModificarDatos modificarDatos, FrameHistorialWorkouts historialWorkouts,
@@ -234,6 +242,11 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 			ejercicios.dispose();
 
 		} else if(e.getSource() == ejercicios.getBtnInicioPausa()) {
+			//******
+			serie.mObtenerSeries(String.valueOf(ejercicios.getLblNombreWorkout()), String.valueOf(ejercicios.getLblNombreEjercicio()));
+			serie.mObtenerSerie(String.valueOf(ejercicios.getLblNombreWorkout()), String.valueOf(ejercicios.getLblNombreEjercicio()), serie.getNombreS());
+			
+			
 			if (contador == 0) {
 				ejercicios.getBtnInicioPausa().setText("Pausar");
 				ejercicios.getBtnInicioPausa().setBackground(new java.awt.Color(153,205,144));
@@ -260,11 +273,11 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 						}
 
 						if (ejercicios.getLblCuentaAtrasV().getText().equals("1")) {
-							ejercicios.getLblCuentaAtrasV().setText("-");  // Change label to "-" when countdown finishes
+							ejercicios.getLblCuentaAtrasV().setText("");  //quitar el texto cuando termina
 						}
 
 						//hilos contadores
-						if (hiloCronometro == null || hiloContadorEjercicio == null) {
+						if (hiloCronometro == null || hiloContadorEjercicio == null || hiloCuentaAtrasSerie == null) {
 
 							//hilo cronometro
 							hiloCronometro = new HiloCronometro(ejercicios.getLblCronometro());
@@ -273,12 +286,17 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 							//hilo ejercicio
 							hiloContadorEjercicio = new HiloContadorEjercicio(ejercicios.getLblTiempoEjer());
 							hiloContadorEjercicio.start();
+							
+							//hilo serie
+							hiloCuentaAtrasSerie = new HiloCuentaAtrasSerie(ejercicios.getLblTiempoSerie(), serie.getTiempoSerie());
+							hiloCuentaAtrasSerie.start();
 
 						} else {
 
 							//seguir si estaba pausado
 							hiloCronometro.reanudar();
 							hiloContadorEjercicio.reanudar();
+							hiloCuentaAtrasSerie.reanudar();
 						}
 
 						contador = 1;
@@ -293,6 +311,7 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 					//pausar
 					hiloCronometro.pausar(); 
 					hiloContadorEjercicio.pausar();
+					hiloCuentaAtrasSerie.pausar();
 				}
 
 				contador=0;
