@@ -1,17 +1,18 @@
 package modelo;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
-
 import conexion.Conexion;
+import controlador.Metodos;
 
 public class Workout {
 	private String nombreW;
@@ -24,6 +25,8 @@ public class Workout {
 	private static String fieldNumEjer = "NumEjercicios";
 	private static String fieldNivel = "Nivel";
 	private static String fieldVideo = "Video";
+	private static final String WORKOUTSFILEROUTE = "Ficheros/workouts.dat";
+	private Metodos metodos = new Metodos();
 
 	//constructores
 	public Workout() {
@@ -75,39 +78,39 @@ public class Workout {
 
 	//OBTENER WORKOUT ------------------------
 	public Workout mObtenerWorkout() {
-		Firestore co =null;
+		
+			Firestore co =null;
+			
+			try {			
+				co= Conexion.conectar();
 
-		try {			
-			co= Conexion.conectar();
+				DocumentSnapshot workout = co.collection(collectionName).document(nombreW).get().get();
 
-			DocumentSnapshot workout = co.collection(collectionName).document(nombreW).get().get();
+				setNombreW(workout.getString(fieldNombre));
+				setNumEjercicios(workout.getDouble(fieldNumEjer));
+				setNivel(workout.getDouble(fieldNivel));
+				setVideo(workout.getString(fieldVideo));
 
-			setNombreW(workout.getString(fieldNombre));
-			setNumEjercicios(workout.getDouble(fieldNumEjer));
-			setNivel(workout.getDouble(fieldNivel));
-			setVideo(workout.getString(fieldVideo));
+				co.close();
 
-			co.close();
-
-		} catch ( InterruptedException | ExecutionException e) {
-			System.out.println("Error: Clase Workout, metodo mObtenerWorkout");
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return this;
+			} catch ( InterruptedException | ExecutionException e) {
+				System.out.println("Error: Clase Workout, metodo mObtenerWorkout");
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return this;
 	}
 
 	//OBTENER WORKOUTS ------------------------
 	public ArrayList<Workout> mObtenerWorkouts() {
-		Firestore co =null;
-
 		ArrayList<Workout> listaWorkouts = new 	ArrayList<Workout>();
+		if(metodos.hayInternet()){
+		Firestore co =null;		
 
 		try {			
 			co= Conexion.conectar();
@@ -143,6 +146,24 @@ public class Workout {
 		}
 
 		return listaWorkouts;
+		}
+		
+		else {
+			try {
+                FileInputStream fic = new FileInputStream(WORKOUTSFILEROUTE);
+                ObjectInputStream ois = new ObjectInputStream(fic);
+                while (fic.getChannel().position() < fic.getChannel().size()) {
+                    Workout workout = (Workout) ois.readObject();
+                    listaWorkouts.add(workout);
+                }
+                ois.close();
+                return listaWorkouts;
+            } catch (ClassNotFoundException | IOException e) {
+                e.printStackTrace();
+            }
+		}
+		return listaWorkouts;
+
 
 	}
 

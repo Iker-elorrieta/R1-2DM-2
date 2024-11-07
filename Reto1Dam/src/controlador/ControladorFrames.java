@@ -37,6 +37,7 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 	private HiloCronometro hiloCronometro;
 	private HiloContadorEjercicio hiloContadorEjercicio;
 	private HiloCuentaAtrasV hiloCuentaAtras;
+	private Metodos metodos = new Metodos();
 
 
 	public ControladorFrames(FrameLogin login, FrameRegistro registro, FrameWorkoutsPrincipal workoutsPrincipal, FramePerfilUsuario perfilUsuario,FrameModificarDatos modificarDatos, FrameHistorialWorkouts historialWorkouts,
@@ -140,12 +141,14 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 			registro.dispose();
 
 		} else if (e.getSource() == registro.getBtnRegistrarse()) {
-
+			
+			if(metodos.hayInternet()){
 			String nombre = registro.getTextFieldNombre().getText();
 			String apellido = registro.getTextFieldApellido().getText();
 			String email = registro.getTextFieldEmail().getText();
 			String contrasena = new String(registro.getPasswordFieldContrasena().getPassword());
 			Date fechaNac = registro.getDateChooserFechaNac().getDate();
+			
 
 			if(Metodos.comprobarRegistro(nombre, apellido, email, contrasena, fechaNac)) {
 				Usuario.mRegistrarUsuario(nombre, apellido, email, contrasena, fechaNac);
@@ -155,6 +158,10 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 			}else {
 
 				JOptionPane.showMessageDialog(null, "Algún campo tiene datos incorrectos.", "Error de Registro", JOptionPane.ERROR_MESSAGE);
+			}
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "No es posible registrarse sin conexion.", "Error de Registro", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 		//funcion botones frame workouts principal ---------------------------------------------- BOTONES FRAME WORKOUTS PRINCIPAL
@@ -318,12 +325,15 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 
 		} else if (e.getSource() == perfilUsuario.getBtnModificar()) {
 
-
+			if(metodos.hayInternet()){
 			modificarDatos.setUsuarioModificarDatos(usuarioLogueado);
 			modificarDatos.setVisible(true);
 			perfilUsuario.dispose();
-
-
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "No es posible modificar los datos sin conexion.", "Error de Registro", JOptionPane.ERROR_MESSAGE);
+			}
+			
 		}
 		//funciones botones frame modificar datos ---------------------------------------------- BOTONES FRAME MODIFICAR DATOS
 		else if(e.getSource() == modificarDatos.getBtnCancelar()) {

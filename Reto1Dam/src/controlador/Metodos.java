@@ -1,5 +1,7 @@
 package controlador;
 
+import java.io.IOException;
+import java.net.InetAddress;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import modelo.Usuario;
@@ -64,6 +66,15 @@ public class Metodos{
 
 		}
 	}
+	
+	public boolean hayInternet() {
+        try {
+            InetAddress address = InetAddress.getByName("8.8.8.8");
+            return address.isReachable(3000);
+        } catch (IOException e) {
+            return false;
+        }
+    }
 
 
 	
