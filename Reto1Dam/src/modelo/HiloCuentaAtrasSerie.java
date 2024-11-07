@@ -73,10 +73,9 @@ public class HiloCuentaAtrasSerie extends Thread{
 			} catch (InterruptedException e) {
 				System.out.println("Cuentra atrás interrumpida");
 				Thread.currentThread().interrupt();
-			}
-
-			setTerminado(true);
+			}	
 		}
+		setTerminado(true);
 	}
 
 
