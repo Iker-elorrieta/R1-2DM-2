@@ -123,10 +123,15 @@ public class Ejercicio {
 				listaEjercicios.add(e);
 			}
 
+			co.close();
+			
 		} catch (InterruptedException | ExecutionException e) {
 			System.out.println("Error: Clase Ejercicio, metodo mObtenerEjercicios");
 			e.printStackTrace();
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

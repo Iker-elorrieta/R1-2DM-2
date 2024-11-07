@@ -4,10 +4,13 @@ import javax.swing.JLabel;
 
 public class HiloCuentaAtrasSerie extends Thread{
 
-	JLabel txt;
+	JLabel mostrarContador;
 	private boolean terminado = false;
 	private boolean pausado = false;
-	private double dTiempoSerie;
+	private Serie dTiempoSerie;
+
+	private double tiempoSerie;
+	private int tiempoSegundos;
 
 
 	//constructores
@@ -15,9 +18,9 @@ public class HiloCuentaAtrasSerie extends Thread{
 
 	}
 
-	public HiloCuentaAtrasSerie(JLabel txt, double dTiempoSerie) {
-		this.txt = txt;
-		this.dTiempoSerie = dTiempoSerie;
+	public HiloCuentaAtrasSerie(JLabel txt, double tiempoSerie) {
+		this.mostrarContador = txt;
+		this.tiempoSegundos = (int) tiempoSerie;
 	}
 
 	//parar la cuenta atras
@@ -29,7 +32,7 @@ public class HiloCuentaAtrasSerie extends Thread{
 	public void pausar() {
 		pausado = true;
 	}
-	
+
 	//reanudar despues del pausa
 	public void reanudar() {
 		pausado = false;
@@ -42,40 +45,38 @@ public class HiloCuentaAtrasSerie extends Thread{
 	@Override
 	public void run() {
 
-		try {
-			while (dTiempoSerie > 0 && !terminado) {
-				
-				if(pausado) {
+		int segundosRestantes = tiempoSegundos;
+
+		while(segundosRestantes > 0 && !terminado) {
+
+			if (pausado) {
+				try {
 					synchronized (this) {
 						wait();
 					}
+				} catch (InterruptedException e) {
+					e.printStackTrace();
 				}
+			}
 
-				int tiempoSerie = (int) dTiempoSerie;
+			try {
 
-				txt.setText(String.valueOf(formatoTiempo(tiempoSerie)));
-				
+				int mins = segundosRestantes / 60;
+				int secs = segundosRestantes % 60;
+
+				mostrarContador.setText(String.format("%02d:%02d", mins, secs));				
+
+				segundosRestantes--;
+
 				Thread.sleep(1000);
 
-				tiempoSerie--;
+			} catch (InterruptedException e) {
+				System.out.println("Cuentra atrás interrumpida");
+				Thread.currentThread().interrupt();
 			}
-			
+
 			setTerminado(true);
-
-
-		} catch (InterruptedException e) {
-			System.out.println("Cuentra atrás interrumpida");
-			Thread.currentThread().interrupt();
 		}
-
-		setTerminado(true);
-	}
-
-	//formato en mins secs
-	private String formatoTiempo(int tiempoSerie) {
-		int mins = tiempoSerie / 60;
-		int secs = tiempoSerie % 60;
-		return String.format("%02d:%02d", mins, secs);
 	}
 
 
@@ -88,19 +89,35 @@ public class HiloCuentaAtrasSerie extends Thread{
 		this.terminado = terminado;
 	}
 
-	public JLabel getTxt() {
-		return txt;
+	public JLabel getMostrarContador() {
+		return mostrarContador;
 	}
 
-	public void setTxt(JLabel txt) {
-		this.txt = txt;
+	public void setMostrarContador(JLabel mostrarContador) {
+		this.mostrarContador = mostrarContador;
 	}
 
-	public double getdTiempoSerie() {
+	public boolean isPausado() {
+		return pausado;
+	}
+
+	public void setPausado(boolean pausado) {
+		this.pausado = pausado;
+	}
+
+	public double getTiempoSerie() {
+		return tiempoSerie;
+	}
+
+	public void setTiempoSerie(double tiempoSerie) {
+		this.tiempoSerie = tiempoSerie;
+	}
+
+	public Serie getdTiempoSerie() {
 		return dTiempoSerie;
 	}
 
-	public void setdTiempoSerie(double dTiempoSerie) {
+	public void setdTiempoSerie(Serie dTiempoSerie) {
 		this.dTiempoSerie = dTiempoSerie;
 	}
 

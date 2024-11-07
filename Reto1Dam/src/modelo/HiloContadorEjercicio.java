@@ -26,16 +26,18 @@ public class HiloContadorEjercicio extends Thread{
 		this.mostrarCronometro = txt;
 	}
 
-
+	//parar el contador
 	public void terminar() {
 		terminar=true;
 
 	}
 
+	//pausar el contador
 	public void pausar() {
 		pausado = true;
 	}
 
+	//reanudar despues de la pausa
 	public void reanudar() {
 		pausado = false;
 
@@ -44,13 +46,14 @@ public class HiloContadorEjercicio extends Thread{
 		}
 	}
 
+	//run
 	public void run() {
 		while (!terminar) {
 
 			if (pausado) {
 				try {
 					synchronized (this) {
-						wait();  // Wait until the thread is resumed
+						wait();
 					}
 				} catch (InterruptedException e) {
 					e.printStackTrace();

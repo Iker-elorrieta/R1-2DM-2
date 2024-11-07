@@ -6,6 +6,9 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
+
+import java.util.ArrayList;
 import java.util.Date;
 import vista.FrameWorkoutsPrincipal;
 import vista.FrameEjercicios;
@@ -16,7 +19,6 @@ import vista.FramePerfilUsuario;
 import vista.FrameRegistro;
 import vista.FrameResumenWorkout;
 import vista.FrameWorkout;
-import modelo.Ejercicio;
 import modelo.HiloContadorEjercicio;
 import modelo.HiloCronometro;
 import modelo.HiloCuentaAtrasSerie;
@@ -35,12 +37,12 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 	private FrameWorkout workout;
 	private FrameEjercicios ejercicios;
 	private FrameResumenWorkout resumenWorkout;
-	
+
 	private Usuario usuarioLogueado;
 	private Serie serie;
-	
+
 	private int contador = 0;
-	
+
 	private HiloCronometro hiloCronometro;
 	private HiloContadorEjercicio hiloContadorEjercicio;
 	private HiloCuentaAtrasV hiloCuentaAtras;
@@ -149,24 +151,24 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 			registro.dispose();
 
 		} else if (e.getSource() == registro.getBtnRegistrarse()) {
-			
+
 			if(metodos.hayInternet()){
-			String nombre = registro.getTextFieldNombre().getText();
-			String apellido = registro.getTextFieldApellido().getText();
-			String email = registro.getTextFieldEmail().getText();
-			String contrasena = new String(registro.getPasswordFieldContrasena().getPassword());
-			Date fechaNac = registro.getDateChooserFechaNac().getDate();
-			
+				String nombre = registro.getTextFieldNombre().getText();
+				String apellido = registro.getTextFieldApellido().getText();
+				String email = registro.getTextFieldEmail().getText();
+				String contrasena = new String(registro.getPasswordFieldContrasena().getPassword());
+				Date fechaNac = registro.getDateChooserFechaNac().getDate();
 
-			if(Metodos.comprobarRegistro(nombre, apellido, email, contrasena, fechaNac)) {
-				Usuario.mRegistrarUsuario(nombre, apellido, email, contrasena, fechaNac);
-				login.setVisible(true);
-				registro.dispose();
 
-			}else {
+				if(Metodos.comprobarRegistro(nombre, apellido, email, contrasena, fechaNac)) {
+					Usuario.mRegistrarUsuario(nombre, apellido, email, contrasena, fechaNac);
+					login.setVisible(true);
+					registro.dispose();
 
-				JOptionPane.showMessageDialog(null, "Algún campo tiene datos incorrectos.", "Error de Registro", JOptionPane.ERROR_MESSAGE);
-			}
+				}else {
+
+					JOptionPane.showMessageDialog(null, "Algún campo tiene datos incorrectos.", "Error de Registro", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "No es posible registrarse sin conexion.", "Error de Registro", JOptionPane.ERROR_MESSAGE);
@@ -228,7 +230,7 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 
 			ejercicios.insertarSeries(nombreWorkout, nombreEjercicio);
 			ejercicios.getBtnInicioPausa().setText("Iniciar");
-			ejercicios.getBtnInicioPausa().setBackground(new java.awt.Color(153,205,214));
+			ejercicios.getBtnInicioPausa().setBackground(new java.awt.Color(153,205,144));
 
 
 			ejercicios.setVisible(true);
@@ -242,14 +244,19 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 			ejercicios.dispose();
 
 		} else if(e.getSource() == ejercicios.getBtnInicioPausa()) {
-			//******
-			serie.mObtenerSeries(String.valueOf(ejercicios.getLblNombreWorkout()), String.valueOf(ejercicios.getLblNombreEjercicio()));
-			serie.mObtenerSerie(String.valueOf(ejercicios.getLblNombreWorkout()), String.valueOf(ejercicios.getLblNombreEjercicio()), serie.getNombreS());
+
+			if (serie == null) {
+				serie = new Serie();
+			}
 			
+			//String nombreWorkout = ejercicios.getLblNombreWorkout().getText();
+			//String nombreEjercicio = ejercicios.getLblNombreEjercicio().getText();
+			
+			ArrayList<Serie> listaSeries = serie.mObtenerSeries(ejercicios.getLblNombreWorkout().getText(), ejercicios.getLblNombreEjercicio().getText());
+
+			System.out.println(listaSeries);
 			
 			if (contador == 0) {
-				ejercicios.getBtnInicioPausa().setText("Pausar");
-				ejercicios.getBtnInicioPausa().setBackground(new java.awt.Color(153,205,144));
 
 				//hilo cuenta atras de 5s
 				if (hiloCuentaAtras == null) {
@@ -257,64 +264,85 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 					hiloCuentaAtras.start();
 				}
 
-				//nuevo hilo para poder mirar si cuentaAtras ha terminado
+				//nuevo hilo para mirar si cuentaAtras ha terminado
 				new Thread(new Runnable() {
 					@Override
 					public void run() {
 						//espera a que termine la cuenta atras
 						while (!hiloCuentaAtras.isTerminado()) {
 							try {
-
 								Thread.sleep(100);
-
 							} catch (InterruptedException ex) {
 								ex.printStackTrace();
 							}
 						}
 
-						if (ejercicios.getLblCuentaAtrasV().getText().equals("1")) {
-							ejercicios.getLblCuentaAtrasV().setText("");  //quitar el texto cuando termina
+						if (hiloCuentaAtras.isTerminado()) {
+
+							if (ejercicios.getLblCuentaAtrasV().getText().equals("1")) {
+								ejercicios.getLblCuentaAtrasV().setText("");  //quitar texto cuando termina
+							}
+
+							ejercicios.getBtnInicioPausa().setText("Pausar");
+							ejercicios.getBtnInicioPausa().setBackground(new java.awt.Color(153,205,144));
+
+
+							//recorremos las series
+							for (int i = 0; i < listaSeries.size(); i++) {
+								Serie serieActual = listaSeries.get(i);
+
+								serie = serieActual.mObtenerSerie(String.valueOf(ejercicios.getLblNombreWorkout()), String.valueOf(ejercicios.getLblNombreEjercicio()), serieActual.getNombreS());
+
+								ejercicios.getLblTiempoSerieNom().setText("Tiempo de la " + serieActual.getNombreS());
+							}
+							//*
+
+							//hilos contadores
+							if (hiloCronometro == null || hiloContadorEjercicio == null || hiloCuentaAtrasSerie == null) {
+
+								//hilo cronometro
+								hiloCronometro = new HiloCronometro(ejercicios.getLblCronometro());
+								hiloCronometro.start(); // empezar
+
+								//hilo ejercicio
+								hiloContadorEjercicio = new HiloContadorEjercicio(ejercicios.getLblTiempoEjer());
+								hiloContadorEjercicio.start();
+
+								//hilo serie
+								if (serie.getTiempoSerie() != null) {
+									hiloCuentaAtrasSerie = new HiloCuentaAtrasSerie(ejercicios.getLblTiempoSerie(), serie.getTiempoSerie());
+									hiloCuentaAtrasSerie.start();
+								} else {
+									System.out.println("TiempoSerie es null en: " + serie.getNombreS());
+									
+								}
+
+							} else {
+
+								//seguir si estaba pausado
+								hiloCronometro.reanudar();
+								hiloContadorEjercicio.reanudar();
+								hiloCuentaAtrasSerie.reanudar();
+							}
+
+							contador = 1;
+
 						}
-
-						//hilos contadores
-						if (hiloCronometro == null || hiloContadorEjercicio == null || hiloCuentaAtrasSerie == null) {
-
-							//hilo cronometro
-							hiloCronometro = new HiloCronometro(ejercicios.getLblCronometro());
-							hiloCronometro.start(); //empezar
-
-							//hilo ejercicio
-							hiloContadorEjercicio = new HiloContadorEjercicio(ejercicios.getLblTiempoEjer());
-							hiloContadorEjercicio.start();
-							
-							//hilo serie
-							hiloCuentaAtrasSerie = new HiloCuentaAtrasSerie(ejercicios.getLblTiempoSerie(), serie.getTiempoSerie());
-							hiloCuentaAtrasSerie.start();
-
-						} else {
-
-							//seguir si estaba pausado
-							hiloCronometro.reanudar();
-							hiloContadorEjercicio.reanudar();
-							hiloCuentaAtrasSerie.reanudar();
-						}
-
-						contador = 1;
 					}
 				}).start(); 
 
-			}else if (contador == 1){
+			} else if (contador == 1) {
 				ejercicios.getBtnInicioPausa().setText("Iniciar");
 				ejercicios.getBtnInicioPausa().setBackground(new java.awt.Color(153,205,214));
 
-				if (hiloCronometro != null && hiloContadorEjercicio != null) {
+				if (hiloCronometro != null && hiloContadorEjercicio != null && hiloCuentaAtrasSerie != null) {
 					//pausar
 					hiloCronometro.pausar(); 
 					hiloContadorEjercicio.pausar();
 					hiloCuentaAtrasSerie.pausar();
 				}
 
-				contador=0;
+				contador = 0;
 			}
 
 		} else if (e.getSource() == ejercicios.getBtnSalir()) {
@@ -345,14 +373,14 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 		} else if (e.getSource() == perfilUsuario.getBtnModificar()) {
 
 			if(metodos.hayInternet()){
-			modificarDatos.setUsuarioModificarDatos(usuarioLogueado);
-			modificarDatos.setVisible(true);
-			perfilUsuario.dispose();
+				modificarDatos.setUsuarioModificarDatos(usuarioLogueado);
+				modificarDatos.setVisible(true);
+				perfilUsuario.dispose();
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "No es posible modificar los datos sin conexion.", "Error de Registro", JOptionPane.ERROR_MESSAGE);
 			}
-			
+
 		}
 		//funciones botones frame modificar datos ---------------------------------------------- BOTONES FRAME MODIFICAR DATOS
 		else if(e.getSource() == modificarDatos.getBtnCancelar()) {
@@ -384,6 +412,7 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 			}
 		}
 	}
+
 
 	@Override
 	public void valueChanged(ListSelectionEvent e) {

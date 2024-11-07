@@ -228,7 +228,7 @@ public class FrameEjercicios extends JFrame {
 		textAreaFondo2.setBounds(465, 445, 76, 29);
 		contentPane.add(textAreaFondo2);
 		
-		lblTiempoSerieNom = new JLabel("Tiempo + nomSerie*");
+		lblTiempoSerieNom = new JLabel("Tiempo de la serie -");
 		lblTiempoSerieNom.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTiempoSerieNom.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblTiempoSerieNom.setBounds(20, 559, 147, 14);
