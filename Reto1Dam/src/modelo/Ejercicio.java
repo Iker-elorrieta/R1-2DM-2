@@ -89,11 +89,16 @@ public class Ejercicio {
 				setTiempoDescanso(ejercicio.getDouble(fieldTiempodescanso));
 				setNombreW(new Workout(nombreWorkout, null, null, null));
 			}
+			
+			co.close();
 
 		} catch (InterruptedException | ExecutionException e) {
 			System.out.println("Error: Clase Ejercicio, metodo mObtenerEjercicio");
 			e.printStackTrace();
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -118,7 +123,7 @@ public class Ejercicio {
 				e.setNombreE(ejercicio.getString(fieldNombre));
 				e.setDescripcion(ejercicio.getString(fieldDescripcion));
 				e.setTiempoDescanso(ejercicio.getDouble(fieldTiempodescanso));
-				e.setNombreW(new Workout(nombreWorkout, null, null, null));//en la base de datos es una referencia al nombre, no el nombre en sí
+				e.setNombreW(new Workout(nombreWorkout, null, null, null));
 
 				listaEjercicios.add(e);
 			}

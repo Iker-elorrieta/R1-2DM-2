@@ -65,10 +65,10 @@ public class FrameWorkout extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		lblNombreWorkout = new JLabel("");
+		lblNombreWorkout = new JLabel("nombre workout*");
 		lblNombreWorkout.setForeground(SystemColor.textHighlight);
 		lblNombreWorkout.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblNombreWorkout.setBounds(190, 20, 155, 14);
+		lblNombreWorkout.setBounds(190, 40, 155, 14);
 		contentPane.add(lblNombreWorkout);
 
 		//tabla con datos
@@ -77,7 +77,7 @@ public class FrameWorkout extends JFrame {
 		contentPane.add(jScrollPanel);
 
 
-		String columnas[] = { "Nombre del workout", "Nombre", "Tiempo de descanso", "Descripcion"};
+		String columnas[] = { "Nombre", "Tiempo de descanso", "Descripcion"};
 
 		defaultTableModel = new DefaultTableModel(columnas, 0);
 
@@ -98,9 +98,9 @@ public class FrameWorkout extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 int row = tablaEjercicios.getSelectedRow(); // Get the selected row
                 if (row != -1) { // Check if a row is selected
-                    nombreWorkoutTabla = (String) defaultTableModel.getValueAt(row, 0); //valor de la primera columna de la fila seleccionada
-                    nombreEjercicioTabla = (String) defaultTableModel.getValueAt(row, 1); //valor de la segunda columna de la fila seleccionada
-                    descripcionEjercicioTabla = (String) defaultTableModel.getValueAt(row, 3); //valor de la tercera columna de la fila seleccionada
+                     //valor de la primera columna de la fila seleccionada
+                    nombreEjercicioTabla = (String) defaultTableModel.getValueAt(row, 0); //valor de la segunda columna de la fila seleccionada
+                    descripcionEjercicioTabla = (String) defaultTableModel.getValueAt(row, 2); //valor de la tercera columna de la fila seleccionada
                 }
             }
         });
@@ -128,7 +128,6 @@ public class FrameWorkout extends JFrame {
 		//lo recorremos y añadimos a la tabla
 		for (Ejercicio ejercicio : listaEjercicios) {
 			Object[] rowData = {
-					nombreWorkout,
 					ejercicio.getNombreE(), 
 					ejercicio.getTiempoDescanso().intValue(), 
 					ejercicio.getDescripcion()
@@ -174,14 +173,4 @@ public class FrameWorkout extends JFrame {
 	public String getDescripcionEjercicioTabla() {
 		return descripcionEjercicioTabla;
 	}
-	
-	
-	
-	
-	
-	
-
-
-
-
 }
