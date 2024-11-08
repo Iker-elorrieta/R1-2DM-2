@@ -44,6 +44,7 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 	private Serie serie;
 
 	private int contador = 0;
+	private int indexEjercicioActual = 0;
 
 	private HiloCronometro hiloCronometro;
 	private HiloContadorEjercicio hiloContadorEjercicio;
@@ -242,7 +243,7 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 		//funcion botones frame ejercicio ---------------------------------------------- BOTONES FRAME EJERCICIOS
 		else if (e.getSource() == ejercicios.getBtnAtras()) {
 
-			//*poner que los contadores paren y se reseteen sin contar nada**************************************************
+			//*poner que los contadores paren y se reseteen sin guardar nada**************************************************
 
 			workout.setVisible(true);
 			ejercicios.dispose();
@@ -253,83 +254,31 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 				serie = new Serie();
 			}
 
-			ArrayList<Serie> listaSeries = serie.mObtenerSeries(ejercicios.getLblNombreWorkout().getText(), ejercicios.getLblNombreEjercicio().getText());
-
-			if (contador == 0) {
-				//hilo cuenta atras de 5s
-				if (hiloCuentaAtras == null) {
-					hiloCuentaAtras = new HiloCuentaAtrasV(ejercicios.getLblCuentaAtrasV());
-					hiloCuentaAtras.start();
-				}
-
-				//nuevo hilo para mirar si cuentaAtras ha terminado
-				new Thread(new Runnable() {
-					@Override
-					public void run() {		     
-						while (!hiloCuentaAtras.isTerminado()) {
-							try {
-								Thread.sleep(50);
-							} catch (InterruptedException ex) {
-								ex.printStackTrace();
-							}
-						}
+			if(ejercicio == null) {
+				ejercicio = new Ejercicio();
+			}
 
 
-						if (ejercicios.getLblCuentaAtrasV().getText().equals("1")) {
-							ejercicios.getLblCuentaAtrasV().setText("");
-						}
-						ejercicios.getBtnInicioPausa().setText("Pausar");
-						ejercicios.getBtnInicioPausa().setBackground(new java.awt.Color(153, 205, 144));
+			ArrayList<Ejercicio> listaEjercicios = ejercicio.mObtenerEjercicios(ejercicios.getLblNombreWorkout().getText());
 
-						//hilo cronometro
-						if (hiloCronometro == null) {
-							hiloCronometro = new HiloCronometro(ejercicios.getLblCronometro());
-							hiloCronometro.start();
-						}
+			Ejercicio ejercicioActual = listaEjercicios.get(indexEjercicioActual);
 
-						//hilo ejercicio
-						if (hiloContadorEjercicio == null) {
-							hiloContadorEjercicio = new HiloContadorEjercicio(ejercicios.getLblTiempoEjer());
-							hiloContadorEjercicio.start();
-						}
-
-						//recorremos las series
-						for (int i = 0; i < listaSeries.size(); i++) {
-							Serie serieActual = listaSeries.get(i);
-
-							//nombre de la serie actual
-							ejercicios.getLblTiempoSerieNom().setText("Tiempo de la " + serieActual.getNombreS());
+			ArrayList<Serie> listaSeries = serie.mObtenerSeries(ejercicios.getLblNombreWorkout().getText(), ejercicioActual.getNombreE());			
 
 
-							serie = serieActual.mObtenerSerie(String.valueOf(ejercicios.getLblNombreWorkout()), String.valueOf(ejercicios.getLblNombreEjercicio()), serieActual.getNombreS()
-									);
+			if (indexEjercicioActual < listaEjercicios.size()) {
 
-							//hilo serie
-							if (hiloCuentaAtrasSerie != null) {
-								//asegurarse que la serie anterior haya temrinado
-								hiloCuentaAtrasSerie.terminar();
-							}
+				if (contador == 0) {
+					//hilo cuenta atras de 5s
+					if (hiloCuentaAtras == null) {
+						hiloCuentaAtras = new HiloCuentaAtrasV(ejercicios.getLblCuentaAtrasV());
+						hiloCuentaAtras.start();
+					}
 
-							hiloCuentaAtrasSerie = new HiloCuentaAtrasSerie(ejercicios.getLblTiempoSerie(), serie.getTiempoSerie());
-							hiloCuentaAtrasSerie.start();
-
-							//esperar a que termine antes de empezar el siguiente
-							while (!hiloCuentaAtrasSerie.isTerminado()) {
-								try {
-									Thread.sleep(50);
-								} catch (InterruptedException ex) {
-									ex.printStackTrace();
-								}
-							}
-
-							//delay de 5 segundos entre serie y serie
-							if (hiloCuentaAtras != null) {
-								hiloCuentaAtras.terminado();
-							}
-							hiloCuentaAtras = new HiloCuentaAtrasV(ejercicios.getLblCuentaAtrasV());
-							hiloCuentaAtras.start();
-
-
+					//nuevo hilo para mirar si cuentaAtras ha terminado
+					new Thread(new Runnable() {
+						@Override
+						public void run() {		     
 							while (!hiloCuentaAtras.isTerminado()) {
 								try {
 									Thread.sleep(50);
@@ -338,39 +287,115 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 								}
 							}
 
-							ejercicios.getLblCuentaAtrasV().setText("");
+
+							if (ejercicios.getLblCuentaAtrasV().getText().equals("1")) {
+								ejercicios.getLblCuentaAtrasV().setText("");
+							}
+							ejercicios.getBtnInicioPausa().setText("Pausar");
+							ejercicios.getBtnInicioPausa().setBackground(new java.awt.Color(153, 205, 144));
+
+							//hilo cronometro
+							if (hiloCronometro == null) {
+								hiloCronometro = new HiloCronometro(ejercicios.getLblCronometro());
+								hiloCronometro.start();
+							}
+
+							//hilo ejercicio
+							if (hiloContadorEjercicio == null) {
+								hiloContadorEjercicio = new HiloContadorEjercicio(ejercicios.getLblTiempoEjer());
+								hiloContadorEjercicio.start();
+							}
+
+							//recorremos las series
+							for (int i = 0; i < listaSeries.size(); i++) {
+								Serie serieActual = listaSeries.get(i);
+
+								//nombre de la serie actual
+								ejercicios.getLblTiempoSerieNom().setText("Tiempo de la " + serieActual.getNombreS());
+
+
+								serie = serieActual.mObtenerSerie(String.valueOf(ejercicios.getLblNombreWorkout()), String.valueOf(ejercicios.getLblNombreEjercicio()), serieActual.getNombreS());
+
+								//hilo serie
+								if (hiloCuentaAtrasSerie != null) {
+									//asegurarse que la serie anterior haya temrinado
+									hiloCuentaAtrasSerie.terminar();
+								}
+
+								hiloCuentaAtrasSerie = new HiloCuentaAtrasSerie(ejercicios.getLblTiempoSerie(), serie.getTiempoSerie());
+								hiloCuentaAtrasSerie.start();
+
+								//esperar a que termine antes de empezar el siguiente
+								while (!hiloCuentaAtrasSerie.isTerminado()) {
+									try {
+										Thread.sleep(50);
+									} catch (InterruptedException ex) {
+										ex.printStackTrace();
+									}
+								}
+
+								//delay de 5 segundos entre serie y serie con cuentaAtrasV
+								if (hiloCuentaAtras != null) {
+									hiloCuentaAtras.terminado();
+								}
+								hiloCuentaAtras = new HiloCuentaAtrasV(ejercicios.getLblCuentaAtrasV());
+								hiloCuentaAtras.start();
+
+								while (!hiloCuentaAtras.isTerminado()) {
+									try {
+										Thread.sleep(50);
+									} catch (InterruptedException ex) {
+										ex.printStackTrace();
+									}
+								}
+
+								ejercicios.getLblCuentaAtrasV().setText("");
+							}
+
+							indexEjercicioActual++;
+
+							//cambiar boton a siguiente ejercicio
+							if (indexEjercicioActual < listaEjercicios.size()) {
+								ejercicios.getBtnInicioPausa().setText("Siguiente ejercicio");
+							} else {
+								//si no hay mas ejercicios
+								ejercicios.getBtnInicioPausa().setText("Workout finalizado");
+								//deshabilitamos el boton
+								ejercicios.getBtnInicioPausa().setEnabled(false);
+
+							}
 						}
+					}).start();
+
+					contador = 1;
+				}else if (contador == 1) {
+					//pausar
+					ejercicios.getBtnInicioPausa().setText("Iniciar");
+					ejercicios.getBtnInicioPausa().setBackground(new java.awt.Color(153, 205, 214));
+
+					if (hiloCronometro != null && hiloContadorEjercicio != null && hiloCuentaAtrasSerie != null) {
+						hiloCronometro.pausar();
+						hiloContadorEjercicio.pausar();
+						hiloCuentaAtrasSerie.pausar();
 					}
-				}).start();
 
-				contador = 1;
-				
-			} else if (contador == 1) {
-				//pausar
-				ejercicios.getBtnInicioPausa().setText("Iniciar");
-				ejercicios.getBtnInicioPausa().setBackground(new java.awt.Color(153, 205, 214));
+					contador = 2;
 
-				if (hiloCronometro != null && hiloContadorEjercicio != null && hiloCuentaAtrasSerie != null) {
-					hiloCronometro.pausar();
-					hiloContadorEjercicio.pausar();
-					hiloCuentaAtrasSerie.pausar();
+				} else if (contador == 2) {
+					//seguir contadores
+					ejercicios.getBtnInicioPausa().setText("Pausar");
+					ejercicios.getBtnInicioPausa().setBackground(new java.awt.Color(153, 205, 144));
+
+					if (hiloCronometro != null && hiloContadorEjercicio != null && hiloCuentaAtrasSerie != null) {
+						hiloCronometro.reanudar();
+						hiloContadorEjercicio.reanudar();
+						hiloCuentaAtrasSerie.reanudar();
+					}
+
+					contador = 1;
 				}
 
-				contador = 2;
-
-			} else if (contador == 2) {
-				//seguir contadores
-				ejercicios.getBtnInicioPausa().setText("Pausar");
-				ejercicios.getBtnInicioPausa().setBackground(new java.awt.Color(153, 205, 144));
-
-				if (hiloCronometro != null && hiloContadorEjercicio != null && hiloCuentaAtrasSerie != null) {
-					hiloCronometro.reanudar();
-					hiloContadorEjercicio.reanudar();
-					hiloCuentaAtrasSerie.reanudar();
-				}
-
-				contador = 1;
-			}
+			} 
 
 		} else if (e.getSource() == ejercicios.getBtnSalir()) {
 
