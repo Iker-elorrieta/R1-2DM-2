@@ -18,6 +18,8 @@ import conexion.Conexion;
 public class HistoricoWorkouts {
 	private Workout nombreW;
 	private Workout nivel;
+	//private String nombreW;
+	//private String nivel;
 	private Double tiempoTotal;
 	private Double tiempoPrevisto;
 	private Date fecha;
@@ -37,8 +39,10 @@ public class HistoricoWorkouts {
 	// Constructores
 	public HistoricoWorkouts() {
 	}
+	
 
-	public HistoricoWorkouts(Workout nombreW, Workout nivel, Double tiempoTotal, Double tiempoPrevisto, Date fecha,
+	//String nombreW,  String nivel
+	public HistoricoWorkouts( Workout nombreW,Workout nivel, Double tiempoTotal, Double tiempoPrevisto, Date fecha,
 			Double ejerciciosCompletados) {
 		this.nombreW = nombreW;
 		this.nivel = nivel;
@@ -52,14 +56,30 @@ public class HistoricoWorkouts {
 	public Workout getNombreW() {
 		return nombreW;
 	}
+	
+	/*public String getNombreW() {
+		return nombreW;
+	}*/
 
 	public void setNombreW(Workout nombreW) {
 		this.nombreW = nombreW;
 	}
+	
+	/*public void setNombreW(String nombreW) {
+		this.nombreW = nombreW;
+	}*/
 
 	public Workout getNivel() {
 		return nivel;
 	}
+	
+	/*public String getNivel() {
+		return nivel;
+	}*/
+	
+	/*public void setNivel(String nivel) {
+		this.nivel = nivel;
+	}*/
 
 	public void setNivel(Workout nivel) {
 		this.nivel = nivel;
@@ -188,9 +208,9 @@ public class HistoricoWorkouts {
 						} else {
 						    // Maneja el caso donde no es ni String ni DocumentReference
 						    workout.setNombreW("Valor desconocido");
-						}*/
+						}
 						
-						/*Object nivelField = doc.get(fieldNivel);
+						Object nivelField = doc.get(fieldNivel);
 						if (nivelField instanceof DocumentReference) {
 						    DocumentReference nivelRef = (DocumentReference) nivelField;
 						    workout.setNivel(nivelRef.getId()); // Asigna el ID del documento referenciado, o usa nivelRef.getPath()
