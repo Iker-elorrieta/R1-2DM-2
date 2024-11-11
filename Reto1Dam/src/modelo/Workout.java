@@ -32,7 +32,8 @@ public class Workout {
 	public Workout() {
 
 	}
-
+	
+	
 	public Workout(String nombreW, Double numEjercicios, Double nivel, String video) {
 		super();
 		this.nombreW = nombreW;
