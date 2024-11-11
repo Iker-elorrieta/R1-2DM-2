@@ -16,8 +16,8 @@ import com.google.cloud.firestore.QuerySnapshot;
 import conexion.Conexion;
 
 public class HistoricoWorkouts {
-	//private Workout nombreW;
-	//private Workout nivel;
+	// private Workout nombreW;
+	// private Workout nivel;
 	private String nombreW;
 	private Double nivel;
 	private Double tiempoTotal;
@@ -26,7 +26,7 @@ public class HistoricoWorkouts {
 	private Double ejerciciosCompletados;
 
 	private static String coleccionPrincipal = "USUARIO";
-	private static String coleccionPrincipal2 = "WORKOUT";
+	// private static String coleccionPrincipal2 = "WORKOUT";
 	private static String coleccionSecundaria = "HISTORIALWORKOUTS";
 
 	private static String fieldNombreWorkout = "Nombre";
@@ -39,10 +39,9 @@ public class HistoricoWorkouts {
 	// Constructores
 	public HistoricoWorkouts() {
 	}
-	
 
-	//Workout nombreW,Workout nivel
-	public HistoricoWorkouts(String nombreW,  Double nivel , Double tiempoTotal, Double tiempoPrevisto, Date fecha,
+	// Workout nombreW,Workout nivel
+	public HistoricoWorkouts(String nombreW, Double nivel, Double tiempoTotal, Double tiempoPrevisto, Date fecha,
 			Double ejerciciosCompletados) {
 		this.nombreW = nombreW;
 		this.nivel = nivel;
@@ -53,37 +52,37 @@ public class HistoricoWorkouts {
 	}
 
 	// Getters y setters
-	/*public Workout getNombreW() {
-		return nombreW;
-	}*/
-	
+	/*
+	 * public Workout getNombreW() { return nombreW; }
+	 */
+
 	public String getNombreW() {
 		return nombreW;
 	}
 
-	/*public void setNombreW(Workout nombreW) {
-		this.nombreW = nombreW;
-	}*/
-	
+	/*
+	 * public void setNombreW(Workout nombreW) { this.nombreW = nombreW; }
+	 */
+
 	public void setNombreW(String nombreW) {
 		this.nombreW = nombreW;
 	}
 
-	/*public Workout getNivel() {
-		return nivel;
-	}*/
-	
+	/*
+	 * public Workout getNivel() { return nivel; }
+	 */
+
 	public Double getNivel() {
 		return nivel;
 	}
-	
+
 	public void setNivel(Double nivel) {
 		this.nivel = nivel;
 	}
 
-	/*public void setNivel(Workout nivel) {
-		this.nivel = nivel;
-	}*/
+	/*
+	 * public void setNivel(Workout nivel) { this.nivel = nivel; }
+	 */
 
 	public Double getTiempoTotal() {
 		return tiempoTotal;
@@ -117,54 +116,59 @@ public class HistoricoWorkouts {
 		this.ejerciciosCompletados = ejerciciosCompletados;
 	}
 
-	//	// OBTENER HISTORICOWORKOUT ------------------------
-	//	public HistoricoWorkouts mObtenerHistoricoWorkout(String emailUsuario) {
-	//	    Firestore co = null;
-	//	    HistoricoWorkouts historicoWorkout = new HistoricoWorkouts();
+	// // OBTENER HISTORICOWORKOUT ------------------------
+	// public HistoricoWorkouts mObtenerHistoricoWorkout(String emailUsuario) {
+	// Firestore co = null;
+	// HistoricoWorkouts historicoWorkout = new HistoricoWorkouts();
 	//
-	//	    try {
-	//	        co = Conexion.conectar();
+	// try {
+	// co = Conexion.conectar();
 	//
-	//	        // Consulta para obtener el documento del usuario usando su email
-	//	        CollectionReference usuariosRef = co.collection("USUARIO");
-	//	        Query query = usuariosRef.whereEqualTo("Email", emailUsuario);
-	//	        ApiFuture<QuerySnapshot> querySnapshot = query.get();
+	// // Consulta para obtener el documento del usuario usando su email
+	// CollectionReference usuariosRef = co.collection("USUARIO");
+	// Query query = usuariosRef.whereEqualTo("Email", emailUsuario);
+	// ApiFuture<QuerySnapshot> querySnapshot = query.get();
 	//
-	//	        List<QueryDocumentSnapshot> documentosUsuario = querySnapshot.get().getDocuments();
+	// List<QueryDocumentSnapshot> documentosUsuario =
+	// querySnapshot.get().getDocuments();
 	//
-	//	        // Verificamos si encontramos algún usuario con el email proporcionado
-	//	        if (!documentosUsuario.isEmpty()) {
-	//	            DocumentSnapshot documentoUsuario = documentosUsuario.get(0); // Supongamos que solo hay un usuario con ese email
+	// // Verificamos si encontramos algún usuario con el email proporcionado
+	// if (!documentosUsuario.isEmpty()) {
+	// DocumentSnapshot documentoUsuario = documentosUsuario.get(0); // Supongamos
+	// que solo hay un usuario con ese email
 	//
-	//	            // Ahora obtenemos el workout específico desde la subcolección HISTORIALWORKOUTS usando el IDWorkout
-	//	            DocumentSnapshot historico = documentoUsuario.getReference()
-	//	                    .collection("HISTORIALWORKOUTS")    // Colección secundaria HISTORIALWORKOUTS
-	//	                    .document(IDWorkout)                 // Documento del workout específico
-	//	                    .get().get();
+	// // Ahora obtenemos el workout específico desde la subcolección
+	// HISTORIALWORKOUTS usando el IDWorkout
+	// DocumentSnapshot historico = documentoUsuario.getReference()
+	// .collection("HISTORIALWORKOUTS") // Colección secundaria HISTORIALWORKOUTS
+	// .document(IDWorkout) // Documento del workout específico
+	// .get().get();
 	//
-	//	            // Verificamos si el workout existe
-	//	            if (historico.exists()) {
-	//	                historicoWorkout.setNombreW(new Workout(historico.getString("NombreWorkout"), null, null, null));
-	//	                historicoWorkout.setNivel(historico.getString("Nivel"));
-	//	                historicoWorkout.setTiempoTotal(historico.getDouble("TiempoTotal"));
-	//	                historicoWorkout.setTiempoPrevisto(historico.getDouble("TiempoPrevisto"));
-	//	                historicoWorkout.setFecha(historico.getDate("Fecha"));
-	//	                historicoWorkout.setEjerciciosCompletados(historico.getDouble("Completado"));
-	//	            }
-	//	        } else {
-	//	            System.out.println("No se encontró un usuario con el email: " + emailUsuario);
-	//	        }
+	// // Verificamos si el workout existe
+	// if (historico.exists()) {
+	// historicoWorkout.setNombreW(new Workout(historico.getString("NombreWorkout"),
+	// null, null, null));
+	// historicoWorkout.setNivel(historico.getString("Nivel"));
+	// historicoWorkout.setTiempoTotal(historico.getDouble("TiempoTotal"));
+	// historicoWorkout.setTiempoPrevisto(historico.getDouble("TiempoPrevisto"));
+	// historicoWorkout.setFecha(historico.getDate("Fecha"));
+	// historicoWorkout.setEjerciciosCompletados(historico.getDouble("Completado"));
+	// }
+	// } else {
+	// System.out.println("No se encontró un usuario con el email: " +
+	// emailUsuario);
+	// }
 	//
-	//	    } catch (InterruptedException | ExecutionException e) {
-	//	        System.out.println("Error: Clase HistoricoWorkouts, metodo mObtenerHistoricoWorkout");
-	//	        e.printStackTrace();
-	//	    } catch (IOException e) {
-	//	        e.printStackTrace();
-	//	    }
+	// } catch (InterruptedException | ExecutionException e) {
+	// System.out.println("Error: Clase HistoricoWorkouts, metodo
+	// mObtenerHistoricoWorkout");
+	// e.printStackTrace();
+	// } catch (IOException e) {
+	// e.printStackTrace();
+	// }
 	//
-	//	    return historicoWorkout;
-	//	}
-
+	// return historicoWorkout;
+	// }
 
 	// OBTENER HISTORICOWORKOUTS ------------------------
 	public ArrayList<HistoricoWorkouts> mObtenerHistoricoWorkouts(String email) {
@@ -183,7 +187,8 @@ public class HistoricoWorkouts {
 
 			// Verificamos si encontramos algún usuario con el email proporcionado
 			if (!documentosUsuario.isEmpty()) {
-				DocumentSnapshot documentoUsuario = documentosUsuario.get(0); // Supongamos que solo hay un usuario con ese email
+				DocumentSnapshot documentoUsuario = documentosUsuario.get(0); // Supongamos que solo hay un usuario con
+																				// ese email
 
 				// Obtener la referencia a la subcolección HISTORIALWORKOUTS
 				CollectionReference historicoWorkoutsRef = documentoUsuario.getReference().collection(coleccionSecundaria);
@@ -196,35 +201,32 @@ public class HistoricoWorkouts {
 						workout.setFecha(doc.getDate(fieldFecha));
 						workout.setTiempoPrevisto(doc.getDouble(fieldTiempoPrevisto));
 						workout.setTiempoTotal(doc.getDouble(fieldTiempoTotal));
-						//workout.setNombreW(new Workout(fieldNombreWorkout, null, null, null));
-						//workout.setNivel(new Workout(fieldNivel, null, null, null));
+						// workout.setNombreW(new Workout(fieldNombreWorkout, null, null, null));
+						// workout.setNivel(new Workout(fieldNivel, null, null, null));
 						DocumentReference dirRef = (DocumentReference) doc.getData().get(fieldNivel);
-						if(dirRef != null) {
+						if (dirRef != null) {
 							workout.setNombreW(dirRef.get().get().getString(fieldNombreWorkout));
 							double nivelWork = dirRef.get().get().getDouble(fieldNivel);
 							workout.setNivel(nivelWork);
 						}
-						/*Object nombreWorkoutField = doc.get(fieldNombreWorkout);
-						if (nombreWorkoutField instanceof DocumentReference) {
-						    DocumentReference nombreWorkoutRef = (DocumentReference) nombreWorkoutField;
-						    workout.setNombreW(nombreWorkoutRef.getId());  // Aquí obtienes el ID del documento referenciado
-						} else if (nombreWorkoutField instanceof String) {
-						    workout.setNombreW((String) nombreWorkoutField);
-						} else {
-						    // Maneja el caso donde no es ni String ni DocumentReference
-						    workout.setNombreW("Valor desconocido");
-						}
-						
-						Object nivelField = doc.get(fieldNivel);
-						if (nivelField instanceof DocumentReference) {
-						    DocumentReference nivelRef = (DocumentReference) nivelField;
-						    workout.setNivel(nivelRef.getId()); // Asigna el ID del documento referenciado, o usa nivelRef.getPath()
-						} else if (nivelField instanceof String) {
-						    workout.setNivel((String) nivelField); // Asigna el valor String
-						} else {
-						    workout.setNivel("Nivel desconocido"); // Valor por defecto si no es ni String ni DocumentReference
-						}*/
-						
+						/*
+						 * Object nombreWorkoutField = doc.get(fieldNombreWorkout); if
+						 * (nombreWorkoutField instanceof DocumentReference) { DocumentReference
+						 * nombreWorkoutRef = (DocumentReference) nombreWorkoutField;
+						 * workout.setNombreW(nombreWorkoutRef.getId()); // Aquí obtienes el ID del
+						 * documento referenciado } else if (nombreWorkoutField instanceof String) {
+						 * workout.setNombreW((String) nombreWorkoutField); } else { // Maneja el caso
+						 * donde no es ni String ni DocumentReference
+						 * workout.setNombreW("Valor desconocido"); }
+						 * 
+						 * Object nivelField = doc.get(fieldNivel); if (nivelField instanceof
+						 * DocumentReference) { DocumentReference nivelRef = (DocumentReference)
+						 * nivelField; workout.setNivel(nivelRef.getId()); // Asigna el ID del documento
+						 * referenciado, o usa nivelRef.getPath() } else if (nivelField instanceof
+						 * String) { workout.setNivel((String) nivelField); // Asigna el valor String }
+						 * else { workout.setNivel("Nivel desconocido"); // Valor por defecto si no es
+						 * ni String ni DocumentReference }
+						 */
 
 						listaHistoricoWorkouts.add(workout);
 					}

@@ -1,6 +1,5 @@
 package vista;
 
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.util.ArrayList;
 import javax.swing.JFrame;
@@ -31,20 +30,12 @@ public class FrameHistorialWorkouts extends JFrame {
 	 * Launch the application.
 	 */
 	/*
-	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					FrameHistorialWorkouts frame = new FrameHistorialWorkouts();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-*/
+	 * 
+	 * public static void main(String[] args) { EventQueue.invokeLater(new
+	 * Runnable() { public void run() { try { FrameHistorialWorkouts frame = new
+	 * FrameHistorialWorkouts(); frame.setVisible(true); } catch (Exception e) {
+	 * e.printStackTrace(); } } }); }
+	 */
 	/**
 	 * Create the frame.
 	 */
@@ -62,7 +53,7 @@ public class FrameHistorialWorkouts extends JFrame {
 		jScrollPanel.setBounds(63, 68, 408, 217);
 		contentPane.add(jScrollPanel);
 
-		String columnas[] = { "NombreWorkout","Nivel", "TiempoPrevisto", "TiempoTotal", "Fecha", "Completado" };
+		String columnas[] = { "NombreWorkout", "Nivel", "TiempoPrevisto", "TiempoTotal", "Fecha", "Completado" };
 
 		defaultTableModel = new DefaultTableModel(columnas, 0);
 
@@ -95,29 +86,24 @@ public class FrameHistorialWorkouts extends JFrame {
 		btnAtras.setBounds(10, 11, 89, 23);
 		contentPane.add(btnAtras);
 	}
-	
-	//metodo para insertar los workout en la tabla
-		public void insertarHistoricos(String email) {
-			//limpiar las filas
-			defaultTableModel.setRowCount(0);
 
-			HistoricoWorkouts historicoInstance = new HistoricoWorkouts();
-			ArrayList<HistoricoWorkouts> listaHistoricoWorkouts = historicoInstance.mObtenerHistoricoWorkouts(email);
+	// metodo para insertar los workout en la tabla
+	public void insertarHistoricos(String email) {
+		// limpiar las filas
+		defaultTableModel.setRowCount(0);
 
-			//lo recorremos y añadimos a la tabla
-			for (HistoricoWorkouts HistoricoWorkout : listaHistoricoWorkouts) {
-				Object[] rowData = {
-						HistoricoWorkout.getNombreW(),
-						HistoricoWorkout.getNivel(),
-						HistoricoWorkout.getTiempoTotal().intValue(),
-						HistoricoWorkout.getTiempoPrevisto().intValue(),
-						HistoricoWorkout.getFecha(),
-						HistoricoWorkout.getEjerciciosCompletados()
-				};
+		HistoricoWorkouts historicoInstance = new HistoricoWorkouts();
+		ArrayList<HistoricoWorkouts> listaHistoricoWorkouts = historicoInstance.mObtenerHistoricoWorkouts(email);
 
-				defaultTableModel.addRow(rowData);
-			}
+		// lo recorremos y añadimos a la tabla
+		for (HistoricoWorkouts HistoricoWorkout : listaHistoricoWorkouts) {
+			Object[] rowData = { HistoricoWorkout.getNombreW(), HistoricoWorkout.getNivel(),
+					HistoricoWorkout.getTiempoTotal().intValue(), HistoricoWorkout.getTiempoPrevisto().intValue(),
+					HistoricoWorkout.getFecha(), HistoricoWorkout.getEjerciciosCompletados() };
+
+			defaultTableModel.addRow(rowData);
 		}
+	}
 
 	// getters
 	public JPanel getContentPane() {
