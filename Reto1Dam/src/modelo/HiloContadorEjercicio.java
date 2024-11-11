@@ -4,9 +4,11 @@ import javax.swing.JLabel;
 
 public class HiloContadorEjercicio extends Thread{
 
+
+	JLabel mostrarCronometro;
 	private int minutos = 0;
 	private int segundos = 0;
-	JLabel mostrarCronometro;
+
 	private boolean terminar=false;
 	private boolean pausado = false;
 
@@ -29,7 +31,13 @@ public class HiloContadorEjercicio extends Thread{
 	//parar el contador
 	public void terminar() {
 		terminar=true;
+	}
 
+	//resetear los valores
+	public void reset() {
+		minutos = 0;
+		segundos = 0;
+		mostrarCronometro.setText("0:00");
 	}
 
 	//pausar el contador

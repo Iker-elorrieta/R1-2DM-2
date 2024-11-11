@@ -2,28 +2,27 @@ package modelo;
 
 import javax.swing.JLabel;
 
-public class HiloCuentaAtrasSerie extends Thread{
+public class HiloDescanso extends Thread{
 
 	JLabel mostrarContador;
 	private boolean terminado = false;
 	private boolean pausado = false;
-	private Serie dTiempoSerie;
+	private Ejercicio tiempoDescansoEjer;
 
-	private double tiempoSerie;
 	private int tiempoSegundos;
-
+	
 	int mins;
 	int secs;
 
 
 	//constructores
-	public HiloCuentaAtrasSerie() {
+	public HiloDescanso() {
 
 	}
 
-	public HiloCuentaAtrasSerie(JLabel txt, double tiempoSerie) {
+	public HiloDescanso(JLabel txt, double tiempoDescansoEjer) {
 		this.mostrarContador = txt;
-		this.tiempoSegundos = (int) tiempoSerie;
+		this.tiempoSegundos = (int) tiempoDescansoEjer;
 	}
 
 	//parar la cuenta atras
@@ -36,8 +35,7 @@ public class HiloCuentaAtrasSerie extends Thread{
 		mins = 0;
 		secs = 0;
 		mostrarContador.setText("0:00");
-		
-	}
+	} 
 
 	//pausar la cuenta atras
 	public void pausar() {
@@ -71,41 +69,40 @@ public class HiloCuentaAtrasSerie extends Thread{
 			}
 
 			try {
-				if (!terminado) {
-					mins = segundosRestantes / 60;
-					secs = segundosRestantes % 60;
 
-					mostrarContador.setText(String.format("%02d:%02d", mins, secs));
+				mins = segundosRestantes / 60;
+				secs = segundosRestantes % 60;
 
-					segundosRestantes--; // Decrease remaining time
+				mostrarContador.setText(String.format("%02d:%02d", mins, secs));				
 
-					Thread.sleep(1000); // Wait for one second
-				}
+				segundosRestantes--;
+
+				Thread.sleep(1000);
+
 			} catch (InterruptedException e) {
-				System.out.println("Countdown interrupted");
+				System.out.println("Cuentra atrás interrumpida");
 				Thread.currentThread().interrupt();
-			}
+			}	
 		}
-
 		setTerminado(true);
 	}
 
 
 	//getters y setters
-	public boolean isTerminado() {
-		return terminado;
-	}
-
-	public void setTerminado(boolean terminado) {
-		this.terminado = terminado;
-	}
-
 	public JLabel getMostrarContador() {
 		return mostrarContador;
 	}
 
 	public void setMostrarContador(JLabel mostrarContador) {
 		this.mostrarContador = mostrarContador;
+	}
+
+	public boolean isTerminado() {
+		return terminado;
+	}
+
+	public void setTerminado(boolean terminado) {
+		this.terminado = terminado;
 	}
 
 	public boolean isPausado() {
@@ -116,20 +113,20 @@ public class HiloCuentaAtrasSerie extends Thread{
 		this.pausado = pausado;
 	}
 
-	public double getTiempoSerie() {
-		return tiempoSerie;
+	public Ejercicio getTiempoDescansoEjer() {
+		return tiempoDescansoEjer;
 	}
 
-	public void setTiempoSerie(double tiempoSerie) {
-		this.tiempoSerie = tiempoSerie;
+	public void setTiempoDescansoEjer(Ejercicio tiempoDescansoEjer) {
+		this.tiempoDescansoEjer = tiempoDescansoEjer;
 	}
 
-	public Serie getdTiempoSerie() {
-		return dTiempoSerie;
+	public int getTiempoSegundos() {
+		return tiempoSegundos;
 	}
 
-	public void setdTiempoSerie(Serie dTiempoSerie) {
-		this.dTiempoSerie = dTiempoSerie;
+	public void setTiempoSegundos(int tiempoSegundos) {
+		this.tiempoSegundos = tiempoSegundos;
 	}
 
 

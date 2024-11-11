@@ -6,6 +6,7 @@ public class HiloCuentaAtrasV extends Thread{
 
 	JLabel txt;
 	private boolean terminado = false;
+	int segundos = 5;
 
 	//constructores
 	public HiloCuentaAtrasV() {
@@ -20,9 +21,14 @@ public class HiloCuentaAtrasV extends Thread{
 		setTerminado(true);
 	}
 
+	//resetear los valores
+	public void reset() {
+		segundos = 0;
+		txt.setText("-");
+	}
+
 	@Override
 	public void run() {
-		int segundos = 5;
 
 		try {
 			while (segundos > 0) {

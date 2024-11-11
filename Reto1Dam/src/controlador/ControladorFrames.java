@@ -24,6 +24,7 @@ import modelo.HiloContadorEjercicio;
 import modelo.HiloCronometro;
 import modelo.HiloCuentaAtrasSerie;
 import modelo.HiloCuentaAtrasV;
+import modelo.HiloDescanso;
 import modelo.Serie;
 import modelo.Usuario;
 
@@ -42,15 +43,21 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 	private Usuario usuarioLogueado;
 	private Ejercicio ejercicio;
 	private Serie serie;
+	
+	ArrayList<Ejercicio> listaEjercicios;
+	Ejercicio ejercicioActual;
+	ArrayList<Serie> listaSeries;
 
 	private int contador = 0;
 	private int indexEjercicioActual = 0;
+	private int indexSerieActual = 0;
 
 	private HiloCronometro hiloCronometro;
 	private HiloContadorEjercicio hiloContadorEjercicio;
 	private HiloCuentaAtrasV hiloCuentaAtras;
 	private Metodos metodos = new Metodos();
 	private HiloCuentaAtrasSerie hiloCuentaAtrasSerie;
+	private HiloDescanso hiloDescansoEjer;
 
 
 	public ControladorFrames(FrameLogin login, FrameRegistro registro, FrameWorkoutsPrincipal workoutsPrincipal, FramePerfilUsuario perfilUsuario,FrameModificarDatos modificarDatos, FrameHistorialWorkouts historialWorkouts,
@@ -222,6 +229,11 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 			workout.dispose();
 
 		} else if(e.getSource() == workout.getBtnEntrar()) {
+			
+			indexEjercicioActual = 0;
+		    indexSerieActual = 0;
+		    contador = 0;
+		    
 
 			String descripcionEjercicio = workout.getDescripcionEjercicioTabla();
 			String nombreWorkout = workout.getLblNombreWorkout().getText();
@@ -234,7 +246,14 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 			ejercicios.insertarSeries(nombreWorkout, nombreEjercicio);
 			ejercicios.getBtnInicioPausa().setText("Iniciar");
 			ejercicios.getBtnInicioPausa().setBackground(new java.awt.Color(153,205,144));
-
+			
+			/*
+			hiloContadorEjercicio = new HiloContadorEjercicio(ejercicios.getLblTiempoEjer());
+			ejercicios.getLblTiempoSerieNom().setText("Tiempo de la serie -");
+			hiloCuentaAtrasSerie = new HiloCuentaAtrasSerie(ejercicios.getLblTiempoSerie(), serie.getTiempoSerie());
+			hiloCronometro = new HiloCronometro(ejercicios.getLblCronometro());
+			hiloCuentaAtras = new HiloCuentaAtrasV(ejercicios.getLblCuentaAtrasV());
+			*/
 
 			ejercicios.setVisible(true);
 			workout.dispose();
@@ -243,7 +262,44 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 		//funcion botones frame ejercicio ---------------------------------------------- BOTONES FRAME EJERCICIOS
 		else if (e.getSource() == ejercicios.getBtnAtras()) {
 
-			//*poner que los contadores paren y se reseteen sin guardar nada**************************************************
+
+
+			//los contadores paran y se resetean
+			if (hiloContadorEjercicio != null) {
+				hiloContadorEjercicio.terminar();
+				hiloContadorEjercicio.reset();
+				hiloContadorEjercicio = null;
+			}
+
+			if (hiloCuentaAtrasSerie != null) {
+				hiloCuentaAtrasSerie.terminar();
+				hiloCuentaAtrasSerie.reset();
+				hiloCuentaAtrasSerie = null;				
+			}
+
+			if (hiloCronometro != null) {
+				hiloCronometro.terminar();
+				hiloCronometro.reset();
+				hiloCronometro = null;
+			}
+
+			if (hiloDescansoEjer != null) {
+				hiloDescansoEjer.terminar();
+				hiloDescansoEjer.reset();
+				hiloDescansoEjer = null;
+			}
+			
+			if (hiloCuentaAtras != null) {
+				hiloCuentaAtras.terminado();
+				hiloCuentaAtras.reset();
+				hiloCuentaAtras = null;
+			}
+
+			//reseteamos tambien contadores
+			indexEjercicioActual = 0;
+			indexSerieActual = 0;
+			contador = 0;
+
 
 			workout.setVisible(true);
 			ejercicios.dispose();
@@ -259,11 +315,11 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 			}
 
 
-			ArrayList<Ejercicio> listaEjercicios = ejercicio.mObtenerEjercicios(ejercicios.getLblNombreWorkout().getText());
+			listaEjercicios = ejercicio.mObtenerEjercicios(ejercicios.getLblNombreWorkout().getText());
 
-			Ejercicio ejercicioActual = listaEjercicios.get(indexEjercicioActual);
+			ejercicioActual = listaEjercicios.get(indexEjercicioActual);
 
-			ArrayList<Serie> listaSeries = serie.mObtenerSeries(ejercicios.getLblNombreWorkout().getText(), ejercicioActual.getNombreE());			
+			listaSeries = serie.mObtenerSeries(ejercicios.getLblNombreWorkout().getText(), ejercicioActual.getNombreE());			
 
 
 			if (indexEjercicioActual < listaEjercicios.size()) {
@@ -307,8 +363,8 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 							}
 
 							//recorremos las series
-							for (int i = 0; i < listaSeries.size(); i++) {
-								Serie serieActual = listaSeries.get(i);
+							for (indexSerieActual = 0; indexSerieActual < listaSeries.size(); indexSerieActual++) {
+								Serie serieActual = listaSeries.get(indexSerieActual);
 
 								//nombre de la serie actual
 								ejercicios.getLblTiempoSerieNom().setText("Tiempo de la " + serieActual.getNombreS());
@@ -318,7 +374,7 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 
 								//hilo serie
 								if (hiloCuentaAtrasSerie != null) {
-									//asegurarse que la serie anterior haya temrinado
+									//asegurarse que la serie anterior haya terminado
 									hiloCuentaAtrasSerie.terminar();
 								}
 

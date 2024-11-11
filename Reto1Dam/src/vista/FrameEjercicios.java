@@ -258,7 +258,7 @@ public class FrameEjercicios extends JFrame {
 		for (Serie serie : listaSeries) {
 			
 			String nombreImg = serie.getFoto();
-			
+			 
 			String rutaImg = rutaBaseImg + nombreImg;
 			
 			 ImageIcon imageIcon = new ImageIcon(rutaImg);
