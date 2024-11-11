@@ -16,10 +16,10 @@ import com.google.cloud.firestore.QuerySnapshot;
 import conexion.Conexion;
 
 public class HistoricoWorkouts {
-	private Workout nombreW;
-	private Workout nivel;
-	//private String nombreW;
-	//private String nivel;
+	//private Workout nombreW;
+	//private Workout nivel;
+	private String nombreW;
+	private Double nivel;
 	private Double tiempoTotal;
 	private Double tiempoPrevisto;
 	private Date fecha;
@@ -29,7 +29,7 @@ public class HistoricoWorkouts {
 	private static String coleccionPrincipal2 = "WORKOUT";
 	private static String coleccionSecundaria = "HISTORIALWORKOUTS";
 
-	private static String fieldNombreWorkout = "NombreWorkout";
+	private static String fieldNombreWorkout = "Nombre";
 	private static String fieldNivel = "Nivel";
 	private static String fieldTiempoTotal = "TiempoTotal";
 	private static String fieldTiempoPrevisto = "TiempoPrevisto";
@@ -41,8 +41,8 @@ public class HistoricoWorkouts {
 	}
 	
 
-	//String nombreW,  String nivel
-	public HistoricoWorkouts( Workout nombreW,Workout nivel, Double tiempoTotal, Double tiempoPrevisto, Date fecha,
+	//Workout nombreW,Workout nivel
+	public HistoricoWorkouts(String nombreW,  Double nivel , Double tiempoTotal, Double tiempoPrevisto, Date fecha,
 			Double ejerciciosCompletados) {
 		this.nombreW = nombreW;
 		this.nivel = nivel;
@@ -53,37 +53,37 @@ public class HistoricoWorkouts {
 	}
 
 	// Getters y setters
-	public Workout getNombreW() {
-		return nombreW;
-	}
-	
-	/*public String getNombreW() {
+	/*public Workout getNombreW() {
 		return nombreW;
 	}*/
-
-	public void setNombreW(Workout nombreW) {
-		this.nombreW = nombreW;
-	}
 	
-	/*public void setNombreW(String nombreW) {
+	public String getNombreW() {
+		return nombreW;
+	}
+
+	/*public void setNombreW(Workout nombreW) {
 		this.nombreW = nombreW;
 	}*/
-
-	public Workout getNivel() {
-		return nivel;
-	}
 	
-	/*public String getNivel() {
+	public void setNombreW(String nombreW) {
+		this.nombreW = nombreW;
+	}
+
+	/*public Workout getNivel() {
 		return nivel;
 	}*/
 	
-	/*public void setNivel(String nivel) {
-		this.nivel = nivel;
-	}*/
-
-	public void setNivel(Workout nivel) {
+	public Double getNivel() {
+		return nivel;
+	}
+	
+	public void setNivel(Double nivel) {
 		this.nivel = nivel;
 	}
+
+	/*public void setNivel(Workout nivel) {
+		this.nivel = nivel;
+	}*/
 
 	public Double getTiempoTotal() {
 		return tiempoTotal;
@@ -196,9 +196,14 @@ public class HistoricoWorkouts {
 						workout.setFecha(doc.getDate(fieldFecha));
 						workout.setTiempoPrevisto(doc.getDouble(fieldTiempoPrevisto));
 						workout.setTiempoTotal(doc.getDouble(fieldTiempoTotal));
-						workout.setNombreW(new Workout(fieldNombreWorkout, null, null, null));
-						workout.setNivel(new Workout(fieldNivel, null, null, null));
-						
+						//workout.setNombreW(new Workout(fieldNombreWorkout, null, null, null));
+						//workout.setNivel(new Workout(fieldNivel, null, null, null));
+						DocumentReference dirRef = (DocumentReference) doc.getData().get(fieldNivel);
+						if(dirRef != null) {
+							workout.setNombreW(dirRef.get().get().getString(fieldNombreWorkout));
+							double nivelWork = dirRef.get().get().getDouble(fieldNivel);
+							workout.setNivel(nivelWork);
+						}
 						/*Object nombreWorkoutField = doc.get(fieldNombreWorkout);
 						if (nombreWorkoutField instanceof DocumentReference) {
 						    DocumentReference nombreWorkoutRef = (DocumentReference) nombreWorkoutField;
