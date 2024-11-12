@@ -214,16 +214,19 @@ public class FrameEjercicios extends JFrame {
 		contentPane.add(lblCuentaAtrasV);
 		
 		JTextArea textAreaFondo = new JTextArea();
+		textAreaFondo.setEditable(false);
 		textAreaFondo.setBackground(new Color(204, 204, 255));
 		textAreaFondo.setBounds(20, 445, 147, 29);
 		contentPane.add(textAreaFondo);
 		
 		textAreaFondo1 = new JTextArea();
+		textAreaFondo1.setEditable(false);
 		textAreaFondo1.setBackground(SystemColor.inactiveCaption);
 		textAreaFondo1.setBounds(230, 445, 147, 29);
 		contentPane.add(textAreaFondo1);
 		
 		textAreaFondo2 = new JTextArea();
+		textAreaFondo2.setEditable(false);
 		textAreaFondo2.setBackground(new Color(204, 255, 204));
 		textAreaFondo2.setBounds(465, 445, 76, 29);
 		contentPane.add(textAreaFondo2);
@@ -240,6 +243,7 @@ public class FrameEjercicios extends JFrame {
 		contentPane.add(lblTiempoSerie);
 		
 		JTextArea textAreaFondo3 = new JTextArea();
+		textAreaFondo3.setEditable(false);
 		textAreaFondo3.setBackground(new Color(255, 222, 173));
 		textAreaFondo3.setBounds(20, 597, 147, 29);
 		contentPane.add(textAreaFondo3);
