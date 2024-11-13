@@ -134,6 +134,7 @@ public class FrameWorkout extends JFrame {
 			};
 
 			defaultTableModel.addRow(rowData);
+			
 		}
 
 		//ponemos que por defecto este seleccionado el primer ejercicio para que no de errores
