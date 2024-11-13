@@ -178,7 +178,7 @@ public class HistoricoWorkouts {
 		try {
 			co = Conexion.conectar();
 
-			// Consulta para obtener el documento del usuario usando su email
+			// Consulta para obtener el documento del usuario usando su email 
 			CollectionReference usuariosRef = co.collection(coleccionPrincipal);
 			Query query = usuariosRef.whereEqualTo("Email", email);
 			ApiFuture<QuerySnapshot> querySnapshot = query.get();
