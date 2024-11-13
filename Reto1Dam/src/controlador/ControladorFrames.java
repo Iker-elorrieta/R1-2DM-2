@@ -114,6 +114,7 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 			String email = login.getTextFieldEmail().getText();
 			String contrasena = new String(login.getPasswordFieldContrasena().getPassword());
 
+			if(metodos.hayInternet()){
 			if (Usuario.comprobarLogin(email, contrasena)) {
 				Usuario usuario = Usuario.mObtenerUsuario(email);
 
@@ -126,6 +127,8 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 					workoutsPrincipal.setVisible(true);					
 					login.dispose();
 				}
+			}}else {
+				JOptionPane.showMessageDialog(null, "No es posible registrarse sin conexion.", "Error de Registro", JOptionPane.ERROR_MESSAGE);
 			}
 		} else if (e.getSource() == login.getBtnRegistro()) {
 
