@@ -90,6 +90,52 @@ public class HiloCronometro extends Thread{
 			}
 		}
 	}
+	
+	
+
+	//getters y setters
+	public JLabel getMostrarCronometro() {
+		return mostrarCronometro;
+	}
+
+	public void setMostrarCronometro(JLabel mostrarCronometro) {
+		this.mostrarCronometro = mostrarCronometro;
+	}
+
+	public int getMinutos() {
+		return minutos;
+	}
+
+	public void setMinutos(int minutos) {
+		this.minutos = minutos;
+	}
+
+	public int getSegundos() {
+		return segundos;
+	}
+
+	public void setSegundos(int segundos) {
+		this.segundos = segundos;
+	}
+
+	public boolean isTerminar() {
+		return terminar;
+	}
+
+	public void setTerminar(boolean terminar) {
+		this.terminar = terminar;
+	}
+
+	public boolean isPausado() {
+		return pausado;
+	}
+
+	public void setPausado(boolean pausado) {
+		this.pausado = pausado;
+	}
+	
+	
+	
 
 
 

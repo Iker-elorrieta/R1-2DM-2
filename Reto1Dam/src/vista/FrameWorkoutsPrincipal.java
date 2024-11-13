@@ -31,7 +31,7 @@ public class FrameWorkoutsPrincipal extends JFrame {
 	private JButton btnFiltro;
 	private JButton btnSeleccionar;
 	private JComboBox<Integer> comboBoxFiltrosNivel;
-	
+
 	private String nombreWorkout;
 
 	/**
@@ -87,16 +87,16 @@ public class FrameWorkoutsPrincipal extends JFrame {
 		tablaEjercicios.setDefaultEditor(Object.class, null);
 
 		jScrollPanel.setViewportView(tablaEjercicios);
-		
+
 		tablaEjercicios.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                int row = tablaEjercicios.getSelectedRow(); // Get the selected row
-                if (row != -1) { // Check if a row is selected
-                    nombreWorkout = (String) defaultTableModel.getValueAt(row, 0); //valor de la primera columna de la fila seleccionada
-                }
-            }
-        });
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int row = tablaEjercicios.getSelectedRow();
+				if (row != -1) {
+					nombreWorkout = (String) defaultTableModel.getValueAt(row, 0); //valor de la primera columna de la fila seleccionada
+				}
+			}
+		});
 
 
 		lblWorkouts = new JLabel("WORKOUTS");
@@ -123,7 +123,7 @@ public class FrameWorkoutsPrincipal extends JFrame {
 		comboBoxFiltrosNivel = new JComboBox<Integer>();
 		comboBoxFiltrosNivel.setBounds(110, 55, 89, 22);
 		contentPane.add(comboBoxFiltrosNivel);
-		
+
 		btnFiltro = new JButton("Filtrar");
 		btnFiltro.setBounds(239, 55, 89, 23);
 		contentPane.add(btnFiltro);
@@ -164,6 +164,13 @@ public class FrameWorkoutsPrincipal extends JFrame {
 			};
 
 			defaultTableModel.addRow(rowData);
+		}
+
+		//ponemos que por defecto este seleccionado el primer ejercicio para que no de errores
+		if (defaultTableModel.getRowCount() > 0) {
+			tablaEjercicios.setRowSelectionInterval(0, 0);
+			
+			nombreWorkout = (String) defaultTableModel.getValueAt(0, 0);
 		}
 	}
 
@@ -208,8 +215,8 @@ public class FrameWorkoutsPrincipal extends JFrame {
 	public String getNombreWorkout() {
 		return nombreWorkout;
 	}
-	
-	
-	
-	
+
+
+
+
 }

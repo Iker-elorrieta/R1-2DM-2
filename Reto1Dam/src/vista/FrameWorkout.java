@@ -31,7 +31,7 @@ public class FrameWorkout extends JFrame {
 
 	private JTable tablaEjercicios;
 	private DefaultTableModel defaultTableModel;
-	
+
 	private String nombreWorkoutTabla;
 	private String nombreEjercicioTabla;
 	private String descripcionEjercicioTabla;
@@ -92,18 +92,18 @@ public class FrameWorkout extends JFrame {
 		tablaEjercicios.setDefaultEditor(Object.class, null);
 
 		jScrollPanel.setViewportView(tablaEjercicios);
-		
+
 		tablaEjercicios.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                int row = tablaEjercicios.getSelectedRow(); // Get the selected row
-                if (row != -1) { // Check if a row is selected
-                     //valor de la primera columna de la fila seleccionada
-                    nombreEjercicioTabla = (String) defaultTableModel.getValueAt(row, 0); //valor de la segunda columna de la fila seleccionada
-                    descripcionEjercicioTabla = (String) defaultTableModel.getValueAt(row, 2); //valor de la tercera columna de la fila seleccionada
-                }
-            }
-        });
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int row = tablaEjercicios.getSelectedRow();
+				if (row != -1) {
+					//valor de la primera columna de la fila seleccionada
+					nombreEjercicioTabla = (String) defaultTableModel.getValueAt(row, 0); //valor de la primera columna de la fila seleccionada
+					descripcionEjercicioTabla = (String) defaultTableModel.getValueAt(row, 2); //valor de la tercera columna de la fila seleccionada
+				}
+			}
+		});
 
 		btnAtras = new JButton("Atrás");
 		btnAtras.setBounds(10, 9, 89, 23);
@@ -134,6 +134,15 @@ public class FrameWorkout extends JFrame {
 			};
 
 			defaultTableModel.addRow(rowData);
+		}
+
+		//ponemos que por defecto este seleccionado el primer ejercicio para que no de errores
+		if (defaultTableModel.getRowCount() > 0) {
+			tablaEjercicios.setRowSelectionInterval(0, 0);
+			
+			nombreWorkout = lblNombreWorkout.getText();
+			nombreEjercicioTabla = (String) defaultTableModel.getValueAt(0, 0); //valor de la primera celda de la fila por defecto
+			descripcionEjercicioTabla = (String) defaultTableModel.getValueAt(0, 2); //valor de la segunda celda de la fila por defecto
 		}
 	}
 
