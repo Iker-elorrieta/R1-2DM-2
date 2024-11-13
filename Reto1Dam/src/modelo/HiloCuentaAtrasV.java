@@ -5,7 +5,7 @@ import javax.swing.JLabel;
 public class HiloCuentaAtrasV extends Thread{
 
 	JLabel txt;
-	private boolean terminado = false;
+	private boolean terminado = true;
 	int segundos = 5;
 
 	//constructores
@@ -29,7 +29,9 @@ public class HiloCuentaAtrasV extends Thread{
 
 	@Override
 	public void run() {
-
+		
+		terminado = false;
+		
 		try {
 			while (segundos > 0) {
 

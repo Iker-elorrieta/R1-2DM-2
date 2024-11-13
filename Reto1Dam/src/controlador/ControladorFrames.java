@@ -233,7 +233,6 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 			indexSerieActual = 0;
 			contador = 0;
 
-
 			String descripcionEjercicio = workout.getDescripcionEjercicioTabla();
 			String nombreWorkout = workout.getLblNombreWorkout().getText();
 			String nombreEjercicio = workout.getNombreEjercicioTabla();
@@ -290,7 +289,7 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 			workout.dispose();
 
 		}
-		// funcion botones frame ejercicio ---------------------------------------------- BOTONES FRAME EJERCICIOS
+		// funcion botones frame ejercicios ---------------------------------------------- BOTONES FRAME EJERCICIOS
 		else if (e.getSource() == ejercicios.getBtnAtras()) {	
 
 			indexEjercicioActual = 0;
@@ -338,7 +337,6 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 
 		} else if (e.getSource() == ejercicios.getBtnInicioPausa()) {
 
-
 			if (serie == null) {
 				serie = new Serie();
 			}
@@ -363,7 +361,7 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 						hiloCuentaAtras.start();
 					}
 
-					//nuevo hilo para mirar si cuentaAtras ha terminado
+					//nuevo hilo
 					new Thread(new Runnable() {
 						@Override
 						public void run() {

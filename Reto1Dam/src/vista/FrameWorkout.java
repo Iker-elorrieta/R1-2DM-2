@@ -25,33 +25,14 @@ public class FrameWorkout extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JButton btnAtras;
-	private JButton btnEntrar;
+	private JButton btnAtras, btnEntrar;
 	private JLabel lblNombreWorkout;
-
 	private JTable tablaEjercicios;
 	private DefaultTableModel defaultTableModel;
 
 	private String nombreWorkoutTabla;
 	private String nombreEjercicioTabla;
 	private String descripcionEjercicioTabla;
-
-	/**
-	 * Launch the application.
-	 */
-	/*
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					FrameWorkout frame = new FrameWorkout();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}*/
 
 	/**
 	 * Create the frame.

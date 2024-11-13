@@ -26,33 +26,11 @@ public class FrameWorkoutsPrincipal extends JFrame {
 	private JTable tablaEjercicios;
 	private DefaultTableModel defaultTableModel;
 	private JLabel lblWorkouts;
-	private JButton btnPerfil;
-	private JButton btnHistorial;
-	private JButton btnFiltro;
-	private JButton btnSeleccionar;
+	private JButton btnPerfil, btnHistorial, btnFiltro, btnSeleccionar;
 	private JComboBox<Integer> comboBoxFiltrosNivel;
 
 	private String nombreWorkout;
-
-	/**
-	 * Launch the application.
-	 */
-	/*
-	public void cargarFrameWorkoutsPrincipal(Usuario usuario, FrameWorkoutsPrincipal frame) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					FrameWorkoutsPrincipal frame = new FrameWorkoutsPrincipal(usuario);
-					frame.setVisible(true);
-
-					//cargamos la tabla con los datos
-					frame.insertarWorkouts();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}*/
+	
 
 	/**
 	 * Create the frame.

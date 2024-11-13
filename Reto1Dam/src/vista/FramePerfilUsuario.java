@@ -16,36 +16,10 @@ public class FramePerfilUsuario extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textFieldNombre;
-	private JTextField textFieldApellido;
-	private JTextField textFieldEmail;
-	private JTextField textFieldFechaNac;
-	private JButton btnModificar;
-	private JButton btnAtras;
+	private JTextField textFieldNombre, textFieldApellido, textFieldEmail, textFieldFechaNac;
+	private JButton btnModificar, btnAtras;
 
-
-	/**
-	 * Launch the application.
-	 */
-	/*
-	public void cargarFramePerfilUsuario(Usuario usuario) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {					
-					FramePerfilUsuario frame = new FramePerfilUsuario(usuario);
-					frame.setVisible(true);
-
-					frame.setUsuarioDatos(usuario);
-					
-				} catch (Exception e) {
-					e.printStackTrace();
-					
-				}
-			}
-			
-		});
-	}*/
-
+	
 	/**
 	 * Create the frame.
 	 */

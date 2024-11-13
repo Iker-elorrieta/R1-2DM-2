@@ -13,9 +13,12 @@ public class FrameResumenWorkout extends JFrame {
 	private JPanel contentPane;
 	private JButton btnOk;
 
-	/**
-	 * Launch the application.
-	 */
+	/*
+	 
+	 
+	//
+	 // Launch the application.
+	 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -28,6 +31,7 @@ public class FrameResumenWorkout extends JFrame {
 			}
 		});
 	}
+	*/
 
 	/**
 	 * Create the frame.

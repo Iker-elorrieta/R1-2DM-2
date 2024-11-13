@@ -29,47 +29,13 @@ public class FrameEjercicios extends JFrame {
 	private static String rutaBaseImg = "src/Imagen/";
 
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
-	private JButton btnAtras;
-	private JButton btnInicioPausa;
-	private JButton btnSalir;
-
-	private JLabel lblNombreEjercicio;
-	private JLabel lblNombreWorkout;
-	private JTextArea textAreaDescripcion;
-	private JLabel lblTiempoEjercicio;
-	private JLabel lblDescanso;
-	private JLabel lblCronometroWorkout;
-	private JLabel lblCronometro;
-	private JLabel lblTiempoSerie;
-	private JLabel lblTiempoSerieNom;
-
+	private JPanel contentPane;	
+	private JButton btnAtras, btnInicioPausa, btnSalir, btnSigSerie, btnSigEjercicio;	
+	private JTextArea textAreaDescripcion, textAreaFondo, textAreaFondo1, textAreaFondo2, textAreaFondo3;	
+	private JLabel lblTiempoEjercicio, lblDescanso, lblCronometroWorkout, lblCronometro, lblTiempoSerie, lblTiempoSerieNom, lblTiempoEjer, lblTiempoDescanso, lblCuentaAtrasV, lblNombreEjercicio, lblNombreWorkout;
 	private JTable tablaEjercicios;
 	private DefaultTableModel defaultTableModel;
-	private JLabel lblTiempoEjer;
-	private JLabel lblTiempoDescanso;
-	private JLabel lblCuentaAtrasV;
-	private JTextArea textAreaFondo1;
-	private JTextArea textAreaFondo2;
 
-
-	/**
-	 * Launch the application.
-	 */
-	/*
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					FrameEjercicios frame = new FrameEjercicios();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}*/
-	
 	
 	 /**
      * Render customizado para poner imagenes en una columna del Jtable
@@ -210,7 +176,7 @@ public class FrameEjercicios extends JFrame {
 		lblCuentaAtrasV.setBounds(286, 542, 44, 44);
 		contentPane.add(lblCuentaAtrasV);
 		
-		JTextArea textAreaFondo = new JTextArea();
+		textAreaFondo = new JTextArea();
 		textAreaFondo.setEditable(false);
 		textAreaFondo.setBackground(new Color(204, 204, 255));
 		textAreaFondo.setBounds(20, 445, 147, 29);
@@ -239,11 +205,19 @@ public class FrameEjercicios extends JFrame {
 		lblTiempoSerie.setBounds(20, 597, 147, 29);
 		contentPane.add(lblTiempoSerie);
 		
-		JTextArea textAreaFondo3 = new JTextArea();
+		textAreaFondo3 = new JTextArea();
 		textAreaFondo3.setEditable(false);
 		textAreaFondo3.setBackground(new Color(255, 222, 173));
 		textAreaFondo3.setBounds(20, 597, 147, 29);
 		contentPane.add(textAreaFondo3);
+		
+		btnSigSerie = new JButton("Siguiente serie");
+		btnSigSerie.setBounds(256, 630, 122, 23);
+		contentPane.add(btnSigSerie);
+		
+		btnSigEjercicio = new JButton("Siguiente ejercicio");
+		btnSigEjercicio.setBounds(256, 630, 122, 23);
+		contentPane.add(btnSigEjercicio);
 	}
 
 	//metodo para insertar los datos de las series en la tabla
@@ -350,8 +324,6 @@ public class FrameEjercicios extends JFrame {
 	public JLabel getLblTiempoSerieNom() {
 		return lblTiempoSerieNom;
 	}
-	
-	
 	
 	
 }

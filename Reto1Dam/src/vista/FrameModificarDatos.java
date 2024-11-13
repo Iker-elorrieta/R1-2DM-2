@@ -15,32 +15,11 @@ import modelo.Usuario;
 public class FrameModificarDatos extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
-	private JTextField textFieldNombreModificar;
-	private JTextField textFieldApellidoModificar;
-	private JTextField textFieldEmailModificar;
-	private JButton btnModificarAceptar;
-	private JButton btnCancelar;
-	private JLabel lblcontrasena;
-	private JTextField textFieldContrasenaModificar;
+	private JPanel contentPane;	
+	private JTextField textFieldNombreModificar, textFieldApellidoModificar, textFieldEmailModificar, textFieldContrasenaModificar;	
+	private JButton btnModificarAceptar, btnCancelar;
+	private JLabel lblcontrasena;	
 	private JDateChooser dateChooserFechaNacModificar;
-
-	/**
-	 * Launch the application.
-	 */
-	/*
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					FrameModificarDatos frame = new FrameModificarDatos();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}*/
 
 	/**
 	 * Create the frame.

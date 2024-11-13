@@ -9,7 +9,7 @@ public class HiloCronometro extends Thread{
 	private int minutos = 0;
 	private int segundos = 0;
 
-	private boolean terminar=false;
+	private boolean terminar = true;
 	private boolean pausado = false;
 
 
@@ -55,6 +55,9 @@ public class HiloCronometro extends Thread{
 	}
 
 	public void run() {
+		
+		terminar = false;
+		
 		while (!terminar) {
 
 			if (pausado) {

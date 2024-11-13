@@ -5,12 +5,15 @@ import javax.swing.JLabel;
 public class HiloCuentaAtrasSerie extends Thread{
 
 	JLabel mostrarContador;
-	private boolean terminado = false;
+	private boolean terminado = true;
 	private boolean pausado = false;
 	private Serie dTiempoSerie;
 
 	private double tiempoSerie;
 	private int tiempoSegundos;
+	
+
+	int segundosRestantes;
 
 	int mins;
 	int secs;
@@ -56,8 +59,10 @@ public class HiloCuentaAtrasSerie extends Thread{
 	@Override
 	public void run() {
 
-		int segundosRestantes = tiempoSegundos;
-
+		segundosRestantes = tiempoSegundos;
+		
+		terminado = false;
+		
 		while(segundosRestantes > 0 && !terminado) {
 
 			if (pausado) {
@@ -71,6 +76,7 @@ public class HiloCuentaAtrasSerie extends Thread{
 			}
 
 			try {
+				
 				if (!terminado) {
 					mins = segundosRestantes / 60;
 					secs = segundosRestantes % 60;

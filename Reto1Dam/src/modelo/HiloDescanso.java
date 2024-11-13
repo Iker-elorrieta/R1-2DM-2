@@ -5,7 +5,7 @@ import javax.swing.JLabel;
 public class HiloDescanso extends Thread{
 
 	JLabel mostrarContador;
-	private boolean terminado = false;
+	private boolean terminado = true;
 	private boolean pausado = false;
 	private Ejercicio tiempoDescansoEjer;
 
@@ -55,6 +55,8 @@ public class HiloDescanso extends Thread{
 	public void run() {
 
 		int segundosRestantes = tiempoSegundos;
+		
+		terminado = false;
 
 		while(segundosRestantes > 0 && !terminado) {
 
@@ -128,11 +130,6 @@ public class HiloDescanso extends Thread{
 	public void setTiempoSegundos(int tiempoSegundos) {
 		this.tiempoSegundos = tiempoSegundos;
 	}
-
-
-
-
-
 
 
 }
