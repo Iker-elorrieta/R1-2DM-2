@@ -178,7 +178,7 @@ public class HistoricoWorkouts {
 		try {
 			co = Conexion.conectar();
 
-			// Consulta para obtener el documento del usuario usando su email
+			// Consulta para obtener el documento del usuario usando su email 
 			CollectionReference usuariosRef = co.collection(coleccionPrincipal);
 			Query query = usuariosRef.whereEqualTo("Email", email);
 			ApiFuture<QuerySnapshot> querySnapshot = query.get();
@@ -209,24 +209,6 @@ public class HistoricoWorkouts {
 							double nivelWork = dirRef.get().get().getDouble(fieldNivel);
 							workout.setNivel(nivelWork);
 						}
-						/*
-						 * Object nombreWorkoutField = doc.get(fieldNombreWorkout); if
-						 * (nombreWorkoutField instanceof DocumentReference) { DocumentReference
-						 * nombreWorkoutRef = (DocumentReference) nombreWorkoutField;
-						 * workout.setNombreW(nombreWorkoutRef.getId()); // Aquí obtienes el ID del
-						 * documento referenciado } else if (nombreWorkoutField instanceof String) {
-						 * workout.setNombreW((String) nombreWorkoutField); } else { // Maneja el caso
-						 * donde no es ni String ni DocumentReference
-						 * workout.setNombreW("Valor desconocido"); }
-						 * 
-						 * Object nivelField = doc.get(fieldNivel); if (nivelField instanceof
-						 * DocumentReference) { DocumentReference nivelRef = (DocumentReference)
-						 * nivelField; workout.setNivel(nivelRef.getId()); // Asigna el ID del documento
-						 * referenciado, o usa nivelRef.getPath() } else if (nivelField instanceof
-						 * String) { workout.setNivel((String) nivelField); // Asigna el valor String }
-						 * else { workout.setNivel("Nivel desconocido"); // Valor por defecto si no es
-						 * ni String ni DocumentReference }
-						 */
 
 						listaHistoricoWorkouts.add(workout);
 					}
