@@ -3,6 +3,7 @@ package modelo;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -14,7 +15,11 @@ import com.google.cloud.firestore.QuerySnapshot;
 import conexion.Conexion;
 import controlador.Metodos;
 
-public class Workout {
+public class Workout implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String nombreW;
 	private Double numEjercicios;
 	private Double nivel;

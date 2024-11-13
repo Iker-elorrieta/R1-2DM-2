@@ -13,15 +13,15 @@ import modelo.Ejercicio;
 import modelo.Serie;
 import modelo.Workout;
 
-import javax.swing.DefaultListModel;
+//import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.Font;
-import javax.swing.JList;
+//import javax.swing.JList;
 import java.awt.SystemColor;
 import java.util.ArrayList;
-import java.util.List;
+//import java.util.List;
 import java.awt.Color;
 import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;

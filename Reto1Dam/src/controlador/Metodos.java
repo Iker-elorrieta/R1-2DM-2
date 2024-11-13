@@ -1,6 +1,7 @@
 package controlador;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.InetAddress;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -8,8 +9,12 @@ import modelo.Usuario;
 
 
 
-public class Metodos{
+public class Metodos implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	static Usuario usuario;
 
 

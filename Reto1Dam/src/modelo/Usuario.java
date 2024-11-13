@@ -3,6 +3,7 @@ package modelo;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.Serializable;
 import java.util.concurrent.ExecutionException;
 import javax.swing.JOptionPane;
 import java.util.ArrayList;
@@ -20,7 +21,12 @@ import com.google.cloud.firestore.QuerySnapshot;
 import controlador.Metodos;
 import conexion.Conexion;
 
-public class Usuario {
+public class Usuario  implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private static Usuario usuarioLogueado = null;
 

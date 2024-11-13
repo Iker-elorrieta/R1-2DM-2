@@ -1,6 +1,6 @@
 package vista;
 
-import java.awt.EventQueue;
+//import java.awt.EventQueue;
 import java.awt.Font;
 import java.util.ArrayList;
 import javax.swing.JFrame;

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.CollectionReference;
-import com.google.cloud.firestore.DocumentReference;
+//import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.Query;
@@ -24,7 +24,7 @@ public class HistoricoWorkouts {
 	private Double ejerciciosCompletados;
 
 	private static String coleccionPrincipal = "USUARIO";
-	private static String coleccionPrincipal2 = "WORKOUT";
+	//private static String coleccionPrincipal2 = "WORKOUT";
 	private static String coleccionSecundaria = "HISTORIALWORKOUTS";
 
 	private static String fieldNombreWorkout = "NombreWorkout";
