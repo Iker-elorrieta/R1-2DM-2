@@ -94,6 +94,13 @@ public class HiloContadorEjercicio extends Thread{
 			}
 		}
 	}
+	
+	public void resetearHilo() {
+		this.terminar();
+		this.reset();
+		//hiloContadorEjercicio = null;
+		hiloContadorEjercicio = new HiloContadorEjercicio(ejercicios.getLblTiempoEjer());
+	}
 
 	
 	//getters y setters

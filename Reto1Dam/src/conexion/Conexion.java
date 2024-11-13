@@ -24,8 +24,7 @@ public class Conexion {
 			serviceAccount = new FileInputStream(nombreJSON);
 		
 
-		FirestoreOptions firestoreOptions = FirestoreOptions.getDefaultInstance().toBuilder()
-				.setProjectId(projectID).setCredentials(GoogleCredentials.fromStream(serviceAccount)).build();
+		FirestoreOptions firestoreOptions = FirestoreOptions.getDefaultInstance().toBuilder().setProjectId(projectID).setCredentials(GoogleCredentials.fromStream(serviceAccount)).build();
 		fs = firestoreOptions.getService();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

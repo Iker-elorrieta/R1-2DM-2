@@ -271,11 +271,12 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 				hiloCronometro = new HiloCronometro(ejercicios.getLblCronometro());
 			}
 
-			/*if (hiloDescansoEjer != null) {
+			if (hiloDescansoEjer != null) {
 				hiloDescansoEjer.terminar();
 				hiloDescansoEjer.reset();
-				hiloDescansoEjer = null;
-			}*/
+				//hiloDescansoEjer = null;
+				hiloDescansoEjer = new HiloDescanso(ejercicios.getLblTiempoDescanso(), ejercicio.getTiempoDescanso());
+			}
 
 			if (hiloCuentaAtras != null) {
 				hiloCuentaAtras.terminado();
@@ -318,11 +319,12 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 				hiloCronometro = new HiloCronometro(ejercicios.getLblCronometro());
 			}
 
-			/*if (hiloDescansoEjer != null) {
+			if (hiloDescansoEjer != null) {
 				hiloDescansoEjer.terminar();
 				hiloDescansoEjer.reset();
-				hiloDescansoEjer = null;
-			}*/
+				//hiloDescansoEjer = null;
+				hiloDescansoEjer = new HiloDescanso(ejercicios.getLblTiempoDescanso(), ejercicio.getTiempoDescanso());
+			}
 
 			if (hiloCuentaAtras != null) {
 				hiloCuentaAtras.terminado();
@@ -488,7 +490,13 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 
 			}
 
-		} else if (e.getSource() == ejercicios.getBtnSalir()) {
+		} else if(e.getSource() == ejercicios.getBtnSigSerie()) {
+			//*pasa al siguiente ejercicio
+			
+		}else if(e.getSource() == ejercicios.getBtnSigEjercicio()) {
+			//*pasa a la siguiente serie
+			
+		}else if (e.getSource() == ejercicios.getBtnSalir()) {
 
 			// *
 			// guardar los datos en el historial

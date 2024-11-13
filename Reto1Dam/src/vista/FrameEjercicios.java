@@ -324,6 +324,16 @@ public class FrameEjercicios extends JFrame {
 	public JLabel getLblTiempoSerieNom() {
 		return lblTiempoSerieNom;
 	}
+
+	public JButton getBtnSigSerie() {
+		return btnSigSerie;
+	}
+
+	public JButton getBtnSigEjercicio() {
+		return btnSigEjercicio;
+	}
+	
+	
 	
 	
 }
