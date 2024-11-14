@@ -2,9 +2,13 @@ package modelo;
 
 import javax.swing.JLabel;
 
+import vista.FrameEjercicios;
+
 public class HiloCuentaAtrasV extends Thread{
 
-	JLabel txt;
+	private FrameEjercicios ejercicios;
+	
+	JLabel mostrarContador;
 	private boolean terminado = true;
 	int segundos = 5;
 
@@ -13,8 +17,8 @@ public class HiloCuentaAtrasV extends Thread{
 
 	}
 
-	public HiloCuentaAtrasV(JLabel txt) {
-		this.txt = txt;
+	public HiloCuentaAtrasV(JLabel mostrarContador) {
+		this.mostrarContador = mostrarContador;
 	}
 
 	public void terminado() {
@@ -24,7 +28,7 @@ public class HiloCuentaAtrasV extends Thread{
 	//resetear los valores
 	public void reset() {
 		segundos = 0;
-		txt.setText("-");
+		mostrarContador.setText("-");
 	}
 
 	@Override
@@ -33,9 +37,9 @@ public class HiloCuentaAtrasV extends Thread{
 		terminado = false;
 		
 		try {
-			while (segundos > 0) {
+			while (segundos > 0 && !terminado) {
 
-				txt.setText(String.valueOf(segundos));
+				mostrarContador.setText(String.valueOf(segundos));
 
 				segundos--;
 
@@ -50,8 +54,22 @@ public class HiloCuentaAtrasV extends Thread{
 			System.out.println("Cuentra atrás interrumpida");
 			Thread.currentThread().interrupt();
 		}
+		
+		synchronized (this) {
+			terminado = true;
+			
+            notify(); //notify a los hilos que ha terminado
+        }
 
-		setTerminado(true);
+		
+	}
+	
+	
+	public void resetearHilo(JLabel mostrarCronometro) {
+		this.terminado();
+		this.reset();
+		//hiloCuentaAtras = null;
+		new HiloCuentaAtrasV(mostrarCronometro);
 	}
 
 	//getters y setters

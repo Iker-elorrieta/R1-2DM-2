@@ -2,8 +2,11 @@ package modelo;
 
 import javax.swing.JLabel;
 
+import vista.FrameEjercicios;
+
 public class HiloContadorEjercicio extends Thread{
 
+	private FrameEjercicios ejercicios;
 
 	JLabel mostrarCronometro;
 	private int minutos = 0;
@@ -95,11 +98,11 @@ public class HiloContadorEjercicio extends Thread{
 		}
 	}
 	
-	public void resetearHilo() {
+	public void resetearHilo(JLabel mostrarCronometro) {
 		this.terminar();
 		this.reset();
 		//hiloContadorEjercicio = null;
-		hiloContadorEjercicio = new HiloContadorEjercicio(ejercicios.getLblTiempoEjer());
+		new HiloContadorEjercicio(mostrarCronometro);
 	}
 
 	

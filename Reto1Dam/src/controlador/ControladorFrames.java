@@ -43,13 +43,13 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 	private Ejercicio ejercicio;
 	private Serie serie;
 
-	ArrayList<Ejercicio> listaEjercicios;
-	Ejercicio ejercicioActual;
-	ArrayList<Serie> listaSeries;
-
 	private int contador = 0;
 	private int indexEjercicioActual = 0;
 	private int indexSerieActual = 0;
+
+	private ArrayList<Ejercicio> listaEjercicios;
+	private Ejercicio ejercicioActual;
+	private ArrayList<Serie> listaSeries;
 	private Serie serieActual;
 
 	private HiloCronometro hiloCronometro;
@@ -251,39 +251,25 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 			//para asegurar que todo esta a 0
 			//los contadores paran y se resetean
 			if (hiloContadorEjercicio != null) {
-				hiloContadorEjercicio.terminar();
-				hiloContadorEjercicio.reset();
-				//hiloContadorEjercicio = null;
-				hiloContadorEjercicio = new HiloContadorEjercicio(ejercicios.getLblTiempoEjer());
+				hiloContadorEjercicio.resetearHilo(ejercicios.getLblTiempoEjer());
 			}
 
 			if (hiloCuentaAtrasSerie != null) {
-				hiloCuentaAtrasSerie.terminar();
-				hiloCuentaAtrasSerie.reset();
-				//hiloCuentaAtrasSerie = null;
-				hiloCuentaAtrasSerie = new HiloCuentaAtrasSerie(ejercicios.getLblTiempoSerie(), serie.getTiempoSerie());
+				hiloCuentaAtrasSerie.resetearHilo(ejercicios.getLblTiempoSerie(), serie.getTiempoSerie());
 			}
 
 			if (hiloCronometro != null) {
-				hiloCronometro.terminar();
-				hiloCronometro.reset();
-				//hiloCronometro = null;
-				hiloCronometro = new HiloCronometro(ejercicios.getLblCronometro());
+				hiloCronometro.resetearHilo(ejercicios.getLblCronometro());
 			}
 
 			if (hiloDescansoEjer != null) {
-				hiloDescansoEjer.terminar();
-				hiloDescansoEjer.reset();
-				//hiloDescansoEjer = null;
-				hiloDescansoEjer = new HiloDescanso(ejercicios.getLblTiempoDescanso(), ejercicio.getTiempoDescanso());
+				hiloDescansoEjer.resetearHilo();
 			}
 
 			if (hiloCuentaAtras != null) {
-				hiloCuentaAtras.terminado();
-				hiloCuentaAtras.reset();
-				//hiloCuentaAtras = null;
-				hiloCuentaAtras = new HiloCuentaAtrasV(ejercicios.getLblCuentaAtrasV());
+				hiloCuentaAtras.resetearHilo(ejercicios.getLblCuentaAtrasV());
 			}
+
 
 
 			ejercicios.setVisible(true);
@@ -299,38 +285,23 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 
 			//los contadores paran y se resetean
 			if (hiloContadorEjercicio != null) {
-				hiloContadorEjercicio.terminar();
-				hiloContadorEjercicio.reset();
-				//hiloContadorEjercicio = null;
-				hiloContadorEjercicio = new HiloContadorEjercicio(ejercicios.getLblTiempoEjer());
+				hiloContadorEjercicio.resetearHilo(ejercicios.getLblTiempoEjer());
 			}
 
 			if (hiloCuentaAtrasSerie != null) {
-				hiloCuentaAtrasSerie.terminar();
-				hiloCuentaAtrasSerie.reset();
-				//hiloCuentaAtrasSerie = null;
-				hiloCuentaAtrasSerie = new HiloCuentaAtrasSerie(ejercicios.getLblTiempoSerie(), serie.getTiempoSerie());
+				hiloCuentaAtrasSerie.resetearHilo(ejercicios.getLblTiempoSerie(), serie.getTiempoSerie());
 			}
 
 			if (hiloCronometro != null) {
-				hiloCronometro.terminar();
-				hiloCronometro.reset();
-				//hiloCronometro = null;
-				hiloCronometro = new HiloCronometro(ejercicios.getLblCronometro());
+				hiloCronometro.resetearHilo(ejercicios.getLblCronometro());
 			}
 
 			if (hiloDescansoEjer != null) {
-				hiloDescansoEjer.terminar();
-				hiloDescansoEjer.reset();
-				//hiloDescansoEjer = null;
-				hiloDescansoEjer = new HiloDescanso(ejercicios.getLblTiempoDescanso(), ejercicio.getTiempoDescanso());
+				hiloDescansoEjer.resetearHilo();
 			}
 
 			if (hiloCuentaAtras != null) {
-				hiloCuentaAtras.terminado();
-				hiloCuentaAtras.reset();
-				//hiloCuentaAtras = null;
-				hiloCuentaAtras = new HiloCuentaAtrasV(ejercicios.getLblCuentaAtrasV());
+				hiloCuentaAtras.resetearHilo(ejercicios.getLblCuentaAtrasV());
 			}
 
 
@@ -338,6 +309,201 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 			ejercicios.dispose();
 
 		} else if (e.getSource() == ejercicios.getBtnInicioPausa()) {
+
+			if (serie == null) {
+				serie = new Serie();
+			}
+
+			if (ejercicio == null) {
+				ejercicio = new Ejercicio();
+			}
+			
+			
+			listaEjercicios = ejercicio.mObtenerEjercicios(ejercicios.getLblNombreWorkout().getText());
+			ejercicioActual = listaEjercicios.get(indexEjercicioActual);
+			listaSeries = serie.mObtenerSeries(ejercicios.getLblNombreWorkout().getText(), ejercicioActual.getNombreE());
+			serieActual = listaSeries.get(indexSerieActual);
+
+			
+
+			if (indexEjercicioActual < listaEjercicios.size()) {
+
+				if (contador == 0) {
+
+					//hilo cuenta atras de 5s				
+					if (hiloCuentaAtras == null ||	hiloCuentaAtras.isTerminado()) {
+						hiloCuentaAtras = new HiloCuentaAtrasV(ejercicios.getLblCuentaAtrasV());
+						hiloCuentaAtras.start();
+					}
+					
+					//esperar a que termine
+					synchronized (hiloCuentaAtras) {
+		                while (!hiloCuentaAtras.isTerminado()) {
+		                    try {
+		                        hiloCuentaAtras.wait(); //esperar
+		                    } catch (InterruptedException ex) {
+		                        ex.printStackTrace();
+		                    }
+		                }
+		            }
+					
+
+					if (ejercicios.getLblCuentaAtrasV().getText().equals("1")) {
+						ejercicios.getLblCuentaAtrasV().setText("");
+					}
+
+					ejercicios.getBtnInicioPausa().setText("Pausar");
+					ejercicios.getBtnInicioPausa().setBackground(new java.awt.Color(153, 205, 144));
+
+					//hilos contadores
+					// hilo cronometro
+					if (hiloCronometro == null || hiloCronometro.isTerminar()) {
+						hiloCronometro = new HiloCronometro(ejercicios.getLblCronometro());
+						hiloCronometro.start();
+					}
+
+					//hilo ejercicio
+					if (hiloContadorEjercicio == null || hiloContadorEjercicio.isTerminar()) {
+						hiloContadorEjercicio = new HiloContadorEjercicio(ejercicios.getLblTiempoEjer());
+						hiloContadorEjercicio.start();
+					}
+
+					//hilo series
+					//recorremos las series
+					for (indexSerieActual = 0; indexSerieActual < listaSeries.size(); indexSerieActual++) {
+						serieActual = listaSeries.get(indexSerieActual);
+
+						// nombre de la serie actual
+						ejercicios.getLblTiempoSerieNom().setText("Tiempo de la " + serieActual.getNombreS());
+
+						serie = serieActual.mObtenerSerie(String.valueOf(ejercicios.getLblNombreWorkout()), String.valueOf(ejercicios.getLblNombreEjercicio()), serieActual.getNombreS());
+
+						// hilo ejercicio
+						if (hiloCuentaAtrasSerie == null || hiloCuentaAtrasSerie.isTerminado()) {
+							hiloCuentaAtrasSerie = new HiloCuentaAtrasSerie(ejercicios.getLblTiempoSerie(), serie.getTiempoSerie());
+							hiloCuentaAtrasSerie.start();
+						}									
+
+					}
+
+					//*hiloDescanso
+					//*hilo 5 segundos
+				}
+
+
+
+				contador = 1;
+
+			} else if (contador == 1) {
+
+				//pausar
+				ejercicios.getBtnInicioPausa().setText("Iniciar");
+				ejercicios.getBtnInicioPausa().setBackground(new java.awt.Color(153, 205, 214));
+
+				if (hiloCronometro != null && hiloContadorEjercicio != null && hiloCuentaAtrasSerie != null) {
+					hiloCronometro.pausar();
+					hiloContadorEjercicio.pausar();
+					hiloCuentaAtrasSerie.pausar();
+				}
+
+				contador = 2;
+
+			} else if (contador == 2) {
+				//seguir contadores
+				ejercicios.getBtnInicioPausa().setText("Pausar");
+				ejercicios.getBtnInicioPausa().setBackground(new java.awt.Color(153, 205, 144));
+
+				if (hiloCronometro != null && hiloContadorEjercicio != null && hiloCuentaAtrasSerie != null) {
+					hiloCronometro.reanudar();
+					hiloContadorEjercicio.reanudar();
+					hiloCuentaAtrasSerie.reanudar();
+				}
+
+				contador = 1;
+			}
+
+
+
+		
+
+
+
+	} else if(e.getSource() == ejercicios.getBtnSigSerie()) {
+		//*pasa al siguiente ejercicio
+
+	}else if(e.getSource() == ejercicios.getBtnSigEjercicio()) {
+		//*pasa a la siguiente serie
+
+	}else if (e.getSource() == ejercicios.getBtnSalir()) {
+
+		// *
+		// guardar los datos en el historial
+		resumenWorkout.setVisible(true);
+		ejercicios.dispose();
+
+	} else if (e.getSource() == resumenWorkout.getBtnOk()) {
+
+		workoutsPrincipal.setVisible(true);
+		resumenWorkout.dispose();
+
+	} else if (e.getSource() == historialWorkouts.getBtnAtras()) {
+
+		workoutsPrincipal.setVisible(true);
+		historialWorkouts.dispose();
+
+	}
+	// funcion botones frame perfil usuario ---------------------------------------------- BOTONES FRAME PERFIL USUARIO
+	else if (e.getSource() == perfilUsuario.getBtnAtras()) {
+
+		workoutsPrincipal.setVisible(true);
+		perfilUsuario.dispose();
+
+	} else if (e.getSource() == perfilUsuario.getBtnModificar()) {
+
+		if (metodos.hayInternet()) {
+			modificarDatos.setUsuarioModificarDatos(usuarioLogueado);
+			modificarDatos.setVisible(true);
+			perfilUsuario.dispose();
+		} else {
+			JOptionPane.showMessageDialog(null, "No es posible modificar los datos sin conexion.",
+					"Error de Registro", JOptionPane.ERROR_MESSAGE);
+		}
+
+	}
+	// funciones botones frame modificar datos ---------------------------------------------- BOTONES FRAME MODIFICAR DATOS
+	else if (e.getSource() == modificarDatos.getBtnCancelar()) {
+
+		perfilUsuario.setVisible(true);
+		modificarDatos.dispose();
+
+	} else if (e.getSource() == modificarDatos.getBtnModificarAceptar()) {
+
+		String nombre = modificarDatos.getTextFieldNombreModificar().getText();
+		String apellido = modificarDatos.getTextFieldApellidoModificar().getText();
+		String email = modificarDatos.getTextFieldEmailModificar().getText();
+		String contrasena = new String(registro.getPasswordFieldContrasena().getPassword());
+		Date fechaNac = modificarDatos.getDateChooserFechaNacModificar().getDate();
+
+		if (Metodos.comprobarModificarDatos(nombre, apellido, email, fechaNac)) {
+
+			email = Usuario.mModificarDatos(usuarioLogueado, nombre, apellido, email, contrasena, fechaNac);
+
+			usuarioLogueado.setEmail(email);
+
+			JOptionPane.showMessageDialog(null, "Datos modificados.", "Modificar datos",
+					JOptionPane.INFORMATION_MESSAGE);
+
+			modificarDatos.setUsuarioModificarDatos(usuarioLogueado);
+			perfilUsuario.setUsuarioDatos(Usuario.mObtenerUsuario(email));
+			perfilUsuario.setVisible(true);
+			modificarDatos.dispose();
+
+		}
+	}
+}
+	
+	/*
+	 else if (e.getSource() == ejercicios.getBtnInicioPausa()) {
 
 			if (serie == null) {
 				serie = new Serie();
@@ -363,7 +529,7 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 						hiloCuentaAtras.start();
 					}
 
-					//nuevo hilo
+					//nuevo hilo de fondo para que esperen a que termine hiloCuentaAtras
 					new Thread(new Runnable() {
 						@Override
 						public void run() {
@@ -488,84 +654,10 @@ public class ControladorFrames implements ActionListener, ListSelectionListener 
 					contador = 1;
 				}
 
-			}
+			}*/
 
-		} else if(e.getSource() == ejercicios.getBtnSigSerie()) {
-			//*pasa al siguiente ejercicio
-			
-		}else if(e.getSource() == ejercicios.getBtnSigEjercicio()) {
-			//*pasa a la siguiente serie
-			
-		}else if (e.getSource() == ejercicios.getBtnSalir()) {
+@Override
+public void valueChanged(ListSelectionEvent e) {
 
-			// *
-			// guardar los datos en el historial
-			resumenWorkout.setVisible(true);
-			ejercicios.dispose();
-
-		} else if (e.getSource() == resumenWorkout.getBtnOk()) {
-
-			workoutsPrincipal.setVisible(true);
-			resumenWorkout.dispose();
-
-		} else if (e.getSource() == historialWorkouts.getBtnAtras()) {
-
-			workoutsPrincipal.setVisible(true);
-			historialWorkouts.dispose();
-
-		}
-		// funcion botones frame perfil usuario ---------------------------------------------- BOTONES FRAME PERFIL USUARIO
-		else if (e.getSource() == perfilUsuario.getBtnAtras()) {
-
-			workoutsPrincipal.setVisible(true);
-			perfilUsuario.dispose();
-
-		} else if (e.getSource() == perfilUsuario.getBtnModificar()) {
-
-			if (metodos.hayInternet()) {
-				modificarDatos.setUsuarioModificarDatos(usuarioLogueado);
-				modificarDatos.setVisible(true);
-				perfilUsuario.dispose();
-			} else {
-				JOptionPane.showMessageDialog(null, "No es posible modificar los datos sin conexion.",
-						"Error de Registro", JOptionPane.ERROR_MESSAGE);
-			}
-
-		}
-		// funciones botones frame modificar datos ---------------------------------------------- BOTONES FRAME MODIFICAR DATOS
-		else if (e.getSource() == modificarDatos.getBtnCancelar()) {
-
-			perfilUsuario.setVisible(true);
-			modificarDatos.dispose();
-
-		} else if (e.getSource() == modificarDatos.getBtnModificarAceptar()) {
-
-			String nombre = modificarDatos.getTextFieldNombreModificar().getText();
-			String apellido = modificarDatos.getTextFieldApellidoModificar().getText();
-			String email = modificarDatos.getTextFieldEmailModificar().getText();
-			String contrasena = new String(registro.getPasswordFieldContrasena().getPassword());
-			Date fechaNac = modificarDatos.getDateChooserFechaNacModificar().getDate();
-
-			if (Metodos.comprobarModificarDatos(nombre, apellido, email, fechaNac)) {
-
-				email = Usuario.mModificarDatos(usuarioLogueado, nombre, apellido, email, contrasena, fechaNac);
-
-				usuarioLogueado.setEmail(email);
-
-				JOptionPane.showMessageDialog(null, "Datos modificados.", "Modificar datos",
-						JOptionPane.INFORMATION_MESSAGE);
-
-				modificarDatos.setUsuarioModificarDatos(usuarioLogueado);
-				perfilUsuario.setUsuarioDatos(Usuario.mObtenerUsuario(email));
-				perfilUsuario.setVisible(true);
-				modificarDatos.dispose();
-
-			}
-		}
-	}
-
-	@Override
-	public void valueChanged(ListSelectionEvent e) {
-
-	}
+}
 }

@@ -2,7 +2,12 @@ package modelo;
 
 import javax.swing.JLabel;
 
+import vista.FrameEjercicios;
+
 public class HiloDescanso extends Thread{
+	
+	private FrameEjercicios ejercicios;
+	private Ejercicio ejercicio;
 
 	JLabel mostrarContador;
 	private boolean terminado = true;
@@ -89,6 +94,13 @@ public class HiloDescanso extends Thread{
 		setTerminado(true);
 	}
 
+	
+	public void resetearHilo() {
+		this.terminar();
+		this.reset();
+		//hiloDescansoEjer = null;
+		new HiloDescanso(ejercicios.getLblTiempoDescanso(), ejercicio.getTiempoDescanso());
+	}
 
 	//getters y setters
 	public JLabel getMostrarContador() {

@@ -2,8 +2,13 @@ package modelo;
 
 import javax.swing.JLabel;
 
+import vista.FrameEjercicios;
+
 public class HiloCuentaAtrasSerie extends Thread{
 
+	private FrameEjercicios ejercicios;
+	private Serie serie;
+	
 	JLabel mostrarContador;
 	private boolean terminado = true;
 	private boolean pausado = false;
@@ -83,9 +88,9 @@ public class HiloCuentaAtrasSerie extends Thread{
 
 					mostrarContador.setText(String.format("%02d:%02d", mins, secs));
 
-					segundosRestantes--; // Decrease remaining time
+					segundosRestantes--;
 
-					Thread.sleep(1000); // Wait for one second
+					Thread.sleep(1000);
 				}
 			} catch (InterruptedException e) {
 				System.out.println("Countdown interrupted");
@@ -96,6 +101,12 @@ public class HiloCuentaAtrasSerie extends Thread{
 		setTerminado(true);
 	}
 
+	public void resetearHilo(JLabel mostrarContador, Double serie) {
+		this.terminar();
+		this.reset();
+		//hiloCuentaAtrasSerie = null;
+		new HiloCuentaAtrasSerie(mostrarContador, serie);
+	}
 
 	//getters y setters
 	public boolean isTerminado() {
